@@ -2,28 +2,63 @@ import React, { Component } from 'react'
 import './App.css'
 import { Map, TileLayer , Marker} from "react-leaflet"
 import ModalCustom from './ModalCustom.js'
-import ReactInterval from 'react-interval';
+import ReactInterval from 'react-interval'
+
+/**
+*
+* dexie.js
+*
+**/
+import db from './db';
 
 
 class App extends Component {
-  state = {
-    modal:null, // définit le modal à afficher
-    center: [43.107973199999996, 0.7253157], // centre de la map au chargement
-    zoom: 17,
-    userLocation:null,
-    markers: [], // les pois
-    enabled: true,
-    timeout: 5000
+  constructor(props){
+    super(props)
+    this.modalNull = this.modalNull.bind(this)
+    this.state = {
+      modal:null, // définit le modal à afficher
+      center: [43.107973199999996, 0.7253157], // centre de la map au chargement
+      zoom: 17,
+      userLocation:null,
+      markers: [], // les pois
+      enabled: true,
+      timeout: 5000,
+
+      markersDexie: [] // dexie.js
   }
+}
+
+  modalNull()  { this.setState({ modal: null}) }
+
 
   componentDidMount() {
+    //dexie
+    const poi = {
+      lon:43.105,
+      lat:0.725,
+      desc:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat dolorem ab, minima temporibus sunt inventore deserunt doloremque fugit voluptatibus modi.",
+      done: false,
+    };
+
+    db.table('pois')
+      .add(poi)
+      .then(id => {
+        const newpoi = [...this.state.markersDexie, Object.assign({}, poi, { id })];
+        this.setState({ markersDexie: newpoi });
+        console.log("marker Dexie",this.state.markersDexie)
+      })
+    // fin dexie
+
+    // premier appel à la fonction qui donne les coords de user (à supprimer ?) 
     this.getUserLoc()
+
     /**
     *
     * fetch tous les pois et les stocks dans le state markers
     *
     **/
-    return fetch('http://192.168.1.118:8000/api/pois')
+    return fetch('http://192.168.0.106:8000/api/pois')
       .then(response => response.json())
       .then(data => this.setState({markers:data.pois}))
   }
@@ -71,7 +106,7 @@ class App extends Component {
   render() {
     console.log("markers",this.state.markers)
 
-    const {timeout, enabled, userLocation , markers , modal , zoom , center} = this.state
+    const {timeout, enabled, userLocation , markers , modal , zoom , center , markersDexie} = this.state
 
     return (
       <div className="App">
@@ -97,9 +132,13 @@ class App extends Component {
           {markers.map(x=>
             <Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[+x.lon,+x.lat]}/>)}
 
+          {/* même chose mais sur le(s) marqueur(s) Dexie */}
+          {markersDexie.map(x=>
+            <Marker onClick={()=>alert("DEXIE M A TUER")} key={x.id} position={[x.lon,x.lat]}/>)}
+
           {/* conditional rendering pour afficher ou non un modal (si on a cliqué ou non sur un POI)
            l'objet entier est passé en prop*/}
-          {modal && <ModalCustom marker={modal} />}
+          {modal && <ModalCustom marker={modal} modalNull = {this.modalNull} />}
         </Map>
 
       </div>

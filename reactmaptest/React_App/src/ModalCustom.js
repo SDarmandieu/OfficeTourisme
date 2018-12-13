@@ -15,7 +15,8 @@ class ModalCustom extends Component {
   }
 
   handleClose() {
-    this.setState({show:false})
+    //this.setState({show:false})
+    this.props.modalNull()
   }
 
   componentWillMount() {
@@ -50,7 +51,7 @@ class ModalCustom extends Component {
       answer: this.state.answer
     }
 
-    const res = await axios.post(`http://192.168.1.118:8000/api/answer`, { answer })
+    const res = await axios.post(`http://192.168.0.106:8000/api/answer`, { answer })
 
     console.log(res)
     console.log(res.data)
