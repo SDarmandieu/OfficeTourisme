@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { Map, TileLayer , Marker} from "react-leaflet"
+import { Map, TileLayer , Marker , Circle} from "react-leaflet"
 import ModalCustom from './ModalCustom.js'
 import ReactInterval from 'react-interval'
 
@@ -28,12 +28,18 @@ class App extends Component {
       markersDexie: [] // dexie.js
   }
 }
-
+  
+  /**
+  *
+  * fonction passée au customModal enfant en prop , pour le force à rendre null le state , afin que 
+  * le modal ne se réouvre pas à chaque update de component
+  *
+  **/
   modalNull()  { this.setState({ modal: null}) }
 
 
   componentDidMount() {
-    //dexie
+    //dexie , data en dur
     const poi = {
       lon:43.105,
       lat:0.725,
@@ -41,6 +47,7 @@ class App extends Component {
       done: false,
     };
 
+    // dexie , insert dans la db et set du state markersDixie
     db.table('pois')
       .add(poi)
       .then(id => {
@@ -69,7 +76,7 @@ class App extends Component {
   *
   **/
   handleMarkerClick = (e) => {
-    this.setState({modal:e});
+    this.setState({modal:e})
     console.log("state",this.state.modal.id)
   }
 
@@ -98,6 +105,11 @@ class App extends Component {
 
   geolocError = err => console.warn(`ERREUR (${err.code}): ${err.message}`)
 
+  /**
+  *
+  * fonction appelée dans le react-interval pour mettre à jour la position de user
+  *
+  **/
   getUserLoc = () => window.navigator.geolocation.getCurrentPosition(this.geolocSuccess, this.geolocError, this.geolocOpts)
 
 
@@ -122,11 +134,19 @@ class App extends Component {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
 
+          {/* refresh de la position du user toutes les ${timeout} secondes */}
           <ReactInterval {...{timeout, enabled}}
           callback={this.getUserLoc} />
 
           {/* création du marker position du user */ console.log("test",userLocation)}
-          {userLocation && <Marker position={userLocation}/> }
+          {userLocation && <Marker 
+            onClick={()=>alert("c'est moi")} 
+            position={userLocation}>
+            <Circle 
+                  center={{lat:userLocation[0], lng: userLocation[1]}}
+                  fillColor="blue" 
+                  radius={20}/>
+            </Marker> }
 
           {/* iteration sur les POIs pour les afficher sur la carte */}
           {markers.map(x=>
