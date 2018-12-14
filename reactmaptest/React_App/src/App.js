@@ -4,6 +4,8 @@ import { Map, TileLayer , Marker , Circle} from "react-leaflet"
 import ModalCustom from './ModalCustom.js'
 import ReactInterval from 'react-interval'
 
+//import MapCustom from './MapCustom.js'
+
 /**
 *
 * dexie.js
@@ -39,33 +41,36 @@ class App extends Component {
 
 
   componentDidMount() {
-    //dexie , data en dur
-    const poi = {
-      lon:43.105,
-      lat:0.725,
-      desc:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat dolorem ab, minima temporibus sunt inventore deserunt doloremque fugit voluptatibus modi.",
-      done: false,
-    };
-
-    // dexie , insert dans la db et set du state markersDixie
-    db.table('pois')
-      .add(poi)
-      .then(id => {
-        const newpoi = [...this.state.markersDexie, Object.assign({}, poi, { id })];
-        this.setState({ markersDexie: newpoi });
-        console.log("marker Dexie",this.state.markersDexie)
-      })
-    // fin dexie
 
     // premier appel à la fonction qui donne les coords de user (à supprimer ?) 
-    this.getUserLoc()
+    //this.getUserLoc()
+
+    /**
+    *
+    * transformation de la DB sql sur l'API Laravel en IndexedDB avec Dexie
+    *
+    **/
+    fetch('http://192.168.1.118:8000/api/dexie')
+      .then(response => response.json())
+      .then(data => {
+        console.log("data",data)
+        Object.entries(data).forEach(([tableName,tableDatas]) => {
+          tableDatas.map(current=> db.table(tableName)
+            .add(current)
+            .then(id => {
+              const newpoi = [...this.state.markersDexie, Object.assign({}, current, { id })]
+              this.setState({ markersDexie: newpoi })
+              console.log("marker Dexie",this.state.markersDexie)
+            }))
+          })
+      })
 
     /**
     *
     * fetch tous les pois et les stocks dans le state markers
     *
     **/
-    return fetch('http://192.168.0.106:8000/api/pois')
+    return fetch('http://192.168.1.118:8000/api/pois')
       .then(response => response.json())
       .then(data => this.setState({markers:data.pois}))
   }
@@ -113,8 +118,6 @@ class App extends Component {
   getUserLoc = () => window.navigator.geolocation.getCurrentPosition(this.geolocSuccess, this.geolocError, this.geolocOpts)
 
 
-
-
   render() {
     console.log("markers",this.state.markers)
 
@@ -124,13 +127,13 @@ class App extends Component {
       <div className="App">
 
         {/* div qui contient la map */}
-        <Map
+         <Map
           center={center}
           onClick={(e)=>this.handleMapClick(e)} 
           zoom={zoom}>
 
           {/* layer openstreetmap */}
-          <TileLayer
+          <TileLayer 
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
 
@@ -160,6 +163,7 @@ class App extends Component {
            l'objet entier est passé en prop*/}
           {modal && <ModalCustom marker={modal} modalNull = {this.modalNull} />}
         </Map>
+
 
       </div>
     );
