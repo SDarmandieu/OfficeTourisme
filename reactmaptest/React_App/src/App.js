@@ -50,7 +50,7 @@ class App extends Component {
     * transformation de la DB sql sur l'API Laravel en IndexedDB avec Dexie
     *
     **/
-    fetch('http://192.168.1.118:8000/api/dexie')
+    fetch('http://192.168.0.106:8000/api/dexie')
       .then(response => response.json())
       .then(data => {
         console.log("data",data)
@@ -70,7 +70,7 @@ class App extends Component {
     * fetch tous les pois et les stocks dans le state markers
     *
     **/
-    return fetch('http://192.168.1.118:8000/api/pois')
+    return fetch('http://192.168.0.106:8000/api/pois')
       .then(response => response.json())
       .then(data => this.setState({markers:data.pois}))
   }
@@ -119,7 +119,7 @@ class App extends Component {
 
 
   render() {
-    console.log("markers",this.state.markers)
+    console.log("dexie",this.state.markersDexie)
 
     const {timeout, enabled, userLocation , markers , modal , zoom , center , markersDexie} = this.state
 
@@ -152,12 +152,12 @@ class App extends Component {
             </Marker> }
 
           {/* iteration sur les POIs pour les afficher sur la carte */}
-          {markers.map(x=>
-            <Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[+x.lon,+x.lat]}/>)}
+          {/*markers.map(x=>
+            <Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[+x.lon,+x.lat]}/>)*/}
 
           {/* même chose mais sur le(s) marqueur(s) Dexie */}
           {markersDexie.map(x=>
-            <Marker onClick={()=>alert("DEXIE M A TUER")} key={x.id} position={[x.lon,x.lat]}/>)}
+            <Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[x.lon,x.lat]}/>)}
 
           {/* conditional rendering pour afficher ou non un modal (si on a cliqué ou non sur un POI)
            l'objet entier est passé en prop*/}
