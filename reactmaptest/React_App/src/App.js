@@ -50,7 +50,7 @@ class App extends Component {
     * transformation de la DB sql sur l'API Laravel en IndexedDB avec Dexie
     *
     **/
-    fetch('http://192.168.0.106:8000/api/dexie')
+    fetch('http://192.168.43.44:8000/api/dexie')
       .then(response => response.json())
       .then(data => {
         console.log("data",data)
@@ -70,7 +70,7 @@ class App extends Component {
     * fetch tous les pois et les stocks dans le state markers
     *
     **/
-    return fetch('http://192.168.0.106:8000/api/pois')
+    return fetch('http://192.168.43.44:8000/api/pois')
       .then(response => response.json())
       .then(data => this.setState({markers:data.pois}))
   }

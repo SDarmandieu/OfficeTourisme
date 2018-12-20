@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/php-http/guzzle6-adapter" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/jakub-onderka/php-console-highlighter" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/php-http/httplug" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/jakub-onderka/php-console-color" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/php-http/promise" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/fideloper/proxy" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/barryvdh/laravel-cors" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/laravel/nexmo-notification-channel" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/laravel/slack-notification-channel" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/nexmo/client" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/beyondcode/laravel-dump-server" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/composer" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/dnoegel/php-xdg-base-dir" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/debug" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/contracts" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/Laravel_Back/vendor/zendframework/zend-diactoros" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/Laravel_Back/vendor/autoload.php" />
+    </phpunit_settings>
+  </component>
+</project>

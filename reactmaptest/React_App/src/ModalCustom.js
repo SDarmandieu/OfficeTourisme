@@ -51,7 +51,7 @@ class ModalCustom extends Component {
       answer: this.state.answer
     }
 
-    const res = await axios.post(`http://192.168.0.106:8000/api/answer`, { answer })
+    const res = await axios.post(`http://192.168.43.44:8000/api/answer`, { answer })
 
     console.log(res)
     console.log(res.data)
