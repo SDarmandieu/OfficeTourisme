@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Auth::routes();
+
+Route::get('/city', 'CityController@index')->name('cityIndex')->middleware('auth');
+Route::get('/city/create' , 'CityController@create')->name('cityCreate')->middleware('auth');
+
+Route::post('/city/store' , 'CityController@store')->name('cityStore')->middleware('auth');
+Route::get('/city/destroy/{id}' , 'CityController@destroy')->name('cityDestroy')->middleware('auth');
