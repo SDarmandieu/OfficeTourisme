@@ -27,4 +27,9 @@ class Point extends Model
     {
     	return $this->hasMany('App\Question');
     }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 }

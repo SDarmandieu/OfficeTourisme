@@ -22,4 +22,14 @@ class City extends Model
     {
     	return $this->hasMany('App\Game');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\Image');
+    }
+
+    public function points()
+    {
+        return $this->hasMany('App\Point');
+    }
 }

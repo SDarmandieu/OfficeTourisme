@@ -38,5 +38,10 @@ class Image extends Model
     	return $this->belongsTo('App\Imagetype');
     }
 
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
 
 }
