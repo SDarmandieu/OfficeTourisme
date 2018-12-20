@@ -14,7 +14,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::all();
+        return view('city.index',compact('cities'));
     }
 
     /**
@@ -24,7 +25,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        return view('city.create');
     }
 
     /**
@@ -35,7 +36,15 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        City::create([
+            'name'=>$request->input('name'),
+            'lat'=>$request->input('latitude'),
+            'lon'=>$request->input('longitude')
+        ]);
+
+        return redirect()->route('cityIndex');
+
+
     }
 
     /**
@@ -73,13 +82,14 @@ class CityController extends Controller
     }
 
     /**
+     *
      * Remove the specified resource from storage.
      *
-     * @param  \App\City  $city
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy($id)
     {
-        //
+        $city=City::find($id)->delete();
+        return redirect()->route('cityIndex');
+
     }
 }
