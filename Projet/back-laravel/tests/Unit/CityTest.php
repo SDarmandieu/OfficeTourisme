@@ -134,6 +134,11 @@ class RouteTest extends TestCase
         $this->assertDatabaseMissing('cities', ['name' => 'foo']);
     }
 
+    /**
+     * testing city destroy when authenticated
+     *
+     * @return void
+     */
     public function testCityDestroyRouteAuth()
     {
         $user = factory(User::class)->create();
@@ -158,5 +163,55 @@ class RouteTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseMissing('cities', ['name' => 'foo']);
+    }
+
+    /**
+     * testing city destroy when not authenticated
+     *
+     * @return void
+     */
+    public function testCityDestroyRouteNoAuth()
+    {
+//        to do
+    }
+
+    /**
+     * testing city edit when authenticated
+     *
+     * @return void
+     */
+    public function testCityEditRouteAuth()
+    {
+//        to do
+    }
+
+    /**
+     * testing city edit when not authenticated
+     *
+     * @return void
+     */
+    public function testCityEditRouteNoAuth()
+    {
+//        to do
+    }
+
+    /**
+     * testing city update when authenticated
+     *
+     * @return void
+     */
+    public function testCityUpdateRouteAuth()
+    {
+//        to do
+    }
+
+    /**
+     * testing city update when not authenticated
+     *
+     * @return void
+     */
+    public function testCityUpdateRouteNoAuth()
+    {
+//        to do
     }
 }
