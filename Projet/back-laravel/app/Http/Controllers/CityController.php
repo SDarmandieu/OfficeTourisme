@@ -25,7 +25,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        return view('city.create');
+
     }
 
     /**
@@ -61,24 +61,30 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function edit(City $city)
+    public function edit($id)
     {
-        //
+        $city = City::findOrFail($id);
+        return view('city.edit',compact('city'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
-        //
+        $city = City::findOrFail($id);
+        $city->update([
+            'name' => $request->input('name'),
+            'lat' => $request->input('latitude'),
+            'lon' => $request->input('longitude')
+        ]);
+
+        return redirect()->route('cityIndex');
     }
 
     /**
