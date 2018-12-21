@@ -6,7 +6,12 @@
 
     @foreach($cities as $city)
         <div>Ville : {{$city->name}} latitude : {{$city->lat}}</div>
-        <a href="{{route('cityDestroy',$city->id)}}" class="btn btn-danger">Supprimer</a>
+        <form action="{{route('cityDestroy',$city->id)}}" method="POST">
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger">Supprimer</button>
+        </form>
+        <a href="{{route('cityEdit',$city->id)}}" class="btn btn-success">Modifier</a>
     @endforeach
 
 @endsection
