@@ -45,8 +45,9 @@ class RouteTest extends TestCase
     public function testCityRouteNoAuth()
     {
         $response = $this->get('/city');
-        $response->assertStatus(302);
-        $response->assertRedirect('/login');
+        $response
+            ->assertStatus(302)
+            ->assertRedirect('/login');
     }
 
     /**
@@ -71,8 +72,9 @@ class RouteTest extends TestCase
     public function testCityCreateRouteNoAuth()
     {
         $response = $this->get('/city/create');
-        $response->assertStatus(302);
-        $response->assertRedirect('/login');
+        $response
+            ->assertStatus(302)
+            ->assertRedirect('/login');
     }
 
     /**
@@ -107,8 +109,9 @@ class RouteTest extends TestCase
                 'longitude' => '13'
             ]);
 
-        $response->assertRedirect('/city');
-        $response->assertStatus(302);
+        $response
+            ->assertRedirect('/city')
+            ->assertStatus(302);
 
         $this->assertDatabaseHas('cities', ['name' => 'foo']);
     }
@@ -128,8 +131,9 @@ class RouteTest extends TestCase
                 'longitude' => '13'
             ]);
 
-        $response->assertRedirect('/login');
-        $response->assertStatus(302);
+        $response
+            ->assertRedirect('/login')
+            ->assertStatus(302);
 
         $this->assertDatabaseMissing('cities', ['name' => 'foo']);
     }
@@ -159,8 +163,9 @@ class RouteTest extends TestCase
                 ['_token' => csrf_token()]
             );
 
-        $response->assertRedirect('/city');
-        $response->assertStatus(302);
+        $response
+            ->assertRedirect('/city')
+            ->assertStatus(302);
 
         $this->assertDatabaseMissing('cities', ['name' => 'foo']);
     }
@@ -172,7 +177,26 @@ class RouteTest extends TestCase
      */
     public function testCityDestroyRouteNoAuth()
     {
-//        to do
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $this->assertDatabaseHas('cities', ['name' => 'foo']);
+
+        $response = $this
+            ->call(
+                'DELETE',
+                '/city/destroy/'.$city->id,
+                ['_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/login')
+            ->assertStatus(302);
+
+        $this->assertDatabaseHas('cities', ['name' => 'foo']);
     }
 
     /**
@@ -182,7 +206,23 @@ class RouteTest extends TestCase
      */
     public function testCityEditRouteAuth()
     {
-//        to do
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $user = factory(User::class)->create();
+        $response = $this
+            ->actingAs($user)
+            ->get('/city/edit/'.$city->id);
+
+        $response
+            ->assertStatus(200)
+            ->assertViewHas('city');
+
+        $current = $response->original->getData()['city'];
+        $this->assertInstanceOf('App\City', $current);
     }
 
     /**
@@ -192,7 +232,17 @@ class RouteTest extends TestCase
      */
     public function testCityEditRouteNoAuth()
     {
-//        to do
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $response = $this
+            ->get('/city/edit/'.$city->id);
+        $response
+            ->assertRedirect('/login')
+            ->assertStatus(302);
     }
 
     /**
@@ -202,7 +252,35 @@ class RouteTest extends TestCase
      */
     public function testCityUpdateRouteAuth()
     {
-//        to do
+        $user = factory(User::class)->create();
+
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $this->assertDatabaseHas('cities', ['name' => 'foo']);
+
+        $response = $this
+            ->actingAs($user)
+            ->call(
+                'PUT',
+                '/city/update/'.$city->id,
+                [
+                    'name' => 'bar',
+                    'latitude' => '50',
+                    'longitude' => '40',
+                    '_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/city')
+            ->assertStatus(302);
+
+        $this
+            ->assertDatabaseHas('cities', ['name' => 'bar'])
+            ->assertDatabaseMissing('cities' , ['name' => 'foo']);
     }
 
     /**
@@ -212,6 +290,31 @@ class RouteTest extends TestCase
      */
     public function testCityUpdateRouteNoAuth()
     {
-//        to do
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $this->assertDatabaseHas('cities', ['name' => 'foo']);
+
+        $response = $this
+            ->call(
+                'PUT',
+                '/city/update/'.$city->id,
+                [
+                    'name' => 'bar',
+                    'latitude' => '50',
+                    'longitude' => '40',
+                    '_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/login')
+            ->assertStatus(302);
+
+        $this
+            ->assertDatabaseMissing('cities', ['name' => 'bar'])
+            ->assertDatabaseHas('cities' , ['name' => 'foo']);
     }
 }
