@@ -1,17 +1,136 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container-fluid">
+        <a href="{{route('cityCreate')}}" class="d-flex align-items-center justify-content-center"><i
+                class="fas fa-plus-circle fa-3x mr-1"></i> <span class="link_">Ajouter une ville</span></a>
 
-    <a href="{{route('cityCreate')}}" class="btn btn-primary">Ajouter une ville</a>
+        <div class="card-deck row">
+            @foreach($cities as $city)
+                <div class="col-sm col-md-6 col-lg-4">
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h3>{{$city->name}}</h3>
+                            <p>latitude : {{$city->lat}}</p>
+                            <p>longitude : {{$city->lon}}</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                @switch($city->games->count())
+                                    @case(0)
+                                    Cette ville n'a aucun jeu de piste pour le moment.
+                                    @break
 
-    @foreach($cities as $city)
-        <div>Ville : {{$city->name}} latitude : {{$city->lat}}</div>
-        <form action="{{route('cityDestroy',$city->id)}}" method="POST">
-            @method('DELETE')
-            @csrf
-            <button class="btn btn-danger">Supprimer</button>
-        </form>
-        <a href="{{route('cityEdit',$city->id)}}" class="btn btn-success">Modifier</a>
-    @endforeach
+                                    @case(1)
+                                    Cette ville a 1 jeu de piste.
+                                    @break
 
+                                    @default
+                                    Cette ville a {{$city->games->count()}} jeux de pistes.
+                                @endswitch
+                                <a href="#" class="d-flex align-items-center"><i class="fas fa-map-marked-alt mr-1"></i><span class="link_">Voir
+                                        ses jeux de pistes</span></a>
+                            </p>
+                            <p class="card-text">
+                                @switch($city->images->count())
+                                    @case(0)
+                                    Cette ville n'a aucune image associée pour le moment.
+                                    @break
+
+                                    @case(1)
+                                    Cette ville a 1 image associée.
+                                    @break
+
+                                    @default
+                                    Cette ville a {{$city->games->count()}} images associées.
+                                @endswitch
+                                <a href="#" class="d-flex align-items-center"><i class="fas fa-images mr-1"></i><span class="link_">Voir
+                                        ses images</span></a></p>
+
+                            <p class="card-text">
+                                @switch($city->points->count())
+                                    @case(0)
+                                    Cette ville n'a aucun point d'interêt pour le moment.
+                                    @break
+
+                                    @case(1)
+                                    Cette ville a 1 point d'interêt.
+                                    @break
+
+                                    @default
+                                    Cette ville a {{$city->games->count()}} point d'interêt.
+                                @endswitch
+
+
+                                <a href="#" class="d-flex align-items-center"><i class="fas fa-map-marker-alt mr-1"></i><span class="link_">Voir
+                                        ses points d'interêt</span></a></p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="d-flex align-items-center"><i class="fas fa-home fa-2x mr-1"></i><span class="link_">Accéder
+                                    au contenu (jeux , lieux , points)</span></a>
+                            <a href="{{route('cityEdit',$city->id)}}" class="d-flex align-items-center mt-2"><i
+                                    class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier le nom de la ville / ses coordonnées</span></a>
+                            <button class="btn btn-link d-flex align-items-center p-0 mt-2" type="button"
+                                    data-toggle="modal" data-whatever='{{$city}}'
+                                    data-target="#destroyModal">
+                                <i class="fas fa-trash fa-2x mr-1"></i>Supprimer la ville
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="destroyModal" tabindex="-1" role="dialog"
+                     aria-labelledby="destroyModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="destroyModalLabel"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Attention , vous êtes sur le point de supprimer <span></span> et tout le contenu qui en
+                                dépend. Veuillez confirmer votre choix.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <form method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    {{-- script pour adapter le contenu du modal de suppression à la ville choisie --}}
+    <script>
+        $(document).ready(() => {
+            $('#destroyModal').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget) // bouton qui déclenche le modal
+                let recipient = button.data('whatever') // récupère le data-city attribute
+                let modal = $(this)
+                modal.find('.modal-body span').text(recipient.name)
+                modal.find('.modal-title').text(`Supprimer ${recipient.name}`)
+                modal.find('.modal-footer form').attr('action', `/city/destroy/${recipient.id}`)
+            })
+        })
+    </script>
+@endsection
+
+@section('styles')
+    <style>
+        a:hover {
+            text-decoration:none;
+        }
+
+        .link_:hover {
+            text-decoration : underline;
+        }
+    </style>
 @endsection

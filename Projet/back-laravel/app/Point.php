@@ -15,7 +15,7 @@ class Point extends Model
      * @var array
      */
     protected $fillable = [
-        'lat','lon','desc'
+        'lat','lon','desc','city_id'
     ];
 
     public function games()

@@ -32,4 +32,9 @@ class City extends Model
     {
         return $this->hasMany('App\Point');
     }
+
+    public function getGameCount()
+    {
+        return $this->games?$this->games->count:0;
+    }
 }

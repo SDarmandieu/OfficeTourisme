@@ -18,6 +18,14 @@ class CityController extends Controller
         return view('city.index',compact('cities'));
     }
 
+//    public function index()
+//    {
+//        $res = City::all();
+//        return response()->json([
+//            'city' => $res
+//        ]);
+//    }
+
     /**
      * Show the form for creating a new resource.
      *

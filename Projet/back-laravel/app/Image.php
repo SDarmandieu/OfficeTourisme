@@ -15,7 +15,7 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'filename','alt','idimagetype'
+        'filename','alt','imagetype_id','city_id'
     ];
 
     public function questions()

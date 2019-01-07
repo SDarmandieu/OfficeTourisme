@@ -18,6 +18,7 @@ class CreatePointsTable extends Migration
             $table->string('lat');
             $table->string('lon');
             $table->text('desc');
+            $table->integer('city_id');
             $table->timestamps();
         });
     }

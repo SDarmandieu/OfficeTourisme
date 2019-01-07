@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->text('content');
             $table->string('image');
             $table->integer('expe');
+            $table->integer('point_id');
             $table->timestamps();
         });
     }

@@ -19,6 +19,8 @@ class CreateGamesTable extends Migration
             $table->string('age');
             $table->text('desc');
             $table->string('color');
+            $table->integer('city_id');
+            $table->integer('image_id');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'content','image','expe','idpoint'
+        'content','image','expe','point_id'
     ];
 
     public function point()
