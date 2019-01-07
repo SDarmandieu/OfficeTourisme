@@ -80,7 +80,7 @@
             var map = L.map('mapid').setView([43.1167, 0.7333], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-                attribution: '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
             map.on('click', function(e) {

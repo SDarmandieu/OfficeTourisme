@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{route('cityCreate')}}" class="d-flex align-items-center justify-content-center"><i
-                class="fas fa-plus-circle fa-3x mr-1"></i> <span class="link_">Ajouter une ville</span></a>
+        <a href="{{route('cityCreate')}}" class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
+                class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter une ville</a>
 
         <div class="card-deck row">
             @foreach($cities as $city)
@@ -15,7 +15,7 @@
                             <p>longitude : {{$city->lon}}</p>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">
+                            <p class="card-text d-flex flex-column">
                                 @switch($city->games->count())
                                     @case(0)
                                     Cette ville n'a aucun jeu de piste pour le moment.
@@ -28,10 +28,11 @@
                                     @default
                                     Cette ville a {{$city->games->count()}} jeux de pistes.
                                 @endswitch
-                                <a href="#" class="d-flex align-items-center"><i class="fas fa-map-marked-alt mr-1"></i><span class="link_">Voir
+                                <a href="#" class="d-flex align-items-center align-self-start"><i
+                                        class="fas fa-map-marked-alt mr-1"></i><span class="link_">Voir
                                         ses jeux de pistes</span></a>
                             </p>
-                            <p class="card-text">
+                            <p class="card-text d-flex flex-column">
                                 @switch($city->images->count())
                                     @case(0)
                                     Cette ville n'a aucune image associée pour le moment.
@@ -42,12 +43,13 @@
                                     @break
 
                                     @default
-                                    Cette ville a {{$city->games->count()}} images associées.
+                                    Cette ville a {{$city->images->count()}} images associées.
                                 @endswitch
-                                <a href="#" class="d-flex align-items-center"><i class="fas fa-images mr-1"></i><span class="link_">Voir
+                                <a href="#" class="d-flex align-items-center align-self-start"><i
+                                        class="fas fa-images mr-1"></i><span class="link_">Voir
                                         ses images</span></a></p>
 
-                            <p class="card-text">
+                            <p class="card-text d-flex flex-column">
                                 @switch($city->points->count())
                                     @case(0)
                                     Cette ville n'a aucun point d'interêt pour le moment.
@@ -58,22 +60,25 @@
                                     @break
 
                                     @default
-                                    Cette ville a {{$city->games->count()}} point d'interêt.
+                                    Cette ville a {{$city->points->count()}} point d'interêt.
                                 @endswitch
 
 
-                                <a href="#" class="d-flex align-items-center"><i class="fas fa-map-marker-alt mr-1"></i><span class="link_">Voir
+                                <a href="{{route('pointIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
+                                        class="fas fa-map-marker-alt mr-1"></i><span class="link_">Voir
                                         ses points d'interêt</span></a></p>
                         </div>
-                        <div class="card-footer">
-                            <a href="#" class="d-flex align-items-center"><i class="fas fa-home fa-2x mr-1"></i><span class="link_">Accéder
+                        <div class="card-footer d-flex flex-column">
+
+                            <a href="{{route('cityHome',$city->id)}}" class="d-flex align-items-center align-self-start"><i class="fas fa-home fa-2x mr-1"></i><span
+                                    class="link_">Accéder
                                     au contenu (jeux , lieux , points)</span></a>
-                            <a href="{{route('cityEdit',$city->id)}}" class="d-flex align-items-center mt-2"><i
+                            <a href="{{route('cityEdit',$city->id)}}" class="d-flex align-items-center mt-2 align-self-start"><i
                                     class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier le nom de la ville / ses coordonnées</span></a>
-                            <button class="btn btn-link d-flex align-items-center p-0 mt-2" type="button"
+                            <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start" type="button"
                                     data-toggle="modal" data-whatever='{{$city}}'
                                     data-target="#destroyModal">
-                                <i class="fas fa-trash fa-2x mr-1"></i>Supprimer la ville
+                                <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer la ville</span>
                             </button>
                         </div>
                     </div>
@@ -126,11 +131,19 @@
 @section('styles')
     <style>
         a:hover {
-            text-decoration:none;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration :none;
         }
 
         .link_:hover {
-            text-decoration : underline;
+            text-decoration: underline;
+        }
+
+        .btn-outline-primary {
+            width: 250px;
         }
     </style>
 @endsection

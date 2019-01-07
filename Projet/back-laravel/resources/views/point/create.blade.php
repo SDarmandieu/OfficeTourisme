@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Modification de la ville {{$city->name}}</div>
+                    <div class="card-header">Création d'un point d'interêt pour {{$city->name}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('cityUpdate',$city->id) }}">
-                            @method('PUT')
+                        <form method="POST" action="{{ route('pointStore',$city->id) }}">
                             @csrf
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Nom de la ville</label>
+                                <label for="desc" class="col-md-4 col-form-label text-md-right">Description du point
+                                    d'interêt</label>
 
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name"
-                                           value="{{$city->name}}" required autofocus>
+                                    <textarea id="desc" type="text" class="form-control" name="desc" required autofocus>
+                                    </textarea>
+
                                 </div>
                             </div>
 
@@ -26,8 +26,7 @@
                                 <label for="latitude" class="col-md-4 col-form-label text-md-right">Latitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="latitude" type="text" class="form-control" name="latitude"
-                                           value="{{$city->lat}}" required>
+                                    <input id="latitude" type="text" class="form-control" name="latitude" required>
                                 </div>
                             </div>
 
@@ -35,23 +34,23 @@
                                 <label for="longitude" class="col-md-4 col-form-label text-md-right">Longitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="longitude" type="text" class="form-control" name="longitude"
-                                           value="{{$city->lon}}" required>
+                                    <input id="longitude" type="text" class="form-control" name="longitude" required>
                                 </div>
                             </div>
-                            <p><i class="fas fa-info-circle"></i> Ces coordonnées servent à placer le point de repère principal des jeux de piste. L'idéal
-                                est de le positionner sur l'office de Tourisme.
-                            </p>
-                            <p><i class="fas fa-info-circle"></i> Cliquer sur la carte pour remplir automatiquement les champs.</p>
+
+                            <p><i class="fas fa-info-circle"></i> Cliquer sur la carte pour remplir automatiquement les
+                                champs.</p>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Modifier
+                                        Créer
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
+
                     <div id="mapid"></div>
                 </div>
             </div>
@@ -59,6 +58,7 @@
     </div>
 
 @endsection
+
 
 @section('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
@@ -78,7 +78,7 @@
             crossorigin=""></script>
     <script>
         window.addEventListener('load', function () {
-            var map = L.map('mapid').setView([{{$city->lat}}, {{$city->lon}}], 15);
+            var map = L.map('mapid').setView([{{$city->lat}},{{$city->lon}}], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                 attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -93,3 +93,4 @@
         }, false)
     </script>
 @endpush
+

@@ -26,7 +26,7 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/city') }}">
                 Office de Tourisme 5C
             </a>

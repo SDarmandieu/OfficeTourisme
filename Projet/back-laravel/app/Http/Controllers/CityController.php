@@ -18,24 +18,6 @@ class CityController extends Controller
         return view('city.index',compact('cities'));
     }
 
-//    public function index()
-//    {
-//        $res = City::all();
-//        return response()->json([
-//            'city' => $res
-//        ]);
-//    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -52,18 +34,6 @@ class CityController extends Controller
 
         return redirect()->route('cityIndex');
 
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\City  $city
-     * @return \Illuminate\Http\Response
-     */
-    public function show(City $city)
-    {
-        //
     }
 
     /**
@@ -102,8 +72,18 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        $city=City::find($id)->delete();
+        City::find($id)->delete();
         return redirect()->route('cityIndex');
 
+    }
+
+    /**
+     * Show the homepage of a specific city (point/game/image)
+     */
+
+    public function home($id)
+    {
+        $city = City::findOrFail($id);
+        return view('city.home',compact('city'));
     }
 }

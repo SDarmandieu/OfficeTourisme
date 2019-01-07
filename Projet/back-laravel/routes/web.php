@@ -29,6 +29,37 @@ Route::delete('/city/destroy/{id}', 'CityController@destroy')->name('cityDestroy
 Route::get('/city/edit/{id}', 'CityController@edit')->name('cityEdit')->middleware('auth');
 Route::put('/city/update/{id}', 'CityController@update')->name('cityUpdate')->middleware('auth');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+/**
+ * Routes to city homepage
+ */
+Route::get('/city/{id}','CityController@home')->name('cityHome')->middleware('auth');
+
+/**
+ * Point crud route
+ */
+Route::get('/city/{city_id}/point','PointController@index')->name('pointIndex')->middleware('auth');
+
+Route::get('/city/{city_id}/point/create','PointController@create')->name('pointCreate')->middleware('auth');
+Route::post('/city/{city_id}/point/store','PointController@store')->name('pointStore')->middleware('auth');
+
+Route::get('/city/{city_id}/point/edit/{point_id}','PointController@edit')->name('pointEdit')->middleware('auth');
+Route::put('/city/{city_id}/point/update/{point_id}','PointController@update')->name('pointUpdate')->middleware('auth');
+
+Route::delete('/city/{city_id}/point/destroy/{point_id}','PointController@destroy')->name('pointDestroy')->middleware('auth');
+
+/**
+ * Image crud route
+ */
+Route::get('/city/{city_id}/image','ImageController@index')->name('imageIndex')->middleware('auth');
+
+Route::get('/city/{city_id}/image/create','ImageController@create')->name('imageCreate')->middleware('auth');
+Route::post('/city/{city_id}/image/store','ImageController@store')->name('imageStore')->middleware('auth');
+
+Route::get('/city/{city_id}/image/edit/{image_id}','ImageController@edit')->name('imageEdit')->middleware('auth');
+Route::put('/city/{city_id}/image/update/{image_id}','ImageController@update')->name('imageUpdate')->middleware('auth');
+
+Route::delete('/city/{city_id}/image/destroy/{image_id}','ImageController@destroy')->name('imageDestroy')->middleware('auth');
+
+
