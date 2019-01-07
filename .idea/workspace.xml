@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="57fde230-1cc6-4a9c-a11b-d39f6cbf980e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/CityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/CityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/PointController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/PointController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="57fde230-1cc6-4a9c-a11b-d39f6cbf980e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +24,18 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/Auth/LoginController.php">
           <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -105,12 +105,12 @@
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/edit.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/PointController.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" />
-        <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/layouts/app.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/home.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/create.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/edit.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/routes/web.php" />
+        <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php" />
       </list>
     </option>
   </component>
@@ -159,48 +159,6 @@
               <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
               <item name="Projet" type="462c0819:PsiDirectoryNode" />
               <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="Auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -210,24 +168,6 @@
               <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="city" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
@@ -302,12 +242,12 @@
       <workItem from="1546590275872" duration="129000" />
       <workItem from="1546590421855" duration="10015000" />
       <workItem from="1546604598894" duration="12500000" />
-      <workItem from="1546849163406" duration="18597000" />
+      <workItem from="1546849163406" duration="18896000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106153000" />
+    <option name="totallyTimeSpent" value="106452000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -320,6 +260,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1953514" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -607,13 +548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Projet/back-laravel/resources/views/city/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
@@ -647,6 +581,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/Auth/LoginController.php">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
