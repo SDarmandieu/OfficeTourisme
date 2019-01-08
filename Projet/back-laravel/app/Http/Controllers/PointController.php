@@ -46,18 +46,7 @@ class PointController extends Controller
             'city_id' => $city_id
         ]);
 
-        return redirect()->route('pointIndex', $city_id);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Point $point
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Point $point)
-    {
-        //
+        return redirect()->route('pointIndex', $city_id)->with('success', 'Le point d\'interêt a bien été crée.');
     }
 
     /**
@@ -89,7 +78,7 @@ class PointController extends Controller
             'lon' => $request->input('longitude')
         ]);
 
-        return redirect()->route('pointIndex',$city_id);
+        return redirect()->route('pointIndex',$city_id)->with('success', 'Le point d\'interêt a bien été modifié.');
     }
 
     /**
@@ -101,7 +90,7 @@ class PointController extends Controller
     public function destroy($city_id,$point_id)
     {
         Point::find($point_id)->delete();
-        return redirect()->route('pointIndex',$city_id);
+        return redirect()->route('pointIndex',$city_id)->with('success', 'Le point d\'interêt a bien été supprimé.');
 
     }
 }

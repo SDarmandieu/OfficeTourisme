@@ -32,7 +32,7 @@ class CityController extends Controller
             'lon'=>$request->input('longitude')
         ]);
 
-        return redirect()->route('cityIndex');
+        return redirect()->route('cityIndex')->with('success', 'La ville a bien été créee.');
 
     }
 
@@ -62,7 +62,7 @@ class CityController extends Controller
             'lon' => $request->input('longitude')
         ]);
 
-        return redirect()->route('cityIndex');
+        return redirect()->route('cityIndex')->with('success', 'La ville a bien été modifiée.');
     }
 
     /**
@@ -73,7 +73,7 @@ class CityController extends Controller
     public function destroy($id)
     {
         City::find($id)->delete();
-        return redirect()->route('cityIndex');
+        return redirect()->route('cityIndex')->with('success', 'La ville a bien été supprimée.');
 
     }
 
