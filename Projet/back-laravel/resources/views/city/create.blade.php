@@ -77,17 +77,46 @@
             crossorigin=""></script>
     <script>
         window.addEventListener('load', function () {
-            var map = L.map('mapid').setView([43.1167, 0.7333], 15);
+            var map = L.map('mapid').setView([43.1167, 0.73], 12);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                 attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            map.on('click', function(e) {
+            let marker = false
+
+            /**
+             * it places or update marker onclick on the map
+             * @param lat
+             * @param lng
+             * @returns {boolean}
+             */
+            const updateMarker = (lat, lng) => {
+                if (!marker) {
+                    marker = L.marker([lat, lng]).addTo(map);
+                } else {
+                    marker.setLatLng([lat, lng])
+                    return false
+                }
+            }
+
+            map.on('click', function (e) {
                 let latitude = e.latlng.lat.toString().substring(0, 15);
                 let longitude = e.latlng.lng.toString().substring(0, 15);
                 $('#latitude').val(latitude);
-                $('#longitude').val(longitude);});
+                $('#longitude').val(longitude);
+                updateMarker(latitude, longitude);
+            });
+
+            /**
+             * to handle the marker when inputs are changed manually
+             *
+             * @returns {boolean}
+             */
+            const updateMarkerByInputs = () => updateMarker( $('#latitude').val() , $('#longitude').val())
+
+            $('#latitude').on('input', updateMarkerByInputs);
+            $('#longitude').on('input', updateMarkerByInputs);
         }, false)
     </script>
 @endpush

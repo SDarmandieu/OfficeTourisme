@@ -8,7 +8,7 @@
                     <div class="card-header">Modification d'un point d'interêt pour {{$city->name}}</div>
 
                     <div class="card-body">
-                        <form method="POST"  action="{{ route('pointUpdate',[$city->id,$point->id]) }}">
+                        <form method="POST" action="{{ route('pointUpdate',[$city->id,$point->id]) }}">
                             @method('PUT')
                             @csrf
 
@@ -27,7 +27,8 @@
                                 <label for="latitude" class="col-md-4 col-form-label text-md-right">Latitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="latitude" type="text" class="form-control" name="latitude" value="{{$point->lat}}" required>
+                                    <input id="latitude" type="text" class="form-control" name="latitude"
+                                           value="{{$point->lat}}" required>
                                 </div>
                             </div>
 
@@ -35,7 +36,8 @@
                                 <label for="longitude" class="col-md-4 col-form-label text-md-right">Longitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="longitude" type="text" class="form-control" name="longitude" value="{{$point->lon}}" required>
+                                    <input id="longitude" type="text" class="form-control" name="longitude"
+                                           value="{{$point->lon}}" required>
                                 </div>
                             </div>
 
@@ -79,19 +81,43 @@
             crossorigin=""></script>
     <script>
         window.addEventListener('load', function () {
-            var map = L.map('mapid').setView([{{$city->lat}},{{$city->lon}}], 15);
+            var map = L.map('mapid').setView([{{$point->lat}},{{$point->lon}}], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                 attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+
+            let marker = L.marker([{{$point->lat}},{{$point->lon}}]).addTo(map);
+
+            /**
+             * it places or update marker onclick on the map
+             *
+             * @param lat
+             * @param lng
+             * @returns {boolean}
+             */
+            const updateMarker = (lat, lng) => {
+                marker.setLatLng([lat, lng])
+                return false
+            }
 
             map.on('click', function (e) {
                 let latitude = e.latlng.lat.toString().substring(0, 15);
                 let longitude = e.latlng.lng.toString().substring(0, 15);
                 $('#latitude').val(latitude);
                 $('#longitude').val(longitude);
-                // L.marker([latitude,longitude]).addTo(map)
+                updateMarker(latitude, longitude);
             });
+
+            /**
+             * to handle the marker when inputs are changed manually
+             *
+             * @returns {boolean}
+             */
+            const updateMarkerByInputs = () => updateMarker($('#latitude').val(), $('#longitude').val())
+
+            $('#latitude').on('input', updateMarkerByInputs);
+            $('#longitude').on('input', updateMarkerByInputs);
         }, false)
     </script>
 @endpush

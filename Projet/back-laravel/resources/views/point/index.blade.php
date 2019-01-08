@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="row">
         <div class="col">
             <h1>Liste des points d'interêts de {{$city->name}}</h1>
@@ -14,7 +13,6 @@
                         <th scope="col">Description</th>
                         <th scope="col">Coordonnées</th>
                         <th scope="col">Actions</th>
-                        {{--<th scope="col">Associé à un jeu</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -34,8 +32,12 @@
                                         data-target="#destroyModal">
                                     <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer le point</span>
                                 </button>
+
+                                <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start show"
+                                        type="button" data-point="{{$point}}">
+                                    <i class="fas fa-map-marker-alt mr-1 fa-2x"></i></i><span class="link_">Voir sur la carte</span>
+                                </button>
                             </td>
-                            {{--<td>{{$point->games->count()}}</td>--}}
                         </tr>
                     @endforeach
                     </tbody>
@@ -91,6 +93,18 @@
         #mapid {
             height: 500px;
         }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration :none;
+        }
+
+        .link_:hover {
+            text-decoration: underline;
+        }
     </style>
 @endsection
 
@@ -118,12 +132,9 @@
                     <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>`
                 )
             @endforeach
-        }, false)
-
-    </script>
-    {{-- script pour adapter le contenu du modal de suppression au point choisi --}}
-    <script>
-        $(document).ready(() => {
+            /**
+             *  to adapt the content of destroy modal
+             */
             $('#destroyModal').on('show.bs.modal', function (event) {
                 let button = $(event.relatedTarget) // bouton qui déclenche le modal
                 let recipient = button.data('whatever') // récupère le data-city attribute
@@ -132,6 +143,14 @@
                 modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)
                 modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/point/destroy/${recipient.id}`)
             })
-        })
+
+            /**
+             * to recenter map on chosen point after click on show button
+             */
+            $('.show').click(function(){
+                let point = $(this).data('point')
+                map.setView([point.lat,point.lon],15)
+            })
+        }, false)
     </script>
 @endpush

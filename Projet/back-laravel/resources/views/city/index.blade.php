@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{route('cityCreate')}}" class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
+        <a href="{{route('cityCreate')}}"
+           class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                 class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter une ville</a>
 
         <div class="card-deck row">
@@ -64,18 +65,22 @@
                                 @endswitch
 
 
-                                <a href="{{route('pointIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
+                                <a href="{{route('pointIndex',$city->id)}}"
+                                   class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-map-marker-alt mr-1"></i><span class="link_">Voir
                                         ses points d'interêt</span></a></p>
                         </div>
                         <div class="card-footer d-flex flex-column">
 
-                            <a href="{{route('cityHome',$city->id)}}" class="d-flex align-items-center align-self-start"><i class="fas fa-home fa-2x mr-1"></i><span
+                            <a href="{{route('cityHome',$city->id)}}"
+                               class="d-flex align-items-center align-self-start"><i class="fas fa-home fa-2x mr-1"></i><span
                                     class="link_">Accéder
                                     au contenu (jeux , lieux , points)</span></a>
-                            <a href="{{route('cityEdit',$city->id)}}" class="d-flex align-items-center mt-2 align-self-start"><i
+                            <a href="{{route('cityEdit',$city->id)}}"
+                               class="d-flex align-items-center mt-2 align-self-start"><i
                                     class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier le nom de la ville / ses coordonnées</span></a>
-                            <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start" type="button"
+                            <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
+                                    type="button"
                                     data-toggle="modal" data-whatever='{{$city}}'
                                     data-target="#destroyModal">
                                 <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer la ville</span>
@@ -113,6 +118,10 @@
             @endforeach
         </div>
     </div>
+
+@endsection
+
+@push('scripts')
     {{-- script pour adapter le contenu du modal de suppression à la ville choisie --}}
     <script>
         $(document).ready(() => {
@@ -126,7 +135,7 @@
             })
         })
     </script>
-@endsection
+@endpush
 
 @section('styles')
     <style>
@@ -135,7 +144,7 @@
         }
 
         .btn-link:hover {
-            text-decoration :none;
+            text-decoration: none;
         }
 
         .link_:hover {
