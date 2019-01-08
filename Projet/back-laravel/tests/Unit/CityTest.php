@@ -14,7 +14,7 @@ class RouteTest extends TestCase
     /**
      * Set the URL of the previous request.
      *
-     * @param  string  $url
+     * @param  string $url
      * @return $this
      */
     public function from($url)
@@ -27,14 +27,30 @@ class RouteTest extends TestCase
     }
 
     /**
-     * testing home route status
+     * testing home route when authenticated
      *
      * @return void
      */
-    public function testHomeRoute()
+    public function testHomeRouteAuth()
+    {
+        $user = factory(User::class)->create();
+        $response = $this
+            ->actingAs($user)
+            ->get('/');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * testing home route when not authenticated
+     *
+     * @return void
+     */
+    public function testHomeRouteNoAuth()
     {
         $response = $this->get('/');
-        $response->assertStatus(200);
+        $response
+            ->assertStatus(302)
+            ->assertRedirect('/login');
     }
 
     /**
@@ -159,7 +175,7 @@ class RouteTest extends TestCase
             ->actingAs($user)
             ->call(
                 'DELETE',
-                '/city/destroy/'.$city->id,
+                '/city/destroy/' . $city->id,
                 ['_token' => csrf_token()]
             );
 
@@ -188,7 +204,7 @@ class RouteTest extends TestCase
         $response = $this
             ->call(
                 'DELETE',
-                '/city/destroy/'.$city->id,
+                '/city/destroy/' . $city->id,
                 ['_token' => csrf_token()]
             );
 
@@ -215,7 +231,7 @@ class RouteTest extends TestCase
         $user = factory(User::class)->create();
         $response = $this
             ->actingAs($user)
-            ->get('/city/edit/'.$city->id);
+            ->get('/city/edit/' . $city->id);
 
         $response
             ->assertStatus(200)
@@ -239,7 +255,7 @@ class RouteTest extends TestCase
         ]);
 
         $response = $this
-            ->get('/city/edit/'.$city->id);
+            ->get('/city/edit/' . $city->id);
         $response
             ->assertRedirect('/login')
             ->assertStatus(302);
@@ -266,7 +282,7 @@ class RouteTest extends TestCase
             ->actingAs($user)
             ->call(
                 'PUT',
-                '/city/update/'.$city->id,
+                '/city/update/' . $city->id,
                 [
                     'name' => 'bar',
                     'latitude' => '50',
@@ -280,7 +296,7 @@ class RouteTest extends TestCase
 
         $this
             ->assertDatabaseHas('cities', ['name' => 'bar'])
-            ->assertDatabaseMissing('cities' , ['name' => 'foo']);
+            ->assertDatabaseMissing('cities', ['name' => 'foo']);
     }
 
     /**
@@ -301,7 +317,7 @@ class RouteTest extends TestCase
         $response = $this
             ->call(
                 'PUT',
-                '/city/update/'.$city->id,
+                '/city/update/' . $city->id,
                 [
                     'name' => 'bar',
                     'latitude' => '50',
@@ -315,6 +331,49 @@ class RouteTest extends TestCase
 
         $this
             ->assertDatabaseMissing('cities', ['name' => 'bar'])
-            ->assertDatabaseHas('cities' , ['name' => 'foo']);
+            ->assertDatabaseHas('cities', ['name' => 'foo']);
+    }
+
+    /**
+     * testing a specific city home page when authenticated
+     */
+    public function testCityHomeRouteAuth()
+    {
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $user = factory(User::class)->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->get('/city/' . $city->id);
+
+        $response
+            ->assertStatus(200)
+            ->assertViewHas('city');
+
+        $current = $response->original->getData()['city'];
+        $this->assertInstanceOf('App\City', $current);
+    }
+
+    /**
+     * testing a specific city home page when authenticated
+     */
+    public function testCityHomeRouteNoAuth()
+    {
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $response = $this->get('/city/' . $city->id);
+
+        $response
+            ->assertRedirect('/login')
+            ->assertStatus(302);
     }
 }
