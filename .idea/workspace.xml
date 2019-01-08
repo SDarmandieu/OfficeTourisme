@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57fde230-1cc6-4a9c-a11b-d39f6cbf980e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/CityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/CityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/PointController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/app/Http/Controllers/PointController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Projet/back-laravel/resources/views/point/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/modelisation_database.pdf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Projet/back-laravel/tests/Unit/PointTest.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="334">
@@ -50,6 +43,15 @@
               <folding>
                 <element signature="e#30#49#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="5" selection-start-column="5" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -161,6 +163,7 @@
         <option value="$PROJECT_DIR$/Projet/back-laravel/resources/views/city/index.blade.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/tests/Unit/CityTest.php" />
         <option value="$PROJECT_DIR$/Projet/back-laravel/tests/Unit/PointTest.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -184,120 +187,6 @@
             <path>
               <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
               <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="database" type="462c0819:PsiDirectoryNode" />
-              <item name="factories" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="city" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="layouts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="point" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OfficeTourisme" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OfficeTourisme" type="462c0819:PsiDirectoryNode" />
-              <item name="Projet" type="462c0819:PsiDirectoryNode" />
-              <item name="back-laravel" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="Unit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -358,12 +247,12 @@
       <workItem from="1546590421855" duration="10015000" />
       <workItem from="1546604598894" duration="12500000" />
       <workItem from="1546849163406" duration="20844000" />
-      <workItem from="1546935215545" duration="14141000" />
+      <workItem from="1546935215545" duration="14351000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122541000" />
+    <option name="totallyTimeSpent" value="122751000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -424,7 +313,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Projet/adminfront-react/package.json" />
     <entry file="file://$PROJECT_DIR$/Projet/applifront-react/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -721,6 +609,13 @@
           <folding>
             <element signature="e#30#49#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
