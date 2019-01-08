@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Image;
+use App\City;
+use App\Imagetype;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -12,9 +14,11 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($city_id)
     {
-        //
+        $city = City::find($city_id);
+        $images = Image::where('city_id', $city_id)->get();
+        return view('image.index', compact('images', 'city'));
     }
 
     /**
@@ -22,9 +26,11 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($city_id)
     {
-        //
+        $city = City::find($city_id);
+        $imagetypes = Imagetype::all();
+        return view('image.create', compact('city','imagetypes'));
     }
 
     /**
@@ -33,20 +39,16 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($city_id,Request $request)
     {
-        //
-    }
+        Image::create([
+            'filename' => $request->input('filename'),
+            'alt' => $request->input('alt'),
+            'city_id' => $city_id,
+            'imagetype_id' => $request->input('type')
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
-        //
+        return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été créee.');
     }
 
     /**
@@ -55,9 +57,12 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    public function edit($city_id, $image_id)
     {
-        //
+        $city = City::findOrFail($city_id);
+        $image = Image::findOrFail($image_id);
+        $imagetypes = Imagetype::all();
+        return view('image.edit', compact('city','image','imagetypes'));
     }
 
     /**
@@ -67,9 +72,16 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Image $image)
+    public function update($city_id,$image_id,Request $request)
     {
-        //
+        $image = Image::findOrFail($image_id);
+        $image->update([
+            'filename' => $request->input('filename'),
+            'alt' => $request->input('alt'),
+            'imagetype_id' => $request->input('type')
+        ]);
+
+        return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été modifieé.');
     }
 
     /**
@@ -78,8 +90,10 @@ class ImageController extends Controller
      * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy($city_id,$image_id)
     {
-        //
+        Image::find($image_id)->delete();
+        return redirect()->route('imageIndex',$city_id)->with('success', 'L\'image a bien été supprimée.');
+
     }
 }
