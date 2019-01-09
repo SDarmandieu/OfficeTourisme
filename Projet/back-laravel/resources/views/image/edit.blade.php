@@ -7,25 +7,11 @@
             <div class="card-header">Modifier l'image de {{$city->name}}</div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('imageUpdate',[$city->id,$image->id]) }}">
+                <img class="card-img-top my-2 w-50 mx-auto d-block" src="{{asset('storage/images/'.$image->filename)}}"
+                     alt="{{$image->alt}}">
+                <form method="POST" action="{{ route('imageUpdate',[$city->id,$image->id]) }}" enctype='multipart/form-data'>
                     @method('PUT')
                     @csrf
-
-                    <div class="form-group row">
-                        <label for="file" class="col-md-4 col-form-label text-md-right">Fichier</label>
-
-                        <div class="col-md-6">
-                            <input id="file" type="file" class="form-control" name="file" required autofocus>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="filename" class="col-md-4 col-form-label text-md-right">Nom de l'image</label>
-
-                        <div class="col-md-6">
-                            <input id="filename" type="text" class="form-control" name="filename" value="{{$image->filename}}" required>
-                        </div>
-                    </div>
 
                     <div class="form-group row">
                         <label for="alt" class="col-md-4 col-form-label text-md-right">Alternative textuelle</label>
@@ -36,19 +22,21 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="type"class="col-md-4 col-form-label text-md-right">Type d'image</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">Type d'image</label>
                         <select name="type" class="form-control col-md-6" id="type">
 
-                            <option>Choisissez un type d'image</option>
-
                             @foreach($imagetypes as $imagetype)
-                                <option value="{{$imagetype->id}}">{{$imagetype->title}}</option>
+                                <option
+                                    value="{{$imagetype->id}}"
+                                @if ($image->imagetype->id == $imagetype->id)
+                                    {{'selected'}}
+                                    @endif>{{$imagetype->title}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <p><i class="fas fa-info-circle"></i>
-                        blablabla random help
+                        L'image en elle-même ne peut pas être modifiée/retouchée ici. Uniquement son type et son alternative textuelle.
                     </p>
 
                     <div class="form-group row mb-0">
