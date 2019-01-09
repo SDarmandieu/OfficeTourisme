@@ -28,7 +28,7 @@
 
                                 <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
                                         type="button"
-                                        data-toggle="modal" data-whatever='{{$point}}'
+                                        data-toggle="modal" data-point='{{$point}}'
                                         data-target="#destroyModal">
                                     <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer le point</span>
                                 </button>
@@ -137,7 +137,7 @@
              */
             $('#destroyModal').on('show.bs.modal', function (event) {
                 let button = $(event.relatedTarget) // bouton qui déclenche le modal
-                let recipient = button.data('whatever') // récupère le data-city attribute
+                let recipient = button.data('point') // récupère le data-point attribute
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.desc)
                 modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)

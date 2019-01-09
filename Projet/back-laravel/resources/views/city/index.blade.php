@@ -81,7 +81,7 @@
                                     class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier le nom de la ville / ses coordonnées</span></a>
                             <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
                                     type="button"
-                                    data-toggle="modal" data-whatever='{{$city}}'
+                                    data-toggle="modal" data-city='{{$city}}'
                                     data-target="#destroyModal">
                                 <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer la ville</span>
                             </button>
@@ -127,7 +127,7 @@
         $(document).ready(() => {
             $('#destroyModal').on('show.bs.modal', function (event) {
                 let button = $(event.relatedTarget) // bouton qui déclenche le modal
-                let recipient = button.data('whatever') // récupère le data-city attribute
+                let recipient = button.data('city') // récupère le data-city attribute
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.name)
                 modal.find('.modal-title').text(`Supprimer ${recipient.name}`)
