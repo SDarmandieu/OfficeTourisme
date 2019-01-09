@@ -62,4 +62,17 @@ Route::put('/city/{city_id}/image/update/{image_id}','ImageController@update')->
 
 Route::delete('/city/{city_id}/image/destroy/{image_id}','ImageController@destroy')->name('imageDestroy')->middleware('auth');
 
+/**
+ * Game crud route
+ */
+Route::get('/city/{city_id}/game','GameController@index')->name('gameIndex')->middleware('auth');
+
+Route::get('/city/{city_id}/game/create','GameController@create')->name('gameCreate')->middleware('auth');
+Route::post('/city/{city_id}/game/store','GameController@store')->name('gameStore')->middleware('auth');
+
+Route::get('/city/{city_id}/game/edit/{game_id}','GameController@edit')->name('gameEdit')->middleware('auth');
+Route::put('/city/{city_id}/game/update/{game_id}','GameController@update')->name('gameUpdate')->middleware('auth');
+
+Route::delete('/city/{city_id}/game/destroy/{game_id}','GameController@destroy')->name('gameDestroy')->middleware('auth');
+
 
