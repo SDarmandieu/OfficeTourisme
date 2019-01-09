@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Game;
+use App\City;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -12,9 +13,11 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($city_id)
     {
-        //
+        $city = City::find($city_id);
+        $games = Game::where('city_id', $city_id)->get();
+        return view('game.index',compact('city','games'));
     }
 
     /**
@@ -22,9 +25,10 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($city_id)
     {
-        //
+        $city = City::find($city_id);
+        return view('game.create', compact('city'));
     }
 
     /**
@@ -33,20 +37,17 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($city_id, Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Game $game)
-    {
-        //
+        Game::create([
+            'desc' => $request->input('desc'),
+            'name' => $request->input('name'),
+            'age' => $request->input('age'),
+            'color' => "toto",
+            'image_id' => 32,
+            'city_id' => $city_id
+        ]);
+        return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été crée.');
     }
 
     /**
@@ -55,9 +56,11 @@ class GameController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function edit(Game $game)
+    public function edit($city_id, $game_id)
     {
-        //
+        $city = City::findOrFail($city_id);
+        $game = Game::findOrFail($game_id);
+        return view('game.edit', compact('city','game'));
     }
 
     /**
@@ -67,9 +70,16 @@ class GameController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Game $game)
+    public function update($city_id,$game_id,Request $request)
     {
-        //
+        $game = Game::findOrFail($game_id);
+        $game->update([
+            'desc' => $request->input('desc'),
+            'name' => $request->input('name'),
+            'age' => $request->input('age')
+        ]);
+
+        return redirect()->route('gameIndex',$city_id)->with('success', 'Le jeu de piste a bien été modifié.');
     }
 
     /**
@@ -78,8 +88,17 @@ class GameController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($city_id,$game_id)
     {
-        //
+        Game::find($game_id)->delete();
+        return redirect()->route('gameIndex',$city_id)->with('success', 'Le jeu de piste a bien été supprimé.');
+
+    }
+
+    public function home($city_id,$game_id)
+    {
+        $city = City::find($city_id);
+        $game = Game::find($game_id);
+        return view('game.home',compact('game','city'));
     }
 }

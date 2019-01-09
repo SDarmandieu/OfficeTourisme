@@ -18,11 +18,9 @@ class ImageController extends Controller
     public function index($city_id)
     {
         $city = City::find($city_id);
+        $imagetypes = Imagetype::all();
         $images = Image::where('city_id', $city_id)->get();
-        foreach($images as $image){
-            $image->url = Storage::url($image->filename);
-        }
-        return view('image.index', compact('images', 'city'));
+        return view('image.index', compact('images', 'city','imagetypes'));
     }
 
     /**
@@ -104,6 +102,11 @@ class ImageController extends Controller
         Storage::disk('public')->delete('images/'.$image->filename);
         $image->delete();
         return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été supprimée.');
+
+    }
+
+    public function search(Request $request)
+    {
 
     }
 }
