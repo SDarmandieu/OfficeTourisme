@@ -29,7 +29,8 @@
                                     @default
                                     Cette ville a {{$city->games->count()}} jeux de pistes.
                                 @endswitch
-                                <a href="{{route('gameIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
+                                <a href="{{route('gameIndex',$city->id)}}"
+                                   class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-map-marked-alt mr-1"></i><span class="link_">Voir
                                         ses jeux de pistes</span></a>
                             </p>
@@ -46,7 +47,8 @@
                                     @default
                                     Cette ville a {{$city->images->count()}} images associées.
                                 @endswitch
-                                <a href="{{route('imageIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
+                                <a href="{{route('imageIndex',$city->id)}}"
+                                   class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-images mr-1"></i><span class="link_">Voir
                                         ses images</span></a></p>
 
