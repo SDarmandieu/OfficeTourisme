@@ -28,7 +28,7 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="d-flex align-items-center align-self-start"><i
+                    <a href="{{route('gameIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
                             class="fas fa-map-marked-alt fa-2x mr-1"></i><span class="link_">Gérer
                                         ses jeux de pistes</span></a>
                 </div>
