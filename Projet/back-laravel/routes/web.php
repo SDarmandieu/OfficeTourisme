@@ -75,4 +75,6 @@ Route::put('/city/{city_id}/game/update/{game_id}','GameController@update')->nam
 
 Route::delete('/city/{city_id}/game/destroy/{game_id}','GameController@destroy')->name('gameDestroy')->middleware('auth');
 
+Route::get('/city/{city_id}/game/{game_id}','GameController@home')->name('gameHome')->middleware('auth');
+
 
