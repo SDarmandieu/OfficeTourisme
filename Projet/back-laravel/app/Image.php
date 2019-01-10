@@ -25,7 +25,7 @@ class Image extends Model
 
     public function games()
     {
-    	return $this->belongsToMany('App\Game');
+    	return $this->hasMany('App\Game');
     }
 
     public function answers()
