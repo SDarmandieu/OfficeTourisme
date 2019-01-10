@@ -18,10 +18,14 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('age');
             $table->text('desc');
-            $table->string('color');
-            $table->integer('city_id');
-            $table->integer('image_id');
+            $table->integer('city_id')->unsigned();
+            $table->integer('image_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onDelete('cascade');
         });
     }
 

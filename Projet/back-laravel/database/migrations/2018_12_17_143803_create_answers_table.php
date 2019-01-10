@@ -18,7 +18,7 @@ class CreateAnswersTable extends Migration
             $table->string('content');
             $table->boolean('valid');
             $table->integer('question_id');
-            $table->integer('image_id');
+            $table->integer('image_id')->nullable();
             $table->timestamps();
         });
     }
