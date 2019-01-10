@@ -15,7 +15,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'name','age','desc','color','city_id','image_id'
+        'name','age','desc','city_id','image_id'
     ];
 
     public function city()

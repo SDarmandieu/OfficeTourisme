@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\City;
+use App\Image;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -27,8 +28,14 @@ class GameController extends Controller
      */
     public function create($city_id)
     {
+        $icons = Image::whereHas('imagetype',
+            function($q)
+            {
+                $q->where('title','=','icon');
+            })->get();
+
         $city = City::find($city_id);
-        return view('game.create', compact('city'));
+        return view('game.create', compact('city','icons'));
     }
 
     /**
@@ -43,8 +50,7 @@ class GameController extends Controller
             'desc' => $request->input('desc'),
             'name' => $request->input('name'),
             'age' => $request->input('age'),
-            'color' => "toto",
-            'image_id' => 32,
+            'image_id' => $request->input('icon'),
             'city_id' => $city_id
         ]);
         return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été crée.');
@@ -58,9 +64,14 @@ class GameController extends Controller
      */
     public function edit($city_id, $game_id)
     {
+        $icons = Image::whereHas('imagetype',
+            function($q)
+            {
+                $q->where('title','=','icon');
+            })->get();
         $city = City::findOrFail($city_id);
         $game = Game::findOrFail($game_id);
-        return view('game.edit', compact('city','game'));
+        return view('game.edit', compact('city','game','icons'));
     }
 
     /**
@@ -76,7 +87,8 @@ class GameController extends Controller
         $game->update([
             'desc' => $request->input('desc'),
             'name' => $request->input('name'),
-            'age' => $request->input('age')
+            'age' => $request->input('age'),
+            'image_id' => $request->input('icon')
         ]);
 
         return redirect()->route('gameIndex',$city_id)->with('success', 'Le jeu de piste a bien été modifié.');

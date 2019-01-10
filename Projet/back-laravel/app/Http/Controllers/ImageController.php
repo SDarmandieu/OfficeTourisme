@@ -46,14 +46,15 @@ class ImageController extends Controller
         $file = $request->file;
         $filename = $file->getClientOriginalName();
 
+        $path = Storage::disk('public')->putFile('images', $file, 'public');
+
         Image::create([
             'filename' => $filename,
+            'path' => $path,
             'alt' => $request->input('alt'),
             'city_id' => $city_id,
             'imagetype_id' => $request->input('type')
         ]);
-
-        Storage::disk('public')->putFileAs('images', $file , $filename , 'public');
 
         return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été créee.');
     }
