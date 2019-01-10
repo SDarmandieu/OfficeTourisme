@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
+    <a href="{{route('pointCreate',$city->id)}}"
+       class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
+            class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter un point d'interêt</a>
+    <div class="row container-fluid mt-3">
         <div class="col">
-            <h1>Liste des points d'interêts de {{$city->name}}</h1>
             @if(!($points->count()))
-                <div>Aucun point d'interêt n'a encore été crée pour {{$city->name}}</div>
+                <h2 class="text-center mt-3">Aucun point d'interêt n'a encore été crée pour {{$city->name}}</h2>
             @else
+                <h2 class="text-center">Liste des points d'interêts de {{$city->name}}</h2>
+
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -25,17 +29,15 @@
                                 <a href="{{route('pointEdit',[$city->id,$point->id])}}"
                                    class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier</span></a>
-
+                                <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start show"
+                                        type="button" data-point="{{$point}}">
+                                    <i class="fas fa-map-marker-alt mr-1 fa-2x"></i></i><span class="link_">Voir sur la carte</span>
+                                </button>
                                 <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
                                         type="button"
                                         data-toggle="modal" data-point='{{$point}}'
                                         data-target="#destroyModal">
                                     <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer le point</span>
-                                </button>
-
-                                <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start show"
-                                        type="button" data-point="{{$point}}">
-                                    <i class="fas fa-map-marker-alt mr-1 fa-2x"></i></i><span class="link_">Voir sur la carte</span>
                                 </button>
                             </td>
                         </tr>
@@ -49,8 +51,6 @@
 
         <div class="col">
             <div id="mapid"></div>
-            <a href="{{route('pointCreate',$city->id)}}" class="d-flex align-items-center btn btn-outline-primary"><i
-                    class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter un point d'interêt</a>
         </div>
     </div>
 
@@ -99,11 +99,15 @@
         }
 
         .btn-link:hover {
-            text-decoration :none;
+            text-decoration: none;
         }
 
         .link_:hover {
             text-decoration: underline;
+        }
+
+        .btn-outline-primary {
+            width: 250px;
         }
     </style>
 @endsection
@@ -147,9 +151,9 @@
             /**
              * to recenter map on chosen point after click on show button
              */
-            $('.show').click(function(){
+            $('.show').click(function () {
                 let point = $(this).data('point')
-                map.setView([point.lat,point.lon],15)
+                map.setView([point.lat, point.lon], 15)
             })
         }, false)
     </script>

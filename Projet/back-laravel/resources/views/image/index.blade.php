@@ -6,36 +6,36 @@
                 class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter une image</a>
 
         {{--<form method="POST">--}}
-            {{--@csrf--}}
+        {{--@csrf--}}
 
-            {{--<div class="form-group row">--}}
+        {{--<div class="form-group row">--}}
 
-                {{--<div class="form-check form-check-inline">--}}
-                    {{--<input class="form-check-input" type="radio" name="cityOption" id="currentCity"--}}
-                           {{--value="{{$city->id}}" checked>--}}
-                    {{--<label class="form-check-label" for="currentCity">{{$city->name}}</label>--}}
-                {{--</div>--}}
-                {{--<div class="form-check form-check-inline">--}}
-                    {{--<input class="form-check-input" type="radio" name="cityOption" id="allCities"--}}
-                           {{--value="all">--}}
-                    {{--<label class="form-check-label" for="allCities">Toutes les villes</label>--}}
-                {{--</div>--}}
-                {{--<label for="type" class="col-md-4 col-form-label text-md-right">Type d'image</label>--}}
-                {{--<select name="type" class="form-control col-md-6" id="type">--}}
-                    {{--<option selected disabled hidden>Choisissez un type d'image</option>--}}
-                    {{--@foreach($imagetypes as $imagetype)--}}
-                        {{--<option value="{{$imagetype->id}}">{{$imagetype->title}}</option>--}}
-                    {{--@endforeach--}}
-                {{--</select>--}}
-            {{--</div>--}}
+        {{--<div class="form-check form-check-inline">--}}
+        {{--<input class="form-check-input" type="radio" name="cityOption" id="currentCity"--}}
+        {{--value="{{$city->id}}" checked>--}}
+        {{--<label class="form-check-label" for="currentCity">{{$city->name}}</label>--}}
+        {{--</div>--}}
+        {{--<div class="form-check form-check-inline">--}}
+        {{--<input class="form-check-input" type="radio" name="cityOption" id="allCities"--}}
+        {{--value="all">--}}
+        {{--<label class="form-check-label" for="allCities">Toutes les villes</label>--}}
+        {{--</div>--}}
+        {{--<label for="type" class="col-md-4 col-form-label text-md-right">Type d'image</label>--}}
+        {{--<select name="type" class="form-control col-md-6" id="type">--}}
+        {{--<option selected disabled hidden>Choisissez un type d'image</option>--}}
+        {{--@foreach($imagetypes as $imagetype)--}}
+        {{--<option value="{{$imagetype->id}}">{{$imagetype->title}}</option>--}}
+        {{--@endforeach--}}
+        {{--</select>--}}
+        {{--</div>--}}
 
-            {{--<div class="form-group row mb-0">--}}
-                {{--<div class="col-md-8 offset-md-4">--}}
-                    {{--<button type="submit" class="btn btn-primary">--}}
-                        {{--Chercher--}}
-                    {{--</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+        {{--<div class="form-group row mb-0">--}}
+        {{--<div class="col-md-8 offset-md-4">--}}
+        {{--<button type="submit" class="btn btn-primary">--}}
+        {{--Chercher--}}
+        {{--</button>--}}
+        {{--</div>--}}
+        {{--</div>--}}
         {{--</form>--}}
 
         @if(!($images->count()))
@@ -62,7 +62,7 @@
                                     <span class="badge badge-success">Question/Réponse</span>
                                 @endswitch
                             </div>
-                            <img class="card-img-top my-2" src="{{asset('storage/images/'.$image->filename)}}"
+                            <img class="card-img-top my-2" src="{{asset('storage/'.$image->path)}}"
                                  alt="{{$image->alt}}">
                             <div class="card-footer d-flex flex-column">
                                 <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
@@ -76,12 +76,21 @@
                                    class="d-flex align-items-center mt-2 align-self-start"><i
                                         class="fas fa-edit fa-2x mr-1"></i><span
                                         class="link_">Modifier l'image</span></a>
-                                <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
-                                        type="button"
-                                        data-toggle="modal" data-image='{{$image}}'
-                                        data-target="#destroyModal">
-                                    <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer l'image</span>
-                                </button>
+                                @if(!($image->games()->count()))
+                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
+                                            type="button"
+                                            data-toggle="modal" data-image='{{$image}}'
+                                            data-target="#destroyModal">
+                                        <i class="fas fa-trash fa-2x mr-1"></i><span
+                                            class="link_">Supprimer l'image</span>
+                                    </button>
+                                @else
+                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
+                                            type="button" disabled>
+                                        <i class="fas fa-trash fa-2x mr-1"></i><span
+                                            class="link_">Image utilisée dans une ressource.</span>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -135,7 +144,6 @@
                 @endforeach
             </div>
         @endif
-
         @endsection
 
         @push('scripts')
@@ -157,7 +165,7 @@
                         let modal = $(this)
                         let url = window.location.href.split`/`
                         let domain = `${url[0]}//${url[2]}`
-                        modal.find('.modal-body img').attr('src', `${domain}/storage/images/${recipient.filename}`)
+                        modal.find('.modal-body img').attr('src', `${domain}/storage/${recipient.path}`)
                         modal.find('.modal-body img').attr('alt', recipient.alt)
                         modal.find('.modal-title').text(recipient.filename)
                     })

@@ -26,6 +26,37 @@
                         </div>
                     </div>
 
+                    <div class="image-selector row">
+                        <p class="col-md-4 col-form-label text-md-right">Icône principale de la carte</p>
+                        <div class="col-md-6">
+                            <input
+                                id="default"
+                                type="radio"
+                                name="icon"
+                                value="{{null}}"
+                            @if ($game->image_id == null)
+                                {{'checked'}}
+                                @endif>
+                            <label
+                                for="default"
+                                class="icon-style"
+                                style="background-image:url({{asset('images/default-icon.png')}});"></label>
+                            @foreach($icons as $icon)
+                                <input
+                                    id="icon{{$icon->id}}"
+                                    type="radio" name="icon"
+                                    value="{{$icon->id}}"
+                                @if ($icon->id == $game->image_id)
+                                    {{'checked'}}
+                                    @endif>
+                                <label
+                                    for="icon{{$icon->id}}"
+                                    class="icon-style"
+                                    style="background-image:url({{asset('storage/'.$icon->path)}});"></label>
+                            @endforeach
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label for="age" class="col-md-4 col-form-label text-md-right">Tranche d'âge cible</label>
                         <select name="age" class="form-control col-md-6" id="age">
@@ -65,4 +96,44 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('styles')
+    <style>
+        .image-selector input {
+            margin: 0;
+            padding: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .image-selector input:active + .icon-style {
+            opacity: .9;
+        }
+
+        .image-selector input:checked + .icon-style {
+            -webkit-filter: none;
+            filter: none;
+            outline : solid #227DC7;
+        }
+
+        .icon-style {
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: inline-block;
+            width: 100px;
+            height: 70px;
+            -webkit-transition: all 100ms ease-in;
+            -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+            -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+            filter: brightness(1.8) grayscale(1) opacity(.7);
+        }
+
+        .icon-style:hover {
+            -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+            filter: brightness(1.2) grayscale(.5) opacity(.9);
+        }
+    </style>
 @endsection
