@@ -32,4 +32,9 @@ class Game extends Model
     {
     	return $this->belongsTo('App\Image');
     }
+
+    public function question()
+    {
+        return $this->hasMany('App\Question');
+    }
 }
