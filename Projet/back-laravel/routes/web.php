@@ -77,4 +77,15 @@ Route::delete('/city/{city_id}/game/destroy/{game_id}','GameController@destroy')
 
 Route::get('/city/{city_id}/game/{game_id}','GameController@home')->name('gameHome')->middleware('auth');
 
+/**
+ * Game/Point association
+ */
+Route::get('/city/{city_id}/game/{game_id}/point/{point_id}','GamePointController@index')->name('gamePointIndex')->middleware('auth');
 
+Route::post('/city/{city_id}/game/{game_id}/point/attach/{point_id}','GamePointController@attach')->name('gamePointAttach')->middleware('auth');
+Route::delete('/city/{city_id}/game/{game_id}/point/detach/{point_id}','GamePointController@detach')->name('gamePointDetach')->middleware('auth');
+
+
+/**
+ * Question crud
+ */
