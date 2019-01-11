@@ -57,7 +57,7 @@ class GameController extends Controller
             'image_id' => $request->input('icon'),
             'city_id' => $city_id
         ]);
-        return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été crée.');
+        return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été créé.');
     }
 
     /**

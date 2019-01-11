@@ -56,7 +56,7 @@ class ImageController extends Controller
             'imagetype_id' => $request->input('type')
         ]);
 
-        return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été créee.');
+        return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été créée.');
     }
 
     /**

@@ -32,7 +32,7 @@ class CityController extends Controller
             'lon'=>$request->input('longitude')
         ]);
 
-        return redirect()->route('cityIndex')->with('success', 'La ville a bien été créee.');
+        return redirect()->route('cityIndex')->with('success', 'La ville a bien été créée.');
 
     }
 

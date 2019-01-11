@@ -46,7 +46,7 @@ class PointController extends Controller
             'city_id' => $city_id
         ]);
 
-        return redirect()->route('pointIndex', $city_id)->with('success', 'Le point d\'interêt a bien été crée.');
+        return redirect()->route('pointIndex', $city_id)->with('success', 'Le point d\'interêt a bien été créé.');
     }
 
     /**
