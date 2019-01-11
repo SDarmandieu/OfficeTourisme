@@ -1,9 +1,6 @@
 @extends('layouts.app')
-
+{{--{{dd($game->points->pluck('id')->toJson())}}--}}
 @section('content')
-    {{--<a href="{{route('pointCreate',$city->id)}}"--}}
-    {{--class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i--}}
-    {{--class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter un point d'interêt</a>--}}
     <div class="row container-fluid mt-3">
         <div class="col">
             @if(!($game->points->count()))
@@ -26,6 +23,11 @@
                             <td>{{$point->desc}}</td>
                             <td>{{number_format($point->lat,3,'.','')}} / {{number_format($point->lon,3,'.','')}}</td>
                             <td>
+                                <a href="{{route('gamePointIndex',[$city->id,$game->id,$point->id])}}"
+                                   class="d-flex align-items-center align-self-start"><i
+                                        class="fas fa-question mr-1 fa-2x"></i></i>
+                                    <span class="link_">Gérer
+                                        sa question et ses réponses</span></a>
                                 <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start show"
                                         type="button" data-point="{{$point}}">
                                     <i class="fas fa-map-marker-alt mr-1 fa-2x"></i></i><span class="link_">Voir sur la carte</span>
@@ -34,7 +36,7 @@
                                         type="button"
                                         data-toggle="modal" data-point='{{$point}}'
                                         data-target="#destroyModal">
-                                    <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer le point</span>
+                                    <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Retirer le point</span>
                                 </button>
                             </td>
                         </tr>
@@ -61,16 +63,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Attention , vous êtes sur le point de supprimer le point d'interêt <span></span> et tout le contenu
+                    Attention , vous êtes sur le point de retirer le point d'interêt <span></span> de ce jeu de piste et
+                    tout le contenu
                     qui en
                     dépend. Veuillez confirmer votre choix.
+
+                    Ce point ne sera cependant pas totalement supprimé pour la ville mais uniquement pour ce jeu.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     <form method="POST">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-danger">Supprimer</button>
+                        <button class="btn btn-danger">Retirer</button>
                     </form>
                 </div>
             </div>
@@ -119,17 +124,40 @@
                 attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            @foreach($game->points as $point)
+            let redIcon = new L.Icon({
+                iconUrl: '{{asset('images/marker-icon-red.png')}}',
+                shadowUrl: '{{asset('images/marker-shadow.png')}}',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            @foreach($city->points as $point)
             L
                 .marker([
                     {{$point->lat}},
-                    {{$point->lon}}])
+                    {{$point->lon}}],
+                    ({{$game->points->pluck('id')->toJson()}}.includes({{$point->id}}))?{icon: redIcon}:null)
                 .addTo(map)
-                .bindPopup(
-                    `<p>Description : {{$point->desc}}</p>
+                .bindPopup(!({{$game->points->pluck('id')->toJson()}}.includes({{$point->id}})) ?
+                `<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
-                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>`
-                )
+                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/attach/{{$point->id}}">
+                @csrf
+                    <button class="btn btn-primary">Ajouter au jeu de piste</button>
+                    </form>`
+                : `<p>Description : {{$point->desc}}</p>
+                    <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
+                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/detach/{{$point->id}}">
+                    @method('DELETE')
+                    @csrf
+                    <button class="btn btn-danger">Retirer du jeu de piste</button>
+                    </form>`
+        )
+
             @endforeach
             /**
              *  to adapt the content of destroy modal
@@ -140,7 +168,7 @@
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.desc)
                 modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)
-                modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/point/destroy/${recipient.id}`)
+                modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/game/{{$game->id}}/point/detach/${recipient.id}`)
             })
 
             /**
