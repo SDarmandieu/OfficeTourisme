@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Game;
 use App\City;
 use App\Point;
+use App\Question;
 
 class GamePointController extends Controller
 {
@@ -23,7 +24,9 @@ class GamePointController extends Controller
         $city = City::findOrFail($city_id);
         $point = Point::findOrFail($point_id);
 
-        return view('gamePoint.index',compact('game','city','point'));
+        $question = Question::where('game_id','=',$game_id)->where('point_id','=',$point_id)->get()->first();
+
+        return view('gamePoint.index',compact('game','city','point','question'));
     }
     /**
      * Store a newly created resource in storage.
