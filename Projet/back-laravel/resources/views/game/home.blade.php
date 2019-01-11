@@ -1,5 +1,4 @@
 @extends('layouts.app')
-{{--{{dd($game->points->pluck('id')->toJson())}}--}}
 @section('content')
     <div class="row container-fluid mt-3">
         <div class="col">
@@ -20,7 +19,10 @@
 
                     @foreach($game->points as $point)
                         <tr>
-                            <td>{{$point->desc}}</td>
+                            <td>
+                                {{$point->desc}}
+                                <p>{{$point->questions->count()}} question</p>
+                            </td>
                             <td>{{number_format($point->lat,3,'.','')}} / {{number_format($point->lon,3,'.','')}}</td>
                             <td>
                                 <a href="{{route('gamePointIndex',[$city->id,$game->id,$point->id])}}"
@@ -119,8 +121,6 @@
     <script>
         window.addEventListener('load', function () {
 
-            $("#success").delay(5000).slideUp(300);
-
             var map = L.map('mapid').setView([{{$city->lat}},{{$city->lon}}], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -137,30 +137,36 @@
             });
 
             @foreach($city->points as $point)
+            @if(in_array($point->id,$game->points->pluck('id')->toArray()))
             L
                 .marker([
-                    {{$point->lat}},
-                    {{$point->lon}}],
-                    ({{$game->points->pluck('id')->toJson()}}.includes({{$point->id}}))?{icon: redIcon}:null)
+                        {{$point->lat}},
+                        {{$point->lon}}],
+                    {icon: redIcon})
                 .addTo(map)
-                .bindPopup(!({{$game->points->pluck('id')->toJson()}}.includes({{$point->id}})) ?
-                `<p>Description : {{$point->desc}}</p>
-                    <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
-                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
-                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/attach/{{$point->id}}">
-                @csrf
-                    <button class="btn btn-primary">Ajouter au jeu de piste</button>
-                    </form>`
-                : `<p>Description : {{$point->desc}}</p>
+                .bindPopup(`<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
                     <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
                     <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/detach/{{$point->id}}">
                     @method('DELETE')
                     @csrf
                     <button class="btn btn-danger">Retirer du jeu de piste</button>
-                    </form>`
-        )
-
+                    </form>`)
+            @else
+            L
+                .marker([
+                    {{$point->lat}},
+                    {{$point->lon}}]
+                )
+                .addTo(map)
+                .bindPopup(`<p>Description : {{$point->desc}}</p>
+                    <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
+                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/attach/{{$point->id}}">
+                @csrf
+                    <button class="btn btn-primary">Ajouter au jeu de piste</button>
+                    </form>`)
+            @endif
             @endforeach
             /**
              *  to adapt the content of destroy modal

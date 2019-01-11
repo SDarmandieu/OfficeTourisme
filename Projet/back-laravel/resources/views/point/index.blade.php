@@ -7,7 +7,7 @@
     <div class="row container-fluid mt-3">
         <div class="col">
             @if(!($points->count()))
-                <h2 class="text-center mt-3">Aucun point d'interêt n'a encore été crée pour {{$city->name}}</h2>
+                <h2 class="text-center mt-3">Aucun point d'interêt n'a encore été créé pour {{$city->name}}</h2>
             @else
                 <h2 class="text-center">Liste des points d'interêts de {{$city->name}}</h2>
 

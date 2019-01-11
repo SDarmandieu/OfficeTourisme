@@ -5,9 +5,8 @@
         <a href="{{route('gameCreate',$city->id)}}"
            class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                 class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter un jeu</a>
-
         @if(!($games->count()))
-            <h2 class="text-center mt-3">Aucun jeu n'a encore été crée pour {{$city->name}}</h2>
+            <h2 class="text-center mt-3">Aucun jeu n'a encore été créé pour {{$city->name}}</h2>
         @else
 
             <div class="card-deck row">

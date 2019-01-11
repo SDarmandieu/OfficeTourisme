@@ -4,42 +4,8 @@
         <a href="{{route('imageCreate',$city->id)}}"
            class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                 class="fas fa-plus-circle fa-3x mr-1"></i>Ajouter une image</a>
-
-        {{--<form method="POST">--}}
-        {{--@csrf--}}
-
-        {{--<div class="form-group row">--}}
-
-        {{--<div class="form-check form-check-inline">--}}
-        {{--<input class="form-check-input" type="radio" name="cityOption" id="currentCity"--}}
-        {{--value="{{$city->id}}" checked>--}}
-        {{--<label class="form-check-label" for="currentCity">{{$city->name}}</label>--}}
-        {{--</div>--}}
-        {{--<div class="form-check form-check-inline">--}}
-        {{--<input class="form-check-input" type="radio" name="cityOption" id="allCities"--}}
-        {{--value="all">--}}
-        {{--<label class="form-check-label" for="allCities">Toutes les villes</label>--}}
-        {{--</div>--}}
-        {{--<label for="type" class="col-md-4 col-form-label text-md-right">Type d'image</label>--}}
-        {{--<select name="type" class="form-control col-md-6" id="type">--}}
-        {{--<option selected disabled hidden>Choisissez un type d'image</option>--}}
-        {{--@foreach($imagetypes as $imagetype)--}}
-        {{--<option value="{{$imagetype->id}}">{{$imagetype->title}}</option>--}}
-        {{--@endforeach--}}
-        {{--</select>--}}
-        {{--</div>--}}
-
-        {{--<div class="form-group row mb-0">--}}
-        {{--<div class="col-md-8 offset-md-4">--}}
-        {{--<button type="submit" class="btn btn-primary">--}}
-        {{--Chercher--}}
-        {{--</button>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</form>--}}
-
         @if(!($images->count()))
-            <div>Aucune image n'a encore été crée pour {{$city->name}}</div>
+            <h2 class="text-center mt-3">Aucune image n'a encore été créée pour {{$city->name}}</div>
         @else
             <div class="card-deck row">
                 @foreach($images as $image)
