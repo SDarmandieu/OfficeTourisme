@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Game;
 use App\City;
 use App\Image;
+use App\Point;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index($city_id)
     {
@@ -24,7 +27,8 @@ class GameController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create($city_id)
     {
@@ -41,8 +45,9 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($city_id, Request $request)
     {
@@ -59,8 +64,9 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @param $game_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($city_id, $game_id)
     {
@@ -77,9 +83,10 @@ class GameController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @param $game_id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($city_id,$game_id,Request $request)
     {
@@ -96,9 +103,9 @@ class GameController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param $city_id
+     * @param $game_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($city_id,$game_id)
     {
@@ -107,6 +114,13 @@ class GameController extends Controller
 
     }
 
+    /**
+     * Display game home view
+     *
+     * @param $city_id
+     * @param $game_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function home($city_id,$game_id)
     {
         $city = City::find($city_id);
