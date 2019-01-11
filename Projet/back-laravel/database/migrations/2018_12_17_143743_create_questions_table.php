@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->text('content');
             $table->integer('expe');
             $table->integer('point_id');
+            $table->integer('game_id');
             $table->timestamps();
         });
     }
