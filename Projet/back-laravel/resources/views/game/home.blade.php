@@ -118,6 +118,9 @@
             crossorigin=""></script>
     <script>
         window.addEventListener('load', function () {
+
+            $("#success").delay(5000).slideUp(300);
+
             var map = L.map('mapid').setView([{{$city->lat}},{{$city->lon}}], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {

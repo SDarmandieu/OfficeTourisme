@@ -63,7 +63,7 @@
 
     <main class="py-4">
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center" role="alert">
+            <div id="success" class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center" role="alert">
                 {{session("success")}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

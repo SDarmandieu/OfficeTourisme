@@ -40,7 +40,7 @@ class GamePointController extends Controller
 
         $game->points()->attach($point_id);
 
-        return view('game.home',compact('game','city'));
+        return redirect()->route('gameHome',compact('game','city'))->with('success', 'Le point a bien été ajouté au jeu de piste');
     }
 
     /**
@@ -58,7 +58,7 @@ class GamePointController extends Controller
 
         $game->points()->detach($point_id);
 
-        return view('game.home',compact('game','city'));
+        return redirect()->route('gameHome',compact('game','city'))->with('success', 'Le point a bien été retiré du jeu de piste');
     }
 
 }
