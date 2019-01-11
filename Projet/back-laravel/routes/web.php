@@ -89,3 +89,23 @@ Route::delete('/city/{city_id}/game/{game_id}/point/detach/{point_id}','GamePoin
 /**
  * Question crud
  */
+Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/create','QuestionController@create')->name('questionCreate')->middleware('auth');
+Route::post('/city/{city_id}/game/{game_id}/point/{point_id}/question/store','QuestionController@store')->name('questionStore')->middleware('auth');
+
+Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/edit/{question_id}','QuestionController@edit')->name('questionEdit')->middleware('auth');
+Route::put('/city/{city_id}/game/{game_id}/point/{point_id}/question/update/{question_id}','QuestionController@update')->name('questionUpdate')->middleware('auth');
+
+Route::delete('/city/{city_id}/game/{game_id}/point/{point_id}/question/destroy/{question_id}','QuestionController@destroy')->name('questionDestroy')->middleware('auth');
+
+/**
+ * Answer crud
+ */
+Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/create','AnswerController@create')->name('answerCreate')->middleware('auth');
+Route::post('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/store','AnswerController@store')->name('answerStore')->middleware('auth');
+
+Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/edit/{answer_id}','AnswerController@edit')->name('answerEdit')->middleware('auth');
+Route::put('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/update/{answer_id}','AnswerController@update')->name('answerUpdate')->middleware('auth');
+
+Route::delete('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/destroy/{answer_id}','AnswerController@destroy')->name('answerDestroy')->middleware('auth');
+
+
