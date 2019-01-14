@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Image extends Model
+class File extends Model
 {
     use Notifiable;
 
@@ -20,7 +20,7 @@ class Image extends Model
 
     public function questions()
     {
-    	return $this->belongsToMany('App\Question');
+    	return $this->hasMany('App\Question');
     }
 
     public function games()

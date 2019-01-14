@@ -8,7 +8,7 @@ use App\Imagetype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ImageController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.

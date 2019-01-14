@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('expe');
             $table->integer('point_id');
             $table->integer('game_id');
+            $table->integer('image_id')->nullable();
             $table->timestamps();
         });
     }
