@@ -15,7 +15,7 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'content','expe','point_id','game_id'
+        'content','expe','point_id','game_id','image_id'
     ];
 
     public function point()
@@ -23,9 +23,9 @@ class Question extends Model
     	return $this->belongsTo('App\Point');
     }
 
-    public function images()
+    public function image()
     {
-    	return $this->belongsToMany('App\Image');
+    	return $this->belongsTo('App\Image');
     }
 
     public function answers()
