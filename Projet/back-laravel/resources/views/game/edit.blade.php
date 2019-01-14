@@ -14,7 +14,8 @@
                         <label for="name" class="col-md-4 col-form-label text-md-right">Nom du jeu</label>
 
                         <div class="col-md-6">
-                            <input type="text" id="name" class="form-control" name="name" value="{{$game->name}}" required>
+                            <input type="text" id="name" class="form-control" name="name" value="{{$game->name}}"
+                                   required>
                         </div>
                     </div>
 
@@ -40,7 +41,7 @@
                             <label
                                 for="default"
                                 class="icon-style"
-                                style="background-image:url({{asset('images/default-icon.png')}});"></label>
+                                style="background-image:url({{asset('images/default-image.png')}});"></label>
                             @foreach($icons as $icon)
                                 <input
                                     id="icon{{$icon->id}}"
@@ -114,7 +115,7 @@
         .image-selector input:checked + .icon-style {
             -webkit-filter: none;
             filter: none;
-            outline : solid #227DC7;
+            outline: solid #227DC7;
         }
 
         .icon-style {

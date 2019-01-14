@@ -3,50 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\City;
+use App\Game;
+use App\Point;
+use App\Question;
+use App\Image;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($city_id, $game_id, $point_id,$question_id)
     {
-        //
+
+        $city = City::findOrFail($city_id);
+        $game = Game::findOrFail($game_id);
+        $point = Point::findOrFail($point_id);
+        $question = Question::findOrFail($question_id);
+        $images = Image::where('city_id', '=', $city_id)
+            ->whereHas('imagetype',
+                function ($q) {
+                    $q->where('title', '=', 'game');
+                })->get();
+
+        return view('answer.create', compact('city', 'game', 'point', 'images','question'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($city_id,$game_id,$point_id,$question_id,Request $request)
     {
-        //
-    }
+        Answer::create([
+            'content' => $request->input('answer'),
+            'valid' => (bool)$request->input('valid'),
+            'question_id' => $question_id,
+            'image_id' => $request->input('image')
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Answer $answer)
-    {
-        //
+//        $question->images()->attach($request->input('image'));
+
+        return redirect()->route('gamePointIndex',[$city_id,$game_id,$point_id])->with('success', 'La réponse a bien été créée.');
     }
 
     /**
@@ -55,9 +60,18 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Answer $answer)
+    public function edit($city_id, $game_id,$point_id,$question_id,$answer_id)
     {
-        //
+        $images = Image::whereHas('imagetype',
+            function ($q) {
+                $q->where('title', '=', 'game');
+            })->get();
+        $city = City::findOrFail($city_id);
+        $game = Game::findOrFail($game_id);
+        $point = Point::findOrFail($point_id);
+        $question = Question::findOrFail($question_id);
+        $answer = Answer::findOrFail($answer_id);
+        return view('answer.edit', compact('city', 'game', 'images','point','question','answer'));
     }
 
     /**
@@ -67,9 +81,16 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Answer $answer)
+    public function update($city_id,$game_id,$point_id,$question_id,$answer_id,Request $request)
     {
-        //
+        $answer = Answer::findOrFail($answer_id);
+        $answer->update([
+            'content' => $request->input('answer'),
+            'valid' => (bool)$request->input('valid'),
+            'image_id' => $request->input('image')
+        ]);
+
+        return redirect()->route('gamePointIndex',[$city_id,$game_id,$point_id])->with('success', 'La réponse a bien été modifiée.');
     }
 
     /**
@@ -78,8 +99,10 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Answer $answer)
+    public function destroy($city_id, $game_id, $point_id, $question_id,$answer_id)
     {
-        //
+        Answer::findOrFail($answer_id)->delete();
+        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La réponse a bien été supprimée.');
+
     }
 }

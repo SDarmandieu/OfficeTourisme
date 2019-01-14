@@ -33,7 +33,7 @@
                             <label
                                 for="default"
                                 class="icon-style"
-                                style="background-image:url({{asset('images/default-icon.png')}});"></label>
+                                style="background-image:url({{asset('images/default-image.png')}});"></label>
                             @foreach($icons as $icon)
                                 <input id="icon{{$icon->id}}" type="radio" name="icon" value="{{$icon->id}}">
                                 <label

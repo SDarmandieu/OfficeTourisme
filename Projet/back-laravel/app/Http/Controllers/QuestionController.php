@@ -11,15 +11,6 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -47,29 +38,19 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($city_id,$game_id,$point_id,Request $request)
+    public function store($city_id, $game_id, $point_id, Request $request)
     {
         $question = Question::create([
             'content' => $request->input('question'),
             'expe' => $request->input('expe'),
             'point_id' => $point_id,
-            'game_id' => $game_id
+            'game_id' => $game_id,
+            'image_id' => $request->input('image')
         ]);
 
-        $question->images()->attach($request->input('image'));
+//        $question->images()->attach($request->input('image'));
 
-        return redirect()->route('gamePointIndex',[$city_id,$game_id,$point_id])->with('success', 'La question a bien été créée.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Question $question
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Question $question)
-    {
-        //
+        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La question a bien été créée.');
     }
 
     /**
@@ -78,9 +59,17 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($city_id, $game_id,$point_id,$question_id)
     {
-        //
+        $images = Image::whereHas('imagetype',
+            function ($q) {
+                $q->where('title', '=', 'game');
+            })->get();
+        $city = City::findOrFail($city_id);
+        $game = Game::findOrFail($game_id);
+        $point = Point::findOrFail($point_id);
+        $question = Question::findOrFail($question_id);
+        return view('question.edit', compact('city', 'game', 'images','point','question'));
     }
 
     /**
@@ -90,9 +79,16 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update($city_id, $game_id,$point_id,$question_id, Request $request)
     {
-        //
+        $question = Question::findOrFail($question_id);
+        $question->update([
+            'content' => $request->input('question'),
+            'expe' => $request->input('expe'),
+            'image_id' => $request->input('image')
+        ]);
+
+        return redirect()->route('gamePointIndex', [$city_id,$game_id,$point_id,$question_id])->with('success', 'La question a bien été modifiée');
     }
 
     /**
@@ -101,8 +97,10 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($city_id, $game_id, $point_id, $question_id)
     {
-        //
+        Question::findOrFail($question_id)->delete();
+        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La question a bien été supprimée.');
+
     }
 }
