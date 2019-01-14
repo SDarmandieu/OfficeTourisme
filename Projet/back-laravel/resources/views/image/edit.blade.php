@@ -23,7 +23,7 @@
 
                     <div class="form-group row">
                         <label for="type" class="col-md-4 col-form-label text-md-right">Type d'image</label>
-                        <select name="type" class="form-control col-md-6" id="type">
+                        <select name="type" class="form-control col-md-6" id="type" required>
 
                             @foreach($imagetypes as $imagetype)
                                 <option
