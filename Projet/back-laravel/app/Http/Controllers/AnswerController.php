@@ -55,18 +55,14 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit($city_id, $game_id,$point_id,$question_id,$answer_id)
+    public function edit($answer_id)
     {
         $images = Image::whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'game');
             })->get();
-        $city = City::findOrFail($city_id);
-        $game = Game::findOrFail($game_id);
-        $point = Point::findOrFail($point_id);
-        $question = Question::findOrFail($question_id);
         $answer = Answer::findOrFail($answer_id);
-        return view('answer.edit', compact('city', 'game', 'images','point','question','answer'));
+        return view('answer.edit', compact('images','answer'));
     }
 
     /**
@@ -76,7 +72,7 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update($city_id,$game_id,$point_id,$question_id,$answer_id,Request $request)
+    public function update($answer_id,Request $request)
     {
         $answer = Answer::findOrFail($answer_id);
         $answer->update([
@@ -85,7 +81,7 @@ class AnswerController extends Controller
             'image_id' => $request->input('image')
         ]);
 
-        return redirect()->route('gamePointIndex',[$city_id,$game_id,$point_id])->with('success', 'La réponse a bien été modifiée.');
+        return redirect()->route('gamePointIndex',[$answer->question->game->id,$answer->question->point->id])->with('success', 'La réponse a bien été modifiée.');
     }
 
     /**
@@ -94,10 +90,13 @@ class AnswerController extends Controller
      * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($city_id, $game_id, $point_id, $question_id,$answer_id)
+    public function destroy($answer_id)
     {
-        Answer::findOrFail($answer_id)->delete();
-        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La réponse a bien été supprimée.');
+        $answer = Answer::findOrFail($answer_id);
+        $game_id = $answer->question->game->id;
+        $point_id = $answer->question->point->id;
+        $answer->delete();
+        return redirect()->route('gamePointIndex', [$game_id, $point_id])->with('success', 'La réponse a bien été supprimée.');
 
     }
 }

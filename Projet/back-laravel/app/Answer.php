@@ -15,7 +15,7 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'content','A   valid','question_id','image_id'
+        'content','valid','question_id','image_id'
     ];
 
     public function question()

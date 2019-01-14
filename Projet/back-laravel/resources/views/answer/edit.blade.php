@@ -8,7 +8,7 @@
 
             <div class="card-body">
                 <form method="POST"
-                      action="{{ route('answerUpdate',[$city->id,$game->id,$point->id,$question->id,$answer->id]) }}">
+                      action="{{ route('answerUpdate',$answer->id) }}">
                     @method('PUT')
                     @csrf
 
