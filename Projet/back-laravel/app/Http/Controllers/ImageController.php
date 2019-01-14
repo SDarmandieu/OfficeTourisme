@@ -65,12 +65,11 @@ class ImageController extends Controller
      * @param  \App\Image $image
      * @return \Illuminate\Http\Response
      */
-    public function edit($city_id, $image_id)
+    public function edit($image_id)
     {
-        $city = City::findOrFail($city_id);
         $image = Image::findOrFail($image_id);
         $imagetypes = Imagetype::all();
-        return view('image.edit', compact('city', 'image', 'imagetypes'));
+        return view('image.edit', compact('image', 'imagetypes'));
     }
 
     /**
@@ -80,7 +79,7 @@ class ImageController extends Controller
      * @param  \App\Image $image
      * @return \Illuminate\Http\Response
      */
-    public function update($city_id, $image_id, Request $request)
+    public function update($image_id, Request $request)
     {
         $image = Image::findOrFail($image_id);
         $image->update([
@@ -88,7 +87,7 @@ class ImageController extends Controller
             'imagetype_id' => $request->input('type')
         ]);
 
-        return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été modifiée.');
+        return redirect()->route('imageIndex', $image->city->id)->with('success', 'L\'image a bien été modifiée.');
     }
 
     /**
@@ -97,17 +96,14 @@ class ImageController extends Controller
      * @param  \App\Image $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy($city_id, $image_id)
+    public function destroy($image_id)
     {
         $image = Image::find($image_id);
+        $city_id = $image->city->id;
+
         Storage::disk('public')->delete('images/'.$image->filename);
         $image->delete();
         return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été supprimée.');
-
-    }
-
-    public function search(Request $request)
-    {
 
     }
 }

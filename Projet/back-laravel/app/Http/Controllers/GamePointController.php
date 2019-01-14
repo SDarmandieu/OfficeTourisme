@@ -18,15 +18,14 @@ class GamePointController extends Controller
      * @param $point_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($city_id,$game_id,$point_id)
+    public function index($game_id,$point_id)
     {
         $game = Game::findOrFail($game_id);
-        $city = City::findOrFail($city_id);
         $point = Point::findOrFail($point_id);
 
         $question = Question::where('game_id','=',$game_id)->where('point_id','=',$point_id)->get()->first();
 
-        return view('gamePoint.index',compact('game','city','point','question'));
+        return view('gamePoint.index',compact('game','point','question'));
     }
     /**
      * Store a newly created resource in storage.
@@ -36,14 +35,12 @@ class GamePointController extends Controller
      * @param $point_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function attach($city_id,$game_id,$point_id)
+    public function attach($game_id,$point_id)
     {
         $game = Game::findOrFail($game_id);
-        $city = City::findOrFail($city_id);
-
         $game->points()->attach($point_id);
 
-        return redirect()->route('gameHome',compact('game','city'))->with('success', 'Le point a bien été ajouté au jeu de piste');
+        return redirect()->route('gameHome',$game)->with('success', 'Le point a bien été ajouté au jeu de piste');
     }
 
     /**
@@ -54,14 +51,13 @@ class GamePointController extends Controller
      * @param $point_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detach($city_id,$game_id,$point_id)
+    public function detach($game_id,$point_id)
     {
         $game = Game::findOrFail($game_id);
-        $city = City::findOrFail($city_id);
 
         $game->points()->detach($point_id);
 
-        return redirect()->route('gameHome',compact('game','city'))->with('success', 'Le point a bien été retiré du jeu de piste');
+        return redirect()->route('gameHome',$game)->with('success', 'Le point a bien été retiré du jeu de piste');
     }
 
 }

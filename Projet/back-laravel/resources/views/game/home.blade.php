@@ -25,7 +25,7 @@
                             </td>
                             <td>{{number_format($point->lat,3,'.','')}} / {{number_format($point->lon,3,'.','')}}</td>
                             <td>
-                                <a href="{{route('gamePointIndex',[$city->id,$game->id,$point->id])}}"
+                                <a href="{{route('gamePointIndex',[$game->id,$point->id])}}"
                                    class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-question mr-1 fa-2x"></i></i>
                                     <span class="link_">Gérer
@@ -121,7 +121,7 @@
     <script>
         window.addEventListener('load', function () {
 
-            var map = L.map('mapid').setView([{{$city->lat}},{{$city->lon}}], 15);
+            var map = L.map('mapid').setView([{{$game->city->lat}},{{$game->city->lon}}], 15);
 
             L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                 attribution: '<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -136,7 +136,7 @@
                 shadowSize: [41, 41]
             });
 
-            @foreach($city->points as $point)
+            @foreach($game->city->points as $point)
             @if(in_array($point->id,$game->points->pluck('id')->toArray()))
             L
                 .marker([
@@ -147,7 +147,7 @@
                 .bindPopup(`<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
                     <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
-                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/detach/{{$point->id}}">
+                    <form method='POST' action="/game/{{$game->id}}/point/detach/{{$point->id}}">
                     @method('DELETE')
                     @csrf
                     <button class="btn btn-danger">Retirer du jeu de piste</button>
@@ -162,7 +162,7 @@
                 .bindPopup(`<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
                     <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
-                    <form method='POST' action="/city/{{$city->id}}/game/{{$game->id}}/point/attach/{{$point->id}}">
+                    <form method='POST' action="/game/{{$game->id}}/point/attach/{{$point->id}}">
                 @csrf
                     <button class="btn btn-primary">Ajouter au jeu de piste</button>
                     </form>`)
@@ -177,7 +177,7 @@
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.desc)
                 modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)
-                modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/game/{{$game->id}}/point/detach/${recipient.id}`)
+                modal.find('.modal-footer form').attr('action', `/game/{{$game->id}}/point/detach/${recipient.id}`)
             })
 
             /**

@@ -4,12 +4,12 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header">Modifier l'image de {{$city->name}}</div>
+            <div class="card-header">Modifier l'image de {{$image->city->name}}</div>
 
             <div class="card-body">
                 <img class="card-img-top my-2 w-50 mx-auto d-block" src="{{asset('storage/'.$image->path)}}"
                      alt="{{$image->alt}}">
-                <form method="POST" action="{{ route('imageUpdate',[$city->id,$image->id]) }}" enctype='multipart/form-data'>
+                <form method="POST" action="{{ route('imageUpdate',$image->id) }}" enctype='multipart/form-data'>
                     @method('PUT')
                     @csrf
 

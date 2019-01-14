@@ -4,10 +4,10 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header">Modification d'un jeu de piste pour {{$city->name}}</div>
+            <div class="card-header">Modification d'un jeu de piste pour {{$game->city->name}}</div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('gameUpdate',[$city->id,$game->id]) }}">
+                <form method="POST" action="{{ route('gameUpdate',$game->id) }}">
                     @method('PUT')
                     @csrf
                     <div class="form-group row">

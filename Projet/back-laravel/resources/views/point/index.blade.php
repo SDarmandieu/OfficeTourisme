@@ -26,7 +26,7 @@
                             <td>{{$point->desc}}</td>
                             <td>{{number_format($point->lat,3,'.','')}} / {{number_format($point->lon,3,'.','')}}</td>
                             <td>
-                                <a href="{{route('pointEdit',[$city->id,$point->id])}}"
+                                <a href="{{route('pointEdit',$point->id)}}"
                                    class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier</span></a>
                                 <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start show"
@@ -145,7 +145,7 @@
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.desc)
                 modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)
-                modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/point/destroy/${recipient.id}`)
+                modal.find('.modal-footer form').attr('action', `/point/destroy/${recipient.id}`)
             })
 
             /**

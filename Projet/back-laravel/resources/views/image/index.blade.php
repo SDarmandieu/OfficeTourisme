@@ -38,7 +38,7 @@
                                     <i class="fas fa-search fa-2x mr-1"></i><span
                                         class="link_">Voir l'image en grand</span>
                                 </button>
-                                <a href="{{route('imageEdit',[$city->id,$image->id])}}"
+                                <a href="{{route('imageEdit',$image->id)}}"
                                    class="d-flex align-items-center mt-2 align-self-start"><i
                                         class="fas fa-edit fa-2x mr-1"></i><span
                                         class="link_">Modifier l'image</span></a>
@@ -122,7 +122,7 @@
                         let modal = $(this)
                         modal.find('.modal-body span').text(recipient.filename)
                         modal.find('.modal-title').text(`Supprimer ${recipient.filename}`)
-                        modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/image/destroy/${recipient.id}`)
+                        modal.find('.modal-footer form').attr('action', `/image/destroy/${recipient.id}`)
                     })
 
                     $('#showModal').on('show.bs.modal', function (event) {

@@ -40,12 +40,12 @@
                             </div>
                             <div class="card-footer d-flex flex-column">
 
-                                <a href="{{route('gameHome',[$city->id,$game->id])}}"
+                                <a href="{{route('gameHome',$game->id)}}"
                                    class="d-flex align-items-center align-self-start"><i
                                         class="fas fa-home fa-2x mr-1"></i><span
                                         class="link_">Accéder
                                     au contenu du jeu de piste</span></a>
-                                <a href="{{route('gameEdit',[$city->id,$game->id])}}"
+                                <a href="{{route('gameEdit',$game->id)}}"
                                    class="d-flex align-items-center mt-2 align-self-start"><i
                                         class="fas fa-edit fa-2x mr-1"></i><span
                                         class="link_">Modifier les informations</span></a>
@@ -104,7 +104,7 @@
                 let modal = $(this)
                 modal.find('.modal-body span').text(recipient.name)
                 modal.find('.modal-title').text(`Supprimer ${recipient.name}`)
-                modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/game/destroy/${recipient.id}`)
+                modal.find('.modal-footer form').attr('action', `/game/destroy/${recipient.id}`)
             })
         })
     </script>

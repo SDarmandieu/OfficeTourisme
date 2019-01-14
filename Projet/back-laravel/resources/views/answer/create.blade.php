@@ -7,7 +7,7 @@
             <div class="card-header">Création d'une réponse</div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('answerStore',[$city->id,$game->id,$point->id,$question->id]) }}">
+                <form method="POST" action="{{ route('answerStore',$question->id) }}">
                     @csrf
 
                     <div class="form-group row">
@@ -40,11 +40,11 @@
                         <p class="col-md-4 col-form-label text-md-right">Est-ce la bonne réponse ?</p>
                         <div class="col-md-6 my-auto">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="true" type="radio" name="valid" value="{{true}}">
+                                <input class="form-check-input" id="true" type="radio" name="valid" value="1">
                                 <label class="form-check-label" for="true">Oui</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" id="false" type="radio" name="valid" value="{{false}}">
+                                <input class="form-check-input" id="false" type="radio" name="valid" value="0">
                                 <label class="form-check-label" for="false">Non</label>
                             </div>
                         </div>

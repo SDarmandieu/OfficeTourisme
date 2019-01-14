@@ -7,7 +7,7 @@
             <div class="card-header">Création de la question de {{$game->name}}</div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('questionStore',[$city->id,$game->id,$point->id]) }}">
+                <form method="POST" action="{{ route('questionStore',[$game->id,$point->id]) }}">
                     @csrf
 
                     <div class="form-group row">

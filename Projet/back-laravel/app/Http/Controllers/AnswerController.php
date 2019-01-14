@@ -18,20 +18,16 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($city_id, $game_id, $point_id,$question_id)
+    public function create($question_id)
     {
-
-        $city = City::findOrFail($city_id);
-        $game = Game::findOrFail($game_id);
-        $point = Point::findOrFail($point_id);
         $question = Question::findOrFail($question_id);
-        $images = Image::where('city_id', '=', $city_id)
+        $images = Image::where('city_id', '=', $question->game->city->id)
             ->whereHas('imagetype',
                 function ($q) {
                     $q->where('title', '=', 'game');
                 })->get();
 
-        return view('answer.create', compact('city', 'game', 'point', 'images','question'));
+        return view('answer.create', compact( 'images','question'));
     }
 
     /**
@@ -40,18 +36,17 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($city_id,$game_id,$point_id,$question_id,Request $request)
+    public function store($question_id,Request $request)
     {
+        $question = Question::find($question_id);
         Answer::create([
             'content' => $request->input('answer'),
-            'valid' => (bool)$request->input('valid'),
+            'valid' => $request->input('valid'),
             'question_id' => $question_id,
             'image_id' => $request->input('image')
         ]);
 
-//        $question->images()->attach($request->input('image'));
-
-        return redirect()->route('gamePointIndex',[$city_id,$game_id,$point_id])->with('success', 'La réponse a bien été créée.');
+        return redirect()->route('gamePointIndex',[$question->game->id,$question->point->id])->with('success', 'La réponse a bien été créée.');
     }
 
     /**
@@ -86,7 +81,7 @@ class AnswerController extends Controller
         $answer = Answer::findOrFail($answer_id);
         $answer->update([
             'content' => $request->input('answer'),
-            'valid' => (bool)$request->input('valid'),
+            'valid' => $request->input('valid'),
             'image_id' => $request->input('image')
         ]);
 

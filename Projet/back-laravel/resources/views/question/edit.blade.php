@@ -3,11 +3,11 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header">Modification de la question de {{$game->name}}</div>
+            <div class="card-header">Modification de la question de {{$question->game->name}}</div>
 
             <div class="card-body">
                 <form method="POST"
-                      action="{{ route('questionUpdate',[$city->id,$game->id,$point->id,$question->id]) }}">
+                      action="{{ route('questionUpdate',$question->id) }}">
                     @method('PUT')
                     @csrf
 

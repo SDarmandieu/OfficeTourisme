@@ -44,10 +44,10 @@ Route::get('/city/{city_id}/point','PointController@index')->name('pointIndex')-
 Route::get('/city/{city_id}/point/create','PointController@create')->name('pointCreate')->middleware('auth');
 Route::post('/city/{city_id}/point/store','PointController@store')->name('pointStore')->middleware('auth');
 
-Route::get('/city/{city_id}/point/edit/{point_id}','PointController@edit')->name('pointEdit')->middleware('auth');
-Route::put('/city/{city_id}/point/update/{point_id}','PointController@update')->name('pointUpdate')->middleware('auth');
+Route::get('/point/edit/{point_id}','PointController@edit')->name('pointEdit')->middleware('auth');
+Route::put('/point/update/{point_id}','PointController@update')->name('pointUpdate')->middleware('auth');
 
-Route::delete('/city/{city_id}/point/destroy/{point_id}','PointController@destroy')->name('pointDestroy')->middleware('auth');
+Route::delete('/point/destroy/{point_id}','PointController@destroy')->name('pointDestroy')->middleware('auth');
 
 /**
  * Image crud route
@@ -57,10 +57,10 @@ Route::get('/city/{city_id}/image','ImageController@index')->name('imageIndex')-
 Route::get('/city/{city_id}/image/create','ImageController@create')->name('imageCreate')->middleware('auth');
 Route::post('/city/{city_id}/image/store','ImageController@store')->name('imageStore')->middleware('auth');
 
-Route::get('/city/{city_id}/image/edit/{image_id}','ImageController@edit')->name('imageEdit')->middleware('auth');
-Route::put('/city/{city_id}/image/update/{image_id}','ImageController@update')->name('imageUpdate')->middleware('auth');
+Route::get('/image/edit/{image_id}','ImageController@edit')->name('imageEdit')->middleware('auth');
+Route::put('/image/update/{image_id}','ImageController@update')->name('imageUpdate')->middleware('auth');
 
-Route::delete('/city/{city_id}/image/destroy/{image_id}','ImageController@destroy')->name('imageDestroy')->middleware('auth');
+Route::delete('/image/destroy/{image_id}','ImageController@destroy')->name('imageDestroy')->middleware('auth');
 
 /**
  * Game crud route
@@ -70,42 +70,42 @@ Route::get('/city/{city_id}/game','GameController@index')->name('gameIndex')->mi
 Route::get('/city/{city_id}/game/create','GameController@create')->name('gameCreate')->middleware('auth');
 Route::post('/city/{city_id}/game/store','GameController@store')->name('gameStore')->middleware('auth');
 
-Route::get('/city/{city_id}/game/edit/{game_id}','GameController@edit')->name('gameEdit')->middleware('auth');
-Route::put('/city/{city_id}/game/update/{game_id}','GameController@update')->name('gameUpdate')->middleware('auth');
+Route::get('/game/edit/{game_id}','GameController@edit')->name('gameEdit')->middleware('auth');
+Route::put('/game/update/{game_id}','GameController@update')->name('gameUpdate')->middleware('auth');
 
-Route::delete('/city/{city_id}/game/destroy/{game_id}','GameController@destroy')->name('gameDestroy')->middleware('auth');
+Route::delete('/game/destroy/{game_id}','GameController@destroy')->name('gameDestroy')->middleware('auth');
 
-Route::get('/city/{city_id}/game/{game_id}','GameController@home')->name('gameHome')->middleware('auth');
+Route::get('/game/{game_id}','GameController@home')->name('gameHome')->middleware('auth');
 
 /**
  * Game/Point association
  */
-Route::get('/city/{city_id}/game/{game_id}/point/{point_id}','GamePointController@index')->name('gamePointIndex')->middleware('auth');
+Route::get('/game/{game_id}/point/{point_id}','GamePointController@index')->name('gamePointIndex')->middleware('auth');
 
-Route::post('/city/{city_id}/game/{game_id}/point/attach/{point_id}','GamePointController@attach')->name('gamePointAttach')->middleware('auth');
-Route::delete('/city/{city_id}/game/{game_id}/point/detach/{point_id}','GamePointController@detach')->name('gamePointDetach')->middleware('auth');
+Route::post('/game/{game_id}/point/attach/{point_id}','GamePointController@attach')->name('gamePointAttach')->middleware('auth');
+Route::delete('/game/{game_id}/point/detach/{point_id}','GamePointController@detach')->name('gamePointDetach')->middleware('auth');
 
 
 /**
  * Question crud
  */
-Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/create','QuestionController@create')->name('questionCreate')->middleware('auth');
-Route::post('/city/{city_id}/game/{game_id}/point/{point_id}/question/store','QuestionController@store')->name('questionStore')->middleware('auth');
+Route::get('/game/{game_id}/point/{point_id}/question/create','QuestionController@create')->name('questionCreate')->middleware('auth');
+Route::post('/game/{game_id}/point/{point_id}/question/store','QuestionController@store')->name('questionStore')->middleware('auth');
 
-Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/edit/{question_id}','QuestionController@edit')->name('questionEdit')->middleware('auth');
-Route::put('/city/{city_id}/game/{game_id}/point/{point_id}/question/update/{question_id}','QuestionController@update')->name('questionUpdate')->middleware('auth');
+Route::get('/question/edit/{question_id}','QuestionController@edit')->name('questionEdit')->middleware('auth');
+Route::put('/question/update/{question_id}','QuestionController@update')->name('questionUpdate')->middleware('auth');
 
-Route::delete('/city/{city_id}/game/{game_id}/point/{point_id}/question/destroy/{question_id}','QuestionController@destroy')->name('questionDestroy')->middleware('auth');
+Route::delete('/question/destroy/{question_id}','QuestionController@destroy')->name('questionDestroy')->middleware('auth');
 
 /**
  * Answer crud
  */
-Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/create','AnswerController@create')->name('answerCreate')->middleware('auth');
-Route::post('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/store','AnswerController@store')->name('answerStore')->middleware('auth');
+Route::get('/question/{question_id}/answer/create','AnswerController@create')->name('answerCreate')->middleware('auth');
+Route::post('/question/{question_id}/answer/store','AnswerController@store')->name('answerStore')->middleware('auth');
 
-Route::get('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/edit/{answer_id}','AnswerController@edit')->name('answerEdit')->middleware('auth');
-Route::put('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/update/{answer_id}','AnswerController@update')->name('answerUpdate')->middleware('auth');
+Route::get('/answer/edit/{answer_id}','AnswerController@edit')->name('answerEdit')->middleware('auth');
+Route::put('/answer/update/{answer_id}','AnswerController@update')->name('answerUpdate')->middleware('auth');
 
-Route::delete('/city/{city_id}/game/{game_id}/point/{point_id}/question/{question_id}/answer/destroy/{answer_id}','AnswerController@destroy')->name('answerDestroy')->middleware('auth');
+Route::delete('/answer/destroy/{answer_id}','AnswerController@destroy')->name('answerDestroy')->middleware('auth');
 
 

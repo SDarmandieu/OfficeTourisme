@@ -3,8 +3,8 @@
     <div class="container-fluid row">
         <div class="col border-right">
             @if(!$question)
-                <h2 class="text-center mt-3">Aucune question n'a encore été créée pour {{$city->name}}</h2>
-                <a href="{{route('questionCreate',[$city->id,$game->id,$point->id])}}"
+                <h2 class="text-center mt-3">Aucune question n'a encore été créée pour {{$game->city->name}}</h2>
+                <a href="{{route('questionCreate',[$game->id,$point->id])}}"
                    class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                         class="fas fa-plus-circle fa-3x mr-1"></i>Créer la question</a>
             @else
@@ -18,7 +18,7 @@
                         <p>Expérience : {{$question->expe}} points</p>
                     </div>
                     <div class="card-footer d-flex flex-column">
-                        <a href="{{route('questionEdit',[$city->id,$game->id,$point->id,$question->id])}}"
+                        <a href="{{route('questionEdit',$question->id)}}"
                            class="d-flex align-items-center mt-2 align-self-start"><i
                                 class="fas fa-edit fa-2x mr-1"></i><span
                                 class="link_">Modifier la question</span></a>
@@ -67,11 +67,11 @@
             @else
                 @if(!($question->answers->count()))
                     <h2 class="text-center mt-3">Aucune réponse n'a encore été créée pour cette question</h2>
-                    <a href="{{route('answerCreate',[$city->id,$game->id,$point->id,$question->id])}}"
+                    <a href="{{route('answerCreate',$question->id)}}"
                        class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                             class="fas fa-plus-circle fa-3x mr-1"></i>Créer une réponse</a>
                 @else
-                    <a href="{{route('answerCreate',[$city->id,$game->id,$point->id,$question->id])}}"
+                    <a href="{{route('answerCreate',$question->id)}}"
                        class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                             class="fas fa-plus-circle fa-3x mr-1"></i>Créer une réponse</a>
                     <h2 class="text-center mt-3">Liste des réponses à cette question</h2>
@@ -91,7 +91,7 @@
                                 <td>{{$answer->content}}</td>
                                 <td>{{$answer->valid == 1 ? "Oui" : "Non"}}</td>
                                 <td>
-                                    <a href="{{route('answerEdit',[$city->id,$game->id,$point->id,$question->id,$answer->id])}}"
+                                    <a href="{{route('answerEdit',$answer->id)}}"
                                        class="d-flex align-items-center align-self-start"><i
                                             class="fas fa-edit fa-2x mr-1"></i><span class="link_">Modifier</span></a>
                                     <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
@@ -124,10 +124,10 @@
                 modal.find('.modal-title').text(`Supprimer`)
                 if (recipient.expe) {
                     modal.find('.modal-body span').text(`cette question et ainsi que toutes les réponses qui en dépendent`)
-                    modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/game/{{$game->id}}/point/{{$point->id}}/question/destroy/${recipient.id}`)
+                    modal.find('.modal-footer form').attr('action', `/question/destroy/${recipient.id}`)
                 } else {
                     modal.find('.modal-body span').text(`cette réponse`)
-                    modal.find('.modal-footer form').attr('action', `/city/{{$city->id}}/game/{{$game->id}}/point/{{$point->id}}/question/{{$question->id}}/answer/destroy/${recipient.id}`)
+                    modal.find('.modal-footer form').attr('action', `/answer/destroy/${recipient.id}`)
                 }
             })
         })

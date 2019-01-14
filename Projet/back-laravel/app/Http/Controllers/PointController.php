@@ -55,11 +55,10 @@ class PointController extends Controller
      * @param  \App\Point $point
      * @return \Illuminate\Http\Response
      */
-    public function edit($city_id, $point_id)
+    public function edit($point_id)
     {
-        $city = City::findOrFail($city_id);
         $point = Point::findOrFail($point_id);
-        return view('point.edit', compact('city','point'));
+        return view('point.edit', compact('point'));
     }
 
     /**
@@ -69,7 +68,7 @@ class PointController extends Controller
      * @param  \App\Point $point
      * @return \Illuminate\Http\Response
      */
-    public function update($city_id,$point_id,Request $request)
+    public function update($point_id,Request $request)
     {
         $point = Point::findOrFail($point_id);
         $point->update([
@@ -78,7 +77,7 @@ class PointController extends Controller
             'lon' => $request->input('longitude')
         ]);
 
-        return redirect()->route('pointIndex',$city_id)->with('success', 'Le point d\'interêt a bien été modifié.');
+        return redirect()->route('pointIndex',$point->city->id)->with('success', 'Le point d\'interêt a bien été modifié.');
     }
 
     /**
@@ -87,9 +86,11 @@ class PointController extends Controller
      * @param  \App\Point $point
      * @return \Illuminate\Http\Response
      */
-    public function destroy($city_id,$point_id)
+    public function destroy($point_id)
     {
-        Point::find($point_id)->delete();
+        $point = Point::find($point_id);
+        $city_id = $point->city->id;
+        $point->delete();
         return redirect()->route('pointIndex',$city_id)->with('success', 'Le point d\'interêt a bien été supprimé.');
 
     }

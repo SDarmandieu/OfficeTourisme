@@ -17,19 +17,17 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($city_id, $game_id, $point_id)
+    public function create($game_id, $point_id)
     {
-
-        $city = City::findOrFail($city_id);
         $game = Game::findOrFail($game_id);
         $point = Point::findOrFail($point_id);
-        $images = Image::where('city_id', '=', $city_id)
+        $images = Image::where('city_id', '=', $game->city->id)
             ->whereHas('imagetype',
                 function ($q) {
                     $q->where('title', '=', 'game');
                 })->get();
 
-        return view('question.create', compact('city', 'game', 'point', 'images'));
+        return view('question.create', compact( 'game', 'point', 'images'));
     }
 
     /**
@@ -38,9 +36,9 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($city_id, $game_id, $point_id, Request $request)
+    public function store($game_id, $point_id, Request $request)
     {
-        $question = Question::create([
+        Question::create([
             'content' => $request->input('question'),
             'expe' => $request->input('expe'),
             'point_id' => $point_id,
@@ -48,9 +46,7 @@ class QuestionController extends Controller
             'image_id' => $request->input('image')
         ]);
 
-//        $question->images()->attach($request->input('image'));
-
-        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La question a bien été créée.');
+        return redirect()->route('gamePointIndex', [$game_id, $point_id])->with('success', 'La question a bien été créée.');
     }
 
     /**
@@ -59,17 +55,16 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function edit($city_id, $game_id,$point_id,$question_id)
+    public function edit($question_id)
     {
+        $question = Question::findOrFail($question_id);
         $images = Image::whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'game');
-            })->get();
-        $city = City::findOrFail($city_id);
-        $game = Game::findOrFail($game_id);
-        $point = Point::findOrFail($point_id);
-        $question = Question::findOrFail($question_id);
-        return view('question.edit', compact('city', 'game', 'images','point','question'));
+            })
+            ->where('city_id','=',$question->game->city->id)
+            ->get();
+        return view('question.edit', compact('question','images'));
     }
 
     /**
@@ -79,7 +74,7 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update($city_id, $game_id,$point_id,$question_id, Request $request)
+    public function update($question_id, Request $request)
     {
         $question = Question::findOrFail($question_id);
         $question->update([
@@ -88,7 +83,7 @@ class QuestionController extends Controller
             'image_id' => $request->input('image')
         ]);
 
-        return redirect()->route('gamePointIndex', [$city_id,$game_id,$point_id,$question_id])->with('success', 'La question a bien été modifiée');
+        return redirect()->route('gamePointIndex', [$question->game->id,$question->point->id])->with('success', 'La question a bien été modifiée');
     }
 
     /**
@@ -97,10 +92,13 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy($city_id, $game_id, $point_id, $question_id)
+    public function destroy($question_id)
     {
-        Question::findOrFail($question_id)->delete();
-        return redirect()->route('gamePointIndex', [$city_id, $game_id, $point_id])->with('success', 'La question a bien été supprimée.');
+        $question = Question::findOrFail($question_id);
+        $game_id = $question->game->id;
+        $point_id = $question->point->id;
+        $question->delete();
+        return redirect()->route('gamePointIndex', [$game_id,$point_id])->with('success', 'La question a bien été supprimée.');
 
     }
 }

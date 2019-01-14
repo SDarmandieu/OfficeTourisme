@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Modification d'un point d'interêt pour {{$city->name}}</div>
+                    <div class="card-header">Modification d'un point d'interêt pour {{$point->city->name}}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('pointUpdate',[$city->id,$point->id]) }}">
+                        <form method="POST" action="{{ route('pointUpdate',$point->id) }}">
                             @method('PUT')
                             @csrf
 
