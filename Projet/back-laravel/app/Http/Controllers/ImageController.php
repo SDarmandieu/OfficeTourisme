@@ -100,10 +100,8 @@ class ImageController extends Controller
     {
         $image = Image::find($image_id);
         $city_id = $image->city->id;
-
-        Storage::disk('public')->delete('images/'.$image->filename);
+        Storage::disk('public')->delete($image->path);
         $image->delete();
         return redirect()->route('imageIndex', $city_id)->with('success', 'L\'image a bien été supprimée.');
-
     }
 }
