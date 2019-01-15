@@ -171,7 +171,7 @@ class PointTest extends TestCase
             ->actingAs($user)
             ->call(
                 'DELETE',
-                '/city/' . $this->city->id . '/point/destroy/' . $point->id,
+                '/point/destroy/' . $point->id,
                 ['_token' => csrf_token()]
             );
 
@@ -201,7 +201,7 @@ class PointTest extends TestCase
         $response = $this
             ->call(
                 'DELETE',
-                '/city/' . $this->city->id . '/point/destroy/' . $point->id,
+                '/point/destroy/' . $point->id,
                 ['_token' => csrf_token()]
             );
 
@@ -229,7 +229,7 @@ class PointTest extends TestCase
         $user = factory(User::class)->create();
         $response = $this
             ->actingAs($user)
-            ->get('/city/' . $this->city->id . '/point/edit/' . $point->id);
+            ->get('/point/edit/' . $point->id);
 
         $response
             ->assertStatus(200)
@@ -253,7 +253,7 @@ class PointTest extends TestCase
             'city_id' => $this->city->id
         ]);
 
-        $response = $this->get('/city/' . $this->city->id . '/point/edit/' . $point->id);
+        $response = $this->get('/point/edit/' . $point->id);
         $response
             ->assertRedirect('/login')
             ->assertStatus(302);
@@ -281,7 +281,7 @@ class PointTest extends TestCase
             ->actingAs($user)
             ->call(
                 'PUT',
-                '/city/' . $this->city->id . '/point/update/' . $point->id,
+                '/point/update/' . $point->id,
                 [
                     'desc' => 'bar',
                     'latitude' => '50',
@@ -317,7 +317,7 @@ class PointTest extends TestCase
         $response = $this
             ->call(
                 'PUT',
-                '/city/' . $this->city->id . '/point/update/' . $point->id,
+                '/point/update/' . $point->id,
                 [
                     'desc' => 'bar',
                     'latitude' => '50',
