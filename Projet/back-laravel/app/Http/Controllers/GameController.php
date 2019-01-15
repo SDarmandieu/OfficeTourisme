@@ -123,6 +123,7 @@ class GameController extends Controller
     public function home($game_id)
     {
         $game = Game::find($game_id);
-        return view('game.home', compact('game'));
+        $points = $game->points()->paginate(5);
+        return view('game.home', compact('game','points'));
     }
 }
