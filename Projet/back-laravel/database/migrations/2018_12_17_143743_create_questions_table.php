@@ -17,10 +17,20 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->text('content');
             $table->integer('expe');
-            $table->integer('point_id');
-            $table->integer('game_id');
+            $table->integer('point_id')->unsigned();
+            $table->integer('game_id')->unsigned();
             $table->integer('image_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('game_id')
+                ->references('id')
+                ->on('games')
+                ->onDelete('cascade');
+
+            $table->foreign('point_id')
+                ->references('id')
+                ->on('points')
+                ->onDelete('cascade');
         });
     }
 

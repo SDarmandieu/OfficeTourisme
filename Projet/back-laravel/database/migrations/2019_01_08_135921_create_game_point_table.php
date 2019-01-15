@@ -15,9 +15,19 @@ class CreateGamePointTable extends Migration
     {
         Schema::create('game_point', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('game_id');
-            $table->integer('point_id');
+            $table->integer('game_id')->unsigned();
+            $table->integer('point_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('game_id')
+                ->references('id')
+                ->on('games')
+                ->onDelete('cascade');
+
+            $table->foreign('point_id')
+                ->references('id')
+                ->on('points')
+                ->onDelete('cascade');
         });
     }
 

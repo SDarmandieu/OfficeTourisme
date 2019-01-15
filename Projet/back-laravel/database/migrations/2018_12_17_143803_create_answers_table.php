@@ -17,10 +17,17 @@ class CreateAnswersTable extends Migration
             $table->increments('id');
             $table->string('content');
             $table->boolean('valid');
-            $table->integer('question_id');
+            $table->integer('question_id')->unsigned();
             $table->integer('image_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('question_id')
+                ->references('id')
+                ->on('questions')
+                ->onDelete('cascade');
         });
+
+
     }
 
     /**
