@@ -17,7 +17,7 @@
                     </thead>
                     <tbody>
 
-                    @foreach($game->points as $point)
+                    @foreach($points as $point)
                         <tr>
                             <td>
                                 {{$point->desc}}
@@ -51,6 +51,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                {{$points->links()}}
             @endif
         </div>
 
@@ -153,10 +154,13 @@
                 .bindPopup(`<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
                     <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <a href="/game/{{$game->id}}/point/{{$point->id}}"
+                                   class="btn btn-primary" style="color:white;">Gérer
+                                        sa question et ses réponses</a>
                     <form method='POST' action="/game/{{$game->id}}/point/detach/{{$point->id}}">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-danger">Retirer du jeu de piste</button>
+                    <button class="btn btn-danger"></i>Retirer du jeu de piste</button>
                     </form>`)
             @else
             L
