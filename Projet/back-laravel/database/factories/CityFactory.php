@@ -4,8 +4,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\City::class, function (Faker $faker) {
     return [
-        'name' => 'foo',
-        'lat' => rand(1, 50),
-        'lon' => rand(1, 50)
+        'name' => $faker->city,
+        'lat' => 43+rand(1,1000)/1000,
+        'lon' => 0.7+rand(1,100)/1000
     ];
 });
