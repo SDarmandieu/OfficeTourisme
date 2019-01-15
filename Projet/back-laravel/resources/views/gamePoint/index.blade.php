@@ -14,7 +14,12 @@
                     </div>
                     <div class="card-body">
                         <p>Question : {{$question->content}}</p>
-                        <p>Image : <img class="img-fluid" src="{{asset('storage/'.$question->image->path)}}"></p>
+                        @if($question->image)
+                            <img class="img-fluid my-2 w-25" src="{{asset('storage/'.$question->image->path)}}"
+                                 alt="{{asset('storage/'.$question->image->lat)}}">
+                        @else
+                            <p>Image : aucune</p>
+                        @endif
                         <p>Expérience : {{$question->expe}} points</p>
                     </div>
                     <div class="card-footer d-flex flex-column">

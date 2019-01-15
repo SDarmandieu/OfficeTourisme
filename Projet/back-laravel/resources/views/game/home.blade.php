@@ -21,7 +21,13 @@
                         <tr>
                             <td>
                                 {{$point->desc}}
-                                <p>{{$point->questions->count()}} question</p>
+                                <p>
+                                    @if(!in_array($game->id,$point->questions->pluck('game_id')->toArray()))
+                                        Ce point n'a pas encore de question
+                                    @else
+                                        <small><i>Ce point a une question</i></small>
+                                    @endif
+                                </p>
                             </td>
                             <td>{{number_format($point->lat,3,'.','')}} / {{number_format($point->lon,3,'.','')}}</td>
                             <td>
