@@ -23,7 +23,7 @@
                                 {{$point->desc}}
                                 <p>
                                     @if(!in_array($game->id,$point->questions->pluck('game_id')->toArray()))
-                                        Ce point n'a pas encore de question
+                                        <small><i>Ce point n'a pas encore de question</i></small>
                                     @else
                                         <small><i>Ce point a une question</i></small>
                                     @endif
