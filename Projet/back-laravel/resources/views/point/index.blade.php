@@ -33,12 +33,20 @@
                                         type="button" data-point="{{$point}}">
                                     <i class="fas fa-map-marker-alt mr-1 fa-2x"></i></i><span class="link_">Voir sur la carte</span>
                                 </button>
-                                <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
-                                        type="button"
-                                        data-toggle="modal" data-point='{{$point}}'
-                                        data-target="#destroyModal">
-                                    <i class="fas fa-trash fa-2x mr-1"></i><span class="link_">Supprimer le point</span>
-                                </button>
+                                @if(!($point->games->count()))
+                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
+                                            type="button"
+                                            data-toggle="modal" data-point='{{$point}}'
+                                            data-target="#destroyModal">
+                                        <i class="fas fa-trash fa-2x mr-1"></i><span
+                                            class="link_">Supprimer le point</span>
+                                    </button>
+                                    @else
+                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start" disabled>
+                                        <i class="fas fa-trash fa-2x mr-1"></i><span
+                                            class="link_">Point utilisé par une ressource</span>
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

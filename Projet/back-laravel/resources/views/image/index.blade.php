@@ -54,7 +54,7 @@
                                     <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
                                             type="button" disabled>
                                         <i class="fas fa-trash fa-2x mr-1"></i><span
-                                            class="link_">Image utilisée dans une ressource.</span>
+                                            class="link_">Image utilisée par une ressource.</span>
                                     </button>
                                 @endif
                             </div>

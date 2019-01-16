@@ -50,7 +50,6 @@
                         <a href="{{ url('/city') }}" class="nav-link">Accueil</a>
                     </li>
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     @auth
