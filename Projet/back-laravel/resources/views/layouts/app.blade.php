@@ -71,8 +71,7 @@
 
     <main class="py-4">
         @if(session('success'))
-            <div id="success"
-                 class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
+            <div class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
                  role="alert">
                 {{session("success")}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -87,7 +86,7 @@
 <script src="{{ asset('js/app.js') }}" defer></script>
 @stack('scripts')
 <script>window.addEventListener('load', function () {
-        $("#success").delay(5000).slideUp(300)
+        $(".alert").delay(10000).slideUp(300)
     })
 </script>
 </body>
