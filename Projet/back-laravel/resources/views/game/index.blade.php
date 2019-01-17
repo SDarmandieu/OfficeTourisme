@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container-fluid">
         <a href="{{route('gameCreate',$city->id)}}"
@@ -30,13 +29,13 @@
                             </div>
                             <div class="card-body">
                                 <p>Description : {{$game->desc}}</p>
-                                Icône :
-                                @if($game->image)
-                                    <img class="img-fluid my-2 w-25" src="{{asset('storage/'.$game->image->path)}}"
-                                         alt="{{asset('storage/'.$game->image->lat)}}">
-                                @else
-                                    <span>par défault</span>
-                                @endif
+                                {{--Icône :--}}
+                                {{--@if($game->files()->pluck('imagetype_id'))--}}
+                                    {{--<img class="img-fluid my-2 w-25" src="{{asset('storage/'.$game->image->path)}}"--}}
+                                         {{--alt="{{asset('storage/'.$game->image->lat)}}">--}}
+                                {{--@else--}}
+                                    {{--<span>par défault</span>--}}
+                                {{--@endif--}}
                             </div>
                             <div class="card-footer d-flex flex-column">
 

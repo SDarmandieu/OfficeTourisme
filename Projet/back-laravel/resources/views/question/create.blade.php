@@ -21,17 +21,17 @@
                     <div class="image-selector row">
                         <p class="col-md-4 col-form-label text-md-right">Image de la question</p>
                         <div class="col-md-6">
-                            <input id="default" type="radio" name="image" value="{{null}}">
+                            <input id="default" type="radio" name="file" value="{{null}}">
                             <label
                                 for="default"
                                 class="image-style"
                                 style="background-image:url({{asset('images/default-image.png')}});"></label>
-                            @foreach($images as $image)
-                                <input id="image{{$image->id}}" type="radio" name="image" value="{{$image->id}}">
+                            @foreach($files as $file)
+                                <input id="image{{$file->id}}" type="radio" name="file" value="{{$file->id}}">
                                 <label
-                                    for="image{{$image->id}}"
+                                    for="image{{$file->id}}"
                                     class="image-style"
-                                    style="background-image:url({{asset('storage/'.$image->path)}});"></label>
+                                    style="background-image:url({{asset('storage/'.$file->path)}});"></label>
                             @endforeach
                         </div>
                     </div>

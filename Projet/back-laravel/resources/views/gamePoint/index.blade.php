@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid row">
-        <div class="col border-right">
+        <div class="col-md-4 border-right">
             @if(!$question)
                 <h2 class="text-center mt-3">Aucune question n'a encore été créée pour {{$game->city->name}}</h2>
                 <a href="{{route('questionCreate',[$game->id,$point->id])}}"
@@ -14,9 +14,9 @@
                     </div>
                     <div class="card-body">
                         <p>Question : {{$question->content}}</p>
-                        @if($question->image)
-                            <img class="img-fluid my-2 w-25" src="{{asset('storage/'.$question->image->path)}}"
-                                 alt="{{asset('storage/'.$question->image->lat)}}">
+                        @if($question->file)
+                            <img class="img-fluid my-2 w-25" src="{{asset('storage/'.$question->file->path)}}"
+                                 alt="{{asset('storage/'.$question->file->alt)}}">
                         @else
                             <p>Image : aucune</p>
                         @endif
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-md-8">
             @if(!$question)
                 <h2 class="text-center mt-3">Veuillez d'abord créer la question avant de rédiger ses réponses.</h2>
             @else

@@ -64,28 +64,28 @@
                 <img class="card-img-top" src="{{asset('images/pictures.png')}}"
                      alt="plusieurs icônes image stylisés superposées">
                 <div class="card-body">
-                    <h3 class="card-title">Images</h3>
+                    <h3 class="card-title">Fichiers</h3>
                     <p class="card-text d-flex flex-column">
-                        @switch($city->images->count())
+                        @switch($city->files->count())
                             @case(0)
-                            Cette ville n'a aucune image associée pour le moment.
+                            Cette ville n'a aucun fichier associé pour le moment.
                             @break
 
                             @case(1)
-                            Cette ville a 1 image associée.
+                            Cette ville a 1 fichier associé.
                             @break
 
                             @default
-                            Cette ville a {{$city->images->count()}} images associées.
+                            Cette ville a {{$city->files->count()}} fichiers associés.
                     @endswitch
                 </div>
                 <div class="card-footer">
-                    <a href="{{route('imageIndex',$city->id)}}" class="d-flex align-items-center align-self-start"><i
+                    <a href="{{route('fileIndex',[$city->id,"image"])}}"
+                       class="d-flex align-items-center align-self-start"><i
                             class="fas fa-images fa-2x mr-1"></i><span class="link_">Gérer
-                                        ses images</span></a></p>
+                                        ses fichiers</span></a></p>
                 </div>
             </div>
-
         </div>
 
     </div>

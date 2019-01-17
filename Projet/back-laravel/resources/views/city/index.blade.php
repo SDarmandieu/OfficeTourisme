@@ -38,23 +38,24 @@
                                             class="fas fa-map-marked-alt mr-1"></i><span class="link_">Voir
                                         ses jeux de pistes</span></a>
                                 </p>
+
                                 <p class="card-text d-flex flex-column">
-                                    @switch($city->images->count())
+                                    @switch($city->files->count())
                                         @case(0)
-                                        Cette ville n'a aucune image associée pour le moment.
+                                        Cette ville n'a aucun fichier associé pour le moment.
                                         @break
 
                                         @case(1)
-                                        Cette ville a 1 image associée.
+                                        Cette ville a 1 fichier associé.
                                         @break
 
                                         @default
-                                        Cette ville a {{$city->images->count()}} images associées.
+                                        Cette ville a {{$city->files->count()}} fichiers associés.
                                     @endswitch
-                                    <a href="{{route('imageIndex',$city->id)}}"
+                                    <a href="{{route('fileIndex',[$city->id,"image"])}}"
                                        class="d-flex align-items-center align-self-start"><i
                                             class="fas fa-images mr-1"></i><span class="link_">Voir
-                                        ses images</span></a></p>
+                                        ses fichiers</span></a></p>
 
                                 <p class="card-text d-flex flex-column">
                                     @switch($city->points->count())
@@ -69,7 +70,6 @@
                                         @default
                                         Cette ville a {{$city->points->count()}} points d'interêt.
                                     @endswitch
-
 
                                     <a href="{{route('pointIndex',$city->id)}}"
                                        class="d-flex align-items-center align-self-start"><i

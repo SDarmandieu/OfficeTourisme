@@ -26,9 +26,9 @@
                             <input
                                 id="default"
                                 type="radio"
-                                name="image"
+                                name="file"
                                 value="{{null}}"
-                            @if ($question->image_id == null)
+                            @if ($question->file_id == null)
                                 {{'checked'}}
                                 @endif>
                             <label
@@ -39,9 +39,9 @@
                                 <input
                                     id="image{{$image->id}}"
                                     type="radio"
-                                    name="image"
+                                    name="file"
                                     value="{{$image->id}}"
-                                @if ($image->id == $question->image_id)
+                                @if ($image->id == $question->file_id)
                                     {{'checked'}}
                                 @endif>
                                 <label

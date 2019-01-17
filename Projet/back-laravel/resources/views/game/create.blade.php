@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="image-selector row">
-                        <p class="col-md-4 col-form-label text-md-right">Icône principale de la carte</p>
+                        <p class="col-md-4 col-form-label text-md-right">Icône principal de la carte</p>
                         <div class="col-md-6">
                             <input id="default" type="radio" name="icon" value="{{null}}">
                             <label
