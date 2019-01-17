@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\City;
-use App\Image;
-use App\Point;
+use App\File;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -32,7 +31,7 @@ class GameController extends Controller
      */
     public function create($city_id)
     {
-        $icons = Image::whereHas('imagetype',
+        $icons = File::whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'icon');
             })->get();
@@ -50,13 +49,15 @@ class GameController extends Controller
      */
     public function store($city_id, Request $request)
     {
-        Game::create([
+        $game = Game::create([
             'desc' => $request->input('desc'),
             'name' => $request->input('name'),
             'age' => $request->input('age'),
-            'image_id' => $request->input('icon'),
             'city_id' => $city_id
         ]);
+
+        $game->files()->attach($request->input('icon'));
+
         return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été créé.');
     }
 
@@ -69,12 +70,12 @@ class GameController extends Controller
      */
     public function edit($game_id)
     {
-        $icons = Image::whereHas('imagetype',
+        $icons = File::whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'icon');
             })->get();
         $game = Game::findOrFail($game_id);
-        return view('game.edit', compact( 'game', 'icons'));
+        return view('game.edit', compact('game', 'icons'));
     }
 
     /**
@@ -124,6 +125,6 @@ class GameController extends Controller
     {
         $game = Game::find($game_id);
         $points = $game->points()->paginate(5);
-        return view('game.home', compact('game','points'));
+        return view('game.home', compact('game', 'points'));
     }
 }

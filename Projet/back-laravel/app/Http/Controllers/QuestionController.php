@@ -6,7 +6,7 @@ use App\Question;
 use App\Point;
 use App\Game;
 use App\City;
-use App\Image;
+use App\File;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -21,13 +21,13 @@ class QuestionController extends Controller
     {
         $game = Game::findOrFail($game_id);
         $point = Point::findOrFail($point_id);
-        $images = Image::where('city_id', '=', $game->city->id)
+        $files = File::where('city_id', '=', $game->city_id)
             ->whereHas('imagetype',
                 function ($q) {
                     $q->where('title', '=', 'game');
                 })->get();
 
-        return view('question.create', compact( 'game', 'point', 'images'));
+        return view('question.create', compact( 'game', 'point', 'files'));
     }
 
     /**
@@ -43,7 +43,7 @@ class QuestionController extends Controller
             'expe' => $request->input('expe'),
             'point_id' => $point_id,
             'game_id' => $game_id,
-            'image_id' => $request->input('image')
+            'file_id' => $request->input('file')
         ]);
 
         return redirect()->route('gamePointIndex', [$game_id, $point_id])->with('success', 'La question a bien été créée.');
@@ -58,7 +58,7 @@ class QuestionController extends Controller
     public function edit($question_id)
     {
         $question = Question::findOrFail($question_id);
-        $images = Image::whereHas('imagetype',
+        $images = File::whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'game');
             })
@@ -80,7 +80,7 @@ class QuestionController extends Controller
         $question->update([
             'content' => $request->input('question'),
             'expe' => $request->input('expe'),
-            'image_id' => $request->input('image')
+            'file_id' => $request->input('file')
         ]);
 
         return redirect()->route('gamePointIndex', [$question->game->id,$question->point->id])->with('success', 'La question a bien été modifiée');

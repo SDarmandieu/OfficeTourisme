@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\City;
-use App\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 

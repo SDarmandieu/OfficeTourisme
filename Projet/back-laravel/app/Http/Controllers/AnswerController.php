@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use App\City;
-use App\Game;
-use App\Point;
 use App\Question;
-use App\Image;
+use App\File;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -21,7 +18,7 @@ class AnswerController extends Controller
     public function create($question_id)
     {
         $question = Question::findOrFail($question_id);
-        $images = Image::where('city_id', '=', $question->game->city->id)
+        $images = File::where('city_id', '=', $question->game->city->id)
             ->whereHas('imagetype',
                 function ($q) {
                     $q->where('title', '=', 'game');
@@ -43,7 +40,7 @@ class AnswerController extends Controller
             'content' => $request->input('answer'),
             'valid' => $request->input('valid'),
             'question_id' => $question_id,
-            'image_id' => $request->input('image')
+            'file_id' => $request->input('file')
         ]);
 
         return redirect()->route('gamePointIndex',[$question->game->id,$question->point->id])->with('success', 'La réponse a bien été créée.');
@@ -57,11 +54,12 @@ class AnswerController extends Controller
      */
     public function edit($answer_id)
     {
-        $images = Image::whereHas('imagetype',
+        $answer = Answer::findOrFail($answer_id);
+        $images = File::where('city_id', '=', $answer->question->game->city->id)
+        ->whereHas('imagetype',
             function ($q) {
                 $q->where('title', '=', 'game');
             })->get();
-        $answer = Answer::findOrFail($answer_id);
         return view('answer.edit', compact('images','answer'));
     }
 
@@ -77,8 +75,8 @@ class AnswerController extends Controller
         $answer = Answer::findOrFail($answer_id);
         $answer->update([
             'content' => $request->input('answer'),
-            'valid' => $request->input('valid'),
-            'image_id' => $request->input('image')
+            'valid' => (bool)($request->input('valid')),
+            'file_id' => $request->input('file')
         ]);
 
         return redirect()->route('gamePointIndex',[$answer->question->game->id,$answer->question->point->id])->with('success', 'La réponse a bien été modifiée.');
