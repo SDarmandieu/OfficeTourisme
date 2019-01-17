@@ -18,7 +18,7 @@ class CreateAnswersTable extends Migration
             $table->string('content');
             $table->boolean('valid');
             $table->integer('question_id')->unsigned();
-            $table->integer('image_id')->nullable();
+            $table->integer('file_id')->nullable();
             $table->timestamps();
 
             $table->foreign('question_id')

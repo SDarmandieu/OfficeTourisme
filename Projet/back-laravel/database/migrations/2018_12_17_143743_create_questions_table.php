@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('expe');
             $table->integer('point_id')->unsigned();
             $table->integer('game_id')->unsigned();
-            $table->integer('image_id')->nullable();
+            $table->integer('file_id')->nullable();
             $table->timestamps();
 
             $table->foreign('game_id')

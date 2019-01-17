@@ -19,7 +19,6 @@ class CreateGamesTable extends Migration
             $table->string('age');
             $table->text('desc');
             $table->integer('city_id')->unsigned();
-            $table->integer('image_id')->nullable();
             $table->timestamps();
 
             $table->foreign('city_id')
