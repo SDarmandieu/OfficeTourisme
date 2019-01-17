@@ -50,19 +50,6 @@ Route::put('/point/update/{point_id}','PointController@update')->name('pointUpda
 Route::delete('/point/destroy/{point_id}','PointController@destroy')->name('pointDestroy')->middleware('auth');
 
 /**
- * Image crud route
- */
-Route::get('/city/{city_id}/image','ImageController@index')->name('imageIndex')->middleware('auth');
-
-Route::get('/city/{city_id}/image/create','ImageController@create')->name('imageCreate')->middleware('auth');
-Route::post('/city/{city_id}/image/store','ImageController@store')->name('imageStore')->middleware('auth');
-
-Route::get('/image/edit/{image_id}','ImageController@edit')->name('imageEdit')->middleware('auth');
-Route::put('/image/update/{image_id}','ImageController@update')->name('imageUpdate')->middleware('auth');
-
-Route::delete('/image/destroy/{image_id}','ImageController@destroy')->name('imageDestroy')->middleware('auth');
-
-/**
  * Game crud route
  */
 Route::get('/city/{city_id}/game','GameController@index')->name('gameIndex')->middleware('auth');
@@ -107,5 +94,18 @@ Route::get('/answer/edit/{answer_id}','AnswerController@edit')->name('answerEdit
 Route::put('/answer/update/{answer_id}','AnswerController@update')->name('answerUpdate')->middleware('auth');
 
 Route::delete('/answer/destroy/{answer_id}','AnswerController@destroy')->name('answerDestroy')->middleware('auth');
+
+/**
+ * File crud route
+ */
+Route::get('/city/{city_id}/files/{type}/{id?}','FileController@index')->name('fileIndex')->middleware('auth');
+
+Route::get('/city/{city_id}/file/create','FileController@create')->name('fileCreate')->middleware('auth');
+Route::post('/city/{city_id}/file/store','FileController@store')->name('fileStore')->middleware('auth');
+
+Route::get('/file/edit/{file_id}','FileController@edit')->name('fileEdit')->middleware('auth');
+Route::put('/file/update/{file_id}','FileController@update')->name('fileUpdate')->middleware('auth');
+
+Route::delete('/file/destroy/{file_id}','FileController@destroy')->name('fileDestroy')->middleware('auth');
 
 
