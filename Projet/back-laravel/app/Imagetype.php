@@ -18,8 +18,8 @@ class Imagetype extends Model
         'title'
     ];
 
-    public function images()
+    public function files()
     {
-    	return $this->hasMany('App\Image');
+        return $this->hasMany('App\File');
     }
 }

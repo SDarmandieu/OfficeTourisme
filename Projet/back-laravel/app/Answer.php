@@ -15,7 +15,7 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'content','valid','question_id','image_id'
+        'content','valid','question_id','file_id'
     ];
 
     public function question()
@@ -23,8 +23,8 @@ class Answer extends Model
     	return $this->belongsTo('App\Question');
     }
 
-    public function image()
+    public function file()
     {
-    	return $this->hasOne('App\Image');
+        return $this->hasOne('App\File');
     }
 }

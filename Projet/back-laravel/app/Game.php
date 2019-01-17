@@ -15,7 +15,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'name','age','desc','city_id','image_id'
+        'name','age','desc','city_id'
     ];
 
     public function city()
@@ -28,13 +28,13 @@ class Game extends Model
     	return $this->belongsToMany('App\Point');
     }
 
-    public function image()
-    {
-    	return $this->belongsTo('App\Image');
-    }
-
     public function question()
     {
         return $this->hasMany('App\Question');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany('App\File');
     }
 }
