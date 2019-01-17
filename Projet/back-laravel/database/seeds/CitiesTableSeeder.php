@@ -15,7 +15,7 @@ class CitiesTableSeeder extends Seeder
             ->each(function ($city) {
                 $city->points()->saveMany(factory(App\Point::class, 7)->make());
 
-                $city->images()->saveMany(factory(App\Image::class, 10)->make())
+                $city->files()->saveMany(factory(App\File::class, 10)->make())
                     ->each(function ($image) {
                         if ($image->imagetype_id == 2) {
                             $game = factory(App\Game::class)->make();
