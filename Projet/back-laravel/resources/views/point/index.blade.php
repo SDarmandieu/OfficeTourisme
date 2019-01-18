@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    {{ Breadcrumbs::render('pointIndex',$city) }}
+@endsection
+
 @section('content')
     <a href="{{route('pointCreate',$city->id)}}"
        class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
