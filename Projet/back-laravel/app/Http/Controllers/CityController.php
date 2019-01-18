@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,7 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        $paths = Image::where('city_id', '=', $id)->pluck('path')->toArray();
+        $paths = File::where('city_id', '=', $id)->pluck('path')->toArray();
         Storage::disk('public')->delete($paths);
         City::find($id)->delete();
         return redirect()->route('cityIndex')->with('success', 'La ville a bien été supprimée.');
