@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('breadcrumb')
+    {{ Breadcrumbs::render('gamePointIndex',$game,$point) }}
+@endsection
+
 @section('content')
     <div class="container-fluid row">
         <div class="col-md-4 border-right">
@@ -8,7 +13,7 @@
                    class="d-flex align-items-center justify-content-center btn btn-outline-primary mx-auto"><i
                         class="fas fa-plus-circle fa-3x mr-1"></i>Créer la question</a>
             @else
-                <div class="card mt-4">
+                <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         Question de ce point d'interêt
                     </div>
