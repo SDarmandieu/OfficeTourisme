@@ -45,11 +45,11 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a href="{{ url('/city') }}" class="nav-link">Accueil</a>
-                    </li>
-                </ul>
+                {{--<ul class="navbar-nav mr-auto">--}}
+                    {{--<li class="nav-item">--}}
+                        {{--<a href="{{ url('/city') }}" class="nav-link">Accueil</a>--}}
+                    {{--</li>--}}
+                {{--</ul>--}}
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     @auth
@@ -69,7 +69,9 @@
         </div>
     </nav>
 
-    <main class="py-4">
+    <nav>@yield('breadcrumb')</nav>
+
+    <main class="mt-4">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
                  role="alert">
