@@ -44,15 +44,14 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                {{--<ul class="navbar-nav mr-auto">--}}
-                    {{--<li class="nav-item">--}}
-                        {{--<a href="{{ url('/city') }}" class="nav-link">Accueil</a>--}}
-                    {{--</li>--}}
-                {{--</ul>--}}
-                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     @auth
+                        {{--<li class="nav-item">--}}
+                            {{--<a class="nav-link" href="{{ route('userCreate') }}">Créer un compte admin</a>--}}
+                        {{--</li>--}}
+                        {{--<li class="nav-item">--}}
+                            {{--<a class="nav-link" href="{{ route('userShow',Auth::user()->id) }}">Mon compte</a>--}}
+                        {{--</li>--}}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

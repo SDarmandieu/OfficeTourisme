@@ -17,6 +17,20 @@ Route::view('/login', 'auth.login')->name('login');
 Auth::routes();
 
 /**
+ * User routes
+ */
+Route::get('/user/show/{id}','UserController@show')->name('userShow')->middleware('auth');
+
+Route::view('/user/create','user.create')->name('userCreate')->middleware('auth');
+Route::post('/user/store','UserController@store')->name('userStore')->middleware('auth');
+
+Route::delete('/user/destroy/{id}','UserController@destroy')->name('userDestroy')->middleware('auth');
+
+Route::get('/user/edit/{id}','UserController@edit')->name('userEdit')->middleware('auth');
+Route::put('/user/update/{id}','UserController@update')->name('userUpdate')->middleware('auth');
+
+
+/**
  * City crud routes
  */
 Route::get('/city', 'CityController@index')->name('cityIndex')->middleware('auth');

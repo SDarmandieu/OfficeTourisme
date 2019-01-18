@@ -45,8 +45,9 @@
                                         <i class="fas fa-trash fa-2x mr-1"></i><span
                                             class="link_">Supprimer le point</span>
                                     </button>
-                                    @else
-                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start" disabled>
+                                @else
+                                    <button class="btn btn-link d-flex align-items-center p-0 mt-2 align-self-start"
+                                            disabled>
                                         <i class="fas fa-trash fa-2x mr-1"></i><span
                                             class="link_">Point utilisé par une ressource</span>
                                     </button>
@@ -137,22 +138,38 @@
             }).addTo(map);
 
             @foreach($points as $point)
+            @if(!($point->games->count()))
             L
                 .marker([
                     {{$point->lat}},
                     {{$point->lon}}])
                 .addTo(map)
-                .bindPopup(
-                    `<p>Description : {{$point->desc}}</p>
+                .bindPopup(`<p>Description : {{$point->desc}}</p>
                     <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
-                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>`
-                )
+                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <form method='POST' action="/point/destroy/{{$point->id}}">
+                    @method('DELETE')
+                    @csrf
+                    <button class="btn btn-danger"></i>Supprimer ce point</button>
+                    </form>`)
+            @else
+            L
+                .marker([
+                    {{$point->lat}},
+                    {{$point->lon}}])
+                .addTo(map)
+                .bindPopup(`<p>Description : {{$point->desc}}</p>
+                    <p>Latitude : ${({{$point->lat}}).toFixed(3)}</p>
+                    <p>Longitude : ${({{$point->lon}}).toFixed(3)}</p>
+                    <button class="btn btn-secondary" disabled></i>Point utilisé par une ressource</button>
+                    </form>`)
+            @endif
             @endforeach
             /**
              *  to adapt the content of destroy modal
              */
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let {desc,id} = $(event.relatedTarget).data('point')
+                let {desc, id} = $(event.relatedTarget).data('point')
                 let modal = $(this)
                 modal.find('.modal-body span').text(desc)
                 modal.find('.modal-title').text(`Supprimer ${desc}`)
