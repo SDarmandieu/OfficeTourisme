@@ -12,7 +12,7 @@
 */
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::view('/login', 'auth.login');
+Route::view('/login', 'auth.login')->name('login');
 
 Auth::routes();
 
@@ -28,8 +28,6 @@ Route::delete('/city/destroy/{id}', 'CityController@destroy')->name('cityDestroy
 
 Route::get('/city/edit/{id}', 'CityController@edit')->name('cityEdit')->middleware('auth');
 Route::put('/city/update/{id}', 'CityController@update')->name('cityUpdate')->middleware('auth');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 /**
  * Routes to city homepage
