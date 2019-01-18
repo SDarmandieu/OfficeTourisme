@@ -127,17 +127,15 @@
     <script>
         $(document).ready(() => {
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let button = $(event.relatedTarget) // bouton qui déclenche le modal
-                let recipient = button.data('current') // récupère le data-question attribute
+                let {id,expe} = $(event.relatedTarget).data('current')
                 let modal = $(this)
-                console.log(recipient)
                 modal.find('.modal-title').text(`Supprimer`)
-                if (recipient.expe) {
+                if (expe !== 'undefined') {
                     modal.find('.modal-body span').text(`cette question et ainsi que toutes les réponses qui en dépendent`)
-                    modal.find('.modal-footer form').attr('action', `/question/destroy/${recipient.id}`)
+                    modal.find('.modal-footer form').attr('action', `/question/destroy/${id}`)
                 } else {
                     modal.find('.modal-body span').text(`cette réponse`)
-                    modal.find('.modal-footer form').attr('action', `/answer/destroy/${recipient.id}`)
+                    modal.find('.modal-footer form').attr('action', `/answer/destroy/${id}`)
                 }
             })
         })

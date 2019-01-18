@@ -187,12 +187,11 @@
              *  to adapt the content of destroy modal
              */
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let button = $(event.relatedTarget) // bouton qui déclenche le modal
-                let recipient = button.data('point') // récupère le data-point attribute
+                let {desc,id} = $(event.relatedTarget).data('point')
                 let modal = $(this)
-                modal.find('.modal-body span').text(recipient.desc)
-                modal.find('.modal-title').text(`Supprimer ${recipient.desc}`)
-                modal.find('.modal-footer form').attr('action', `/game/{{$game->id}}/point/detach/${recipient.id}`)
+                modal.find('.modal-body span').text(desc)
+                modal.find('.modal-title').text(`Supprimer ${desc}`)
+                modal.find('.modal-footer form').attr('action', `/game/{{$game->id}}/point/detach/${id}`)
             })
 
             /**

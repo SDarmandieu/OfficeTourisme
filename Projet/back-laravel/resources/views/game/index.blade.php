@@ -103,12 +103,11 @@
     <script>
         $(document).ready(() => {
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let button = $(event.relatedTarget) // bouton qui déclenche le modal
-                let recipient = button.data('game') // récupère le data-game attribute
+                let {name,id} = $(event.relatedTarget).data('game')
                 let modal = $(this)
-                modal.find('.modal-body span').text(recipient.name)
-                modal.find('.modal-title').text(`Supprimer ${recipient.name}`)
-                modal.find('.modal-footer form').attr('action', `/game/destroy/${recipient.id}`)
+                modal.find('.modal-body span').text(name)
+                modal.find('.modal-title').text(`Supprimer ${name}`)
+                modal.find('.modal-footer form').attr('action', `/game/destroy/${id}`)
             })
         })
     </script>
