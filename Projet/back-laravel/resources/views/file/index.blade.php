@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('breadcrumb')
+    {{ Breadcrumbs::render('fileIndex',$city) }}
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
