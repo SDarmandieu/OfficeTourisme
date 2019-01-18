@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    {{ Breadcrumbs::render('answerEdit',$answer) }}
+@endsection
+
 @section('content')
 
     <div class="container">
