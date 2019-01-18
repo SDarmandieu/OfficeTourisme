@@ -71,7 +71,7 @@
 
     <nav>@yield('breadcrumb')</nav>
 
-    <main class="mt-4">
+    <main class="my-4">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
                  role="alert">
