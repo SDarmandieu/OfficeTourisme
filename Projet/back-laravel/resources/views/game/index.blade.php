@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('breadcrumb')
+    {{ Breadcrumbs::render('gameIndex',$city) }}
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <a href="{{route('gameCreate',$city->id)}}"
@@ -31,10 +36,10 @@
                                 <p>Description : {{$game->desc}}</p>
                                 {{--Icône :--}}
                                 {{--@if($game->files()->pluck('imagetype_id'))--}}
-                                    {{--<img class="img-fluid my-2 w-25" src="{{asset('storage/'.$game->image->path)}}"--}}
-                                         {{--alt="{{asset('storage/'.$game->image->lat)}}">--}}
+                                {{--<img class="img-fluid my-2 w-25" src="{{asset('storage/'.$game->image->path)}}"--}}
+                                {{--alt="{{asset('storage/'.$game->image->lat)}}">--}}
                                 {{--@else--}}
-                                    {{--<span>par défault</span>--}}
+                                {{--<span>par défault</span>--}}
                                 {{--@endif--}}
                             </div>
                             <div class="card-footer d-flex flex-column">

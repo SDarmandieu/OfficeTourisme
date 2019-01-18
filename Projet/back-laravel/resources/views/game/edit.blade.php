@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    {{ Breadcrumbs::render('gameEdit',$game) }}
+@endsection
+
 @section('content')
 
     <div class="container">

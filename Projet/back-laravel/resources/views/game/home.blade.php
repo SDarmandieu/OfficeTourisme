@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('breadcrumb')
+    {{ Breadcrumbs::render('gameHome',$game) }}
+@endsection
+
 @section('content')
     <div class="row container-fluid mt-3">
         <div class="col">
