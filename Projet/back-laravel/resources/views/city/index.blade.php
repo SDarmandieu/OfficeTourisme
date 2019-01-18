@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('breadcrumb')
+    {{ Breadcrumbs::render('cityIndex') }}
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <a href="{{route('cityCreate')}}"
