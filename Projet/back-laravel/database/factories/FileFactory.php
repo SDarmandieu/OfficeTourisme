@@ -8,7 +8,7 @@ $factory->define(App\File::class, function (Faker $faker) {
         case(1) :
             return [
                 'filename' => "audio fake",
-                'path' => '/fake/fake_video.mp4',
+                'path' => '/fake/fake_audio.mp4',
                 'extension' => 'mp4',
                 'type' => 'audio',
                 'alt' => "applause",
