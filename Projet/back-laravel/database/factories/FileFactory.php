@@ -8,7 +8,7 @@ $factory->define(App\File::class, function (Faker $faker) {
         case(1) :
             return [
                 'filename' => "audio fake",
-                'path' => '/fake/fake_audio.mp4',
+                'path' => 'fake/fake_audio.mp3',
                 'extension' => 'mp4',
                 'type' => 'audio',
                 'alt' => "applause",
@@ -18,7 +18,7 @@ $factory->define(App\File::class, function (Faker $faker) {
         case(2) :
             return [
                 'filename' => "video fake",
-                'path' => '/fake/fake_video.mp4',
+                'path' => 'fake/fake_video.mp4',
                 'extension' => 'mp4',
                 'type' => 'video',
                 'alt' => "talking lion",
@@ -28,7 +28,7 @@ $factory->define(App\File::class, function (Faker $faker) {
         default :
             return [
                 'filename' => $faker->word,
-                'path' => '/files/image/' . $faker->image('public/storage/files/image', 400, 300, null, false),
+                'path' => 'files/image/' . $faker->image('public/storage/files/image', 400, 300, null, false),
                 'extension' => 'png',
                 'type' => 'image',
                 'alt' => $faker->word,

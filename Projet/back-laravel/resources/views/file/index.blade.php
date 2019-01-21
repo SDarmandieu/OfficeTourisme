@@ -55,7 +55,7 @@
                         </div>
                         @switch($file->type)
                             @case('image')
-                            <img class="card-img-top my-2" src="{{asset('storage'.$file->path)}}"
+                            <img class="card-img-top my-2" src="{{asset('storage/'.$file->path)}}"
                                  alt="{{$file->alt}}">
                             @break
 
@@ -159,6 +159,8 @@
             $('#showModal').on('show.bs.modal', function (event) {
                 let {path, type, filename, alt} = $(event.relatedTarget).data('file')
                 let modal = $(this)
+
+                console.log(path)
                 modal.find('.modal-title').text(filename)
 
                 let src = `/storage/${path}`
