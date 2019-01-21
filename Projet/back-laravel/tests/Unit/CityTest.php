@@ -31,26 +31,11 @@ class RouteTest extends TestCase
      *
      * @return void
      */
-    public function testHomeRouteAuth()
+    public function testHomeRoute()
     {
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
             ->get('/');
         $response->assertStatus(200);
-    }
-
-    /**
-     * testing home route when not authenticated
-     *
-     * @return void
-     */
-    public function testHomeRouteNoAuth()
-    {
-        $response = $this->get('/');
-        $response
-            ->assertStatus(302)
-            ->assertRedirect('/login');
     }
 
     /**
