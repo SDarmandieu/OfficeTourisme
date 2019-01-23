@@ -30,7 +30,7 @@ class File extends Model
 
     public function answers()
     {
-        return $this->belongsToMany('App\Answer');
+        return $this->hasMany('App\Answer');
     }
 
     public function imagetype()
