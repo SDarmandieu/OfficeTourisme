@@ -21,6 +21,7 @@ class Game extends JsonResource
             'age' => $this->age,
             'city_id' => $this->city_id,
             'points' => $this->points->pluck('id'),
+            'files' => $this->files->pluck('id'),
         ];
     }
 }

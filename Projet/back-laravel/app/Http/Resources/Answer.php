@@ -16,9 +16,10 @@ class Answer extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->content ,
+            'content' => $this->content,
             'valid' => $this->valid,
-            'question_id' =>$this->question_id,
+            'question_id' => $this->question_id,
+            'file_id' => $this->file_id
         ];
     }
 }
