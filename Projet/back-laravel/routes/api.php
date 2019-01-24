@@ -12,6 +12,10 @@ use App\Question;
 use App\Http\Resources\Question as QuestionResource;
 use App\Answer;
 use App\Http\Resources\Answer as AnswerResource;
+use App\File;
+use App\Http\Resources\File as FileResource;
+use App\Imagetype;
+use App\Http\Resources\Imagetype as ImagetypeResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +39,7 @@ Route::get('/database', function () {
         'points' => PointResource::collection(Point::all()),
         'questions' => QuestionResource::collection(Question::all()),
         'answers' => AnswerResource::collection(Answer::all()),
+        'files' => FileResource::collection(File::all()),
+        'imagetypes' => ImagetypeResource::collection(Imagetype::all()),
     ];
 });
-
