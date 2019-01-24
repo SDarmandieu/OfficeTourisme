@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 
 
-var db = new Dexie("officeTourisme");
+let db = new Dexie("officeTourisme");
 db.version(1).stores({
     "cities": 'id,name,lat,lon',
     "games": 'id,name,age,desc,city_id,points,files',
