@@ -3,7 +3,7 @@ import Navigation from './components/Navigation'
 import Routing from './components/Routing'
 import './App.css';
 
-import {populate} from './database/populateDB'
+import {populate} from './database/populateDatabase'
 
 class App extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navigation/>
+                {window.location.pathname.split`/`[1] !== 'game' && <Navigation/>}
                 <Routing/>
             </div>
         );
