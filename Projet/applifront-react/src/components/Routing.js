@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
 import Home from "../webpages/Home";
-import {checkUser} from '../database/user'
+import City from "../webpages/City";
+import Game from "../webpages/Game";
+import {checkUser} from '../database/userController'
 
 
 export default class Routing extends Component {
@@ -23,6 +25,8 @@ export default class Routing extends Component {
                 <Route path='/account' render={() => <div>Account</div>}/>
                 <Route path='/contacts' render={() => <div>Contacts</div>}/>
                 <Route path='/tutorial' render={() => <div>Tutoriel</div>}/>
+                <Route path='/city/:id' component = {City}/>
+                <Route path='/game/:id' component = {Game}/>
             </Switch>
         )
     }
