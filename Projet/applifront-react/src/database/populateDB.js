@@ -1,7 +1,7 @@
 import db from "./db";
 
 export const populate = () => {
-    fetch('http://192.168.43.44:8000/api/database')
+    fetch(`${process.env.REACT_APP_API_URL}/database`)
         .then(response => response.json())
         .then(data => {
             console.log("data", data)
