@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {addMarkers, generateMap} from '../map/utils'
 import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
 import QuestionModal from '../components/QuestionModal'
