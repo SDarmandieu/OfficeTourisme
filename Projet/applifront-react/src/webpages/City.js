@@ -12,7 +12,7 @@ export default class City extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         let city = await cityShow(this.props.match.params.id)
         let games = await gameIndex(this.props.match.params.id)
         await this.setState({

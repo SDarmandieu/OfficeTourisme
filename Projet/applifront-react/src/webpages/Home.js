@@ -13,7 +13,7 @@ export default class Home extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         let cities = await cityIndex()
         await this.setState({
             cities: cities

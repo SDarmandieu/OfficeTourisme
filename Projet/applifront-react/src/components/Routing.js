@@ -12,7 +12,7 @@ export default class Routing extends Component {
         this.state = {user: undefined}
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         let user = await checkUser()
         this.setState({user: user})
     }

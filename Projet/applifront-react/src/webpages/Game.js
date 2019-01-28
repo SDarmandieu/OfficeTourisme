@@ -19,7 +19,7 @@ export default class Game extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
     }
 
     render(){
