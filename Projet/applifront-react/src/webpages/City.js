@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {gameIndex} from '../database/gameController'
-import {cityShow} from '../database/cityController'
 import {ListGroup, ListGroupItem} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 export default class City extends Component {
     constructor(props) {
@@ -27,10 +27,24 @@ export default class City extends Component {
                 <h3>Liste des jeux de {city.name}</h3>
                 <ListGroup>
                     {games.map(game => <ListGroupItem key={game.id}
-                                                      header={game.name}>{game.desc}
+                                                      header={game.name}>
+                        <Link style={styles} to={{
+                            pathname: `/game/${game.id}`,
+                            state: {
+                                game: game,
+                                city: city
+                            }
+                        }}>
+                            {game.desc}
+                        </Link>
                     </ListGroupItem>)}
                 </ListGroup>
             </>
         )
     }
+}
+
+const styles = {
+    display: 'block',
+    color: 'inherit'
 }
