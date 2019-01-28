@@ -1,67 +1,87 @@
 import React, {Component} from 'react';
-import { Map, TileLayer , Marker , Circle} from "react-leaflet"
-import ReactInterval from 'react-interval'
-
+import {addMarkers, generateMap} from '../map/utils'
+import {pointIndex} from '../database/pointController'
+import {questionShow} from '../database/questionController'
+import QuestionModal from '../components/QuestionModal'
+import L from "leaflet";
+import 'leaflet.locatecontrol';
 
 export default class Game extends Component {
     constructor(props) {
         super(props)
         this.state = {
             game: {},
-            points: {},
-            modal: {},
-            center:[43.107973199999996, 0.7253157],
-            zoom:17,
-            userLocation:null,
-            markers:[],
-            enabled:true,
-            timeout:5000
+            points: [],
+            city: {},
+            questionModal: null,
+            center: [0, 0],
+            zoom: 16
         }
     }
 
     async componentDidMount() {
+        let {city, game} = this.props.location.state
+        let points = await pointIndex(game)
+        await this.setState({
+            points: points,
+            city: city,
+            center: [city.lat, city.lon],
+            game: game
+        })
+        let {center, zoom} = this.state
+        let map = this.generateMap(center, points, zoom)
+        this.addMarkers(map, points, center)
     }
 
-    render(){
-        const {timeout, enabled, userLocation , markers , modal , zoom , center , markersDexie} = this.state
+    generateMap = (center, points, zoom) => {
+        let map = L.map('map', {
+            attributionControl: false,
+            center: center,
+            zoom: zoom,
+            layers: [
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
+            ]
+        })
+        L.control.locate({
+            watch: true,
+            drawMarker: true,
+            strings: {
+                popup: "C'est moi !"
+            }
+        }).addTo(map).start()
 
+        return map
+    }
+
+
+    addMarkers = (map, points, center) => {
+        L.marker(center).addTo(map).bindPopup(`Office de Tourisme`)
+
+        let POIgroup = L.featureGroup().addTo(map).on("click", this.showQuestionModal)
+
+        points.map(point => {
+            let marker = L.marker([point.lat, point.lon])
+                .addTo(POIgroup)
+                .bindPopup(`<p>${point.desc}</p>`)
+            marker.id = [point.id,this.state.game.id]
+            return marker
+        })
+    }
+
+    showQuestionModal = async e => {
+        let question = await questionShow(e.layer.id)
+        await this.setState({questionModal:question})
+    }
+
+    modalNull = () => this.setState({questionModal: null})
+
+    render() {
+        let {questionModal} = this.state
         return (
-            <Map
-                center={center}
-                // onClick={(e)=>this.handleMapClick(e)}
-                zoom={zoom}>
-
-                {/* layer openstreetmap */}
-                <TileLayer
-                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.osm.org/{z}/{x}/{y}.png" />
-
-                {/* refresh de la position du user toutes les ${timeout} secondes */}
-                {/*<ReactInterval {...{timeout, enabled}}*/}
-                               {/*callback={this.getUserLoc} />*/}
-
-                {/* création du marker position du user */ }
-                {/*{userLocation && <Marker*/}
-                    {/*onClick={()=>alert("c'est moi")}*/}
-                    {/*position={userLocation}>*/}
-                    {/*<Circle*/}
-                        {/*center={{lat:userLocation[0], lng: userLocation[1]}}*/}
-                        {/*fillColor="blue"*/}
-                        {/*radius={20}/>*/}
-                {/*</Marker> }*/}
-
-                // {/* iteration sur les POIs pour les afficher sur la carte */}
-                // {/*markers.map(x=>
-          //   <Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[+x.lon,+x.lat]}/>)*/}
-
-                {/* même chose mais sur le(s) marqueur(s) Dexie */}
-                {/*{markersDexie.map(x=>*/}
-                    {/*<Marker onClick={()=>this.handleMarkerClick(x)} key={x.id} position={[x.lon,x.lat]}/>)}*/}
-
-                {/* conditional rendering pour afficher ou non un modal (si on a cliqué ou non sur un POI)
-           l'objet entier est passé en prop*/}
-                {/*{modal && <ModalCustom marker={modal} modalNull = {this.modalNull} />}*/}
-            </Map>
+            <>
+                <div id="map"></div>
+                {questionModal && <QuestionModal question={questionModal} modalNull={this.modalNull}/>}
+            </>
         )
     }
 }
