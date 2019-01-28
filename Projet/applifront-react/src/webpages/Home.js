@@ -77,11 +77,11 @@ export default class Home extends Component {
                                 disponibles</ListGroupItem>)}*/}
                             {cities.map(city => <ListGroupItem key={city.id}
                                                                header={city.name}>
-                                <Link to={{
+                                <Link style={styles} to={{
                                     pathname: `/city/${city.id}`,
                                     state: {city: city}
                                 }}>
-                                    Toto
+                                    {city.games.length} jeux disponibles
                                 </Link>
                             </ListGroupItem>)}
                         </ListGroup>
@@ -89,4 +89,9 @@ export default class Home extends Component {
             </>
         )
     }
+}
+
+const styles = {
+        display: 'block',
+        color: 'inherit'
 }
