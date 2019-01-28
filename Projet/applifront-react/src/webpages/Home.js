@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {addUser} from '../database/userController'
 import {cityIndex} from '../database/cityController'
+import {Link} from "react-router-dom";
 import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup, ListGroupItem} from "react-bootstrap"
 
 export default class Home extends Component {
@@ -9,7 +10,7 @@ export default class Home extends Component {
         this.state = {
             value: '',
             cities: [],
-            clickCity : []
+            clickCity: []
         }
     }
 
@@ -18,7 +19,7 @@ export default class Home extends Component {
         await this.setState({
             cities: cities
         })
-        console.log('cities',this.state.cities)
+        console.log('cities', this.state.cities)
     }
 
     handleSubmit = () => {
@@ -71,9 +72,18 @@ export default class Home extends Component {
                     : <>
                         <h3>Bienvenue {user} sur l'application de jeux de piste</h3>
                         <ListGroup>
-                            {cities.map(city => <ListGroupItem key={city.id} href={`/city/${city.id}`}
+                            {/*{cities.map(city => <ListGroupItem key={city.id} href={`/city/${city.id}`}
                                                                header={city.name}>{city.games.length} jeux
-                                disponibles</ListGroupItem>)}
+                                disponibles</ListGroupItem>)}*/}
+                            {cities.map(city => <ListGroupItem key={city.id}
+                                                               header={city.name}>
+                                <Link to={{
+                                    pathname: `/city/${city.id}`,
+                                    state: {city: city}
+                                }}>
+                                    Toto
+                                </Link>
+                            </ListGroupItem>)}
                         </ListGroup>
                     </>}
             </>
