@@ -33,6 +33,12 @@ export default class Game extends Component {
         this.addMarkers(map, points, center)
     }
 
+    /**
+     * generate map and start user control
+     * @param center
+     * @param points
+     * @param zoom
+     */
     generateMap = (center, points, zoom) => {
         let map = L.map('map', {
             attributionControl: false,
@@ -53,7 +59,12 @@ export default class Game extends Component {
         return map
     }
 
-
+    /**
+     * add markers and bind to them the method which opens question modal
+     * @param map
+     * @param points
+     * @param center
+     */
     addMarkers = (map, points, center) => {
         L.marker(center).addTo(map).bindPopup(`Office de Tourisme`)
 
@@ -68,11 +79,19 @@ export default class Game extends Component {
         })
     }
 
+    /**
+     * set modal state to open it
+     * @param e
+     * @returns {Promise<void>}
+     */
     showQuestionModal = async e => {
         let question = await questionShow(e.layer.id)
-        await this.setState({questionModal:question})
+        this.setState({questionModal:question})
     }
 
+    /**
+     * set modal to null to close it
+     */
     modalNull = () => this.setState({questionModal: null})
 
     render() {
