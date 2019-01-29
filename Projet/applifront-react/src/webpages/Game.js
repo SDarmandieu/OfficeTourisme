@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
+import {answerIndex} from '../database/answerController'
 import QuestionModal from '../components/QuestionModal'
+import ResultModal from '../components/ResultModal'
 import L from "leaflet";
 import 'leaflet.locatecontrol';
 
@@ -13,6 +15,7 @@ export default class Game extends Component {
             points: [],
             city: {},
             questionModal: null,
+            validAnswer: null,
             center: [0, 0],
             zoom: 16
         }
@@ -73,7 +76,7 @@ export default class Game extends Component {
             let marker = L.marker([point.lat, point.lon])
                 .addTo(POIgroup)
                 .bindPopup(`<p>${point.desc}</p>`)
-            marker.id = [point.id,this.state.game.id]
+            marker.id = [point.id, this.state.game.id]
             return marker
         })
     }
@@ -85,20 +88,42 @@ export default class Game extends Component {
      */
     showQuestionModal = async e => {
         let question = await questionShow(e.layer.id)
-        this.setState({questionModal:question})
+        let answers = await answerIndex(question.id)
+        this.setState({
+            questionModal: {
+                question: question,
+                answers: answers
+            }
+        })
     }
 
     /**
      * set modal to null to close it
      */
-    modalNull = () => this.setState({questionModal: null})
+    hideQuestionModal = () => this.setState({questionModal: null})
+
+    /**
+     * show result modal, with data : wrong or right answer
+     * @param bool
+     */
+    showResultModal = bool => this.setState({validAnswer: bool})
+
+    /**
+     * close result modal by setting state to null
+     */
+    hideResultModal = () => this.setState({validAnswer: null})
 
     render() {
-        let {questionModal} = this.state
+        let {questionModal, validAnswer} = this.state
         return (
             <>
                 <div id="map"></div>
-                {questionModal && <QuestionModal question={questionModal} modalNull={this.modalNull}/>}
+                {questionModal && <QuestionModal data={questionModal}
+                                                 showResultModal={this.showResultModal}
+                                                 hideQuestionModal={this.hideQuestionModal}/>}
+                {validAnswer && <ResultModal validAnswer={validAnswer}
+                                             hideResultModal={this.hideResultModal}/>
+                }
             </>
         )
     }
