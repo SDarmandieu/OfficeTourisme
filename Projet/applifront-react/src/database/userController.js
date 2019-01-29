@@ -5,7 +5,7 @@ export const checkUser = async () => {
     if (user) return user.name
 }
 
-export const addUser = pseudo => {
+export const userStore = pseudo => {
     db.user.put({
         'id': 1,
         'name': pseudo,

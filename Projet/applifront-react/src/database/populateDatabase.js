@@ -1,5 +1,8 @@
 import db from "./db";
 
+/**
+ * fill DB with the API created from SQL Laravel Backend
+ */
 export const populate = () => {
     fetch(`${process.env.REACT_APP_API_URL}/database`)
         .then(response => response.json())

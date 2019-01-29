@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {addUser} from '../database/userController'
+import {userStore} from '../database/userController'
 import {cityIndex} from '../database/cityController'
 import {Link} from "react-router-dom";
 import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup, ListGroupItem} from "react-bootstrap"
@@ -23,7 +23,7 @@ export default class Home extends Component {
     }
 
     handleSubmit = () => {
-        addUser(this.state.value)
+        userStore(this.state.value)
     }
 
     handleChange = (event) => {
