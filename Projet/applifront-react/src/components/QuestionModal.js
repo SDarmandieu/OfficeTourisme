@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Modal} from 'react-bootstrap';
+import {Modal, FormGroup, Radio, Button} from 'react-bootstrap';
 
 class QuestionModal extends Component {
 
@@ -7,87 +7,63 @@ class QuestionModal extends Component {
         super(props);
         this.state = {
             show: false,
-            answer: ''
+            validAnswer: ''
         }
     }
-
-    handleClose = this.props.modalNull
 
     componentWillMount() {
         this.setState({show: true})
     }
 
     /**
-     *
-     * pour gérer l'ouverture d'un modal après la fermeture d'un autre
-     *
-     **/
+     * handle opening a modal after closing another
+     */
     componentWillReceiveProps() {
         this.setState({show: true})
     }
 
     /**
-     *
-     * modifie le state answer au changement de réponse
-     *
-     **/
-    handleChangeInput = e => {
-        this.setState({answer: e.target.value})
+     * closing modal function of parent
+     * @type {Game.modalNull}
+     */
+    handleClose = this.props.hideQuestionModal
+
+    showResultModal = this.props.showResultModal
+
+
+    /**
+     * change answer state when radio is selected
+     * @param e
+     */
+    handleChangeInput = e => this.setState({validAnswer: e.target.value})
+
+
+    handleSubmit = async e => {
+        e.preventDefault()
+        this.handleClose()
+        let {validAnswer} = this.state
+        this.showResultModal(validAnswer)
     }
 
-    /**
-     *
-     * envoi de la réponse au back , et console.log de ce que renvoie l'API
-     *
-     **/
-    // handleSubmit = async e => {
-    //     e.preventDefault();
-    //
-    //     const answer = {
-    //         answer: this.state.answer
-    //     }
-    //
-    //     const res = await axios.post(`http://192.168.43.44:8000/api/answer`, { answer })
-    //
-    //     console.log(res)
-    //     console.log(res.data)
-    // }
-
-    /**
-     *
-     * version promise de la fonction précédente
-     *
-     **/
-
-    /* handleSubmit = e => {
-      e.preventDefault();
-
-      const answer = {
-        answer: this.state.answer
-      }
-
-      axios.post(`http://192.168.1.118:8000/api/answer`, { answer })
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-    } */
-
     render() {
-        let {question} = this.props
-        console.log(question)
+        let {data} = this.props
+        let {show} = this.state
+        console.log(data)
         return (
             <>
-                <Modal bsSize="large" show={this.state.show} onHide={this.handleClose}>
-                    <Modal.Header closeButton>{question.content}</Modal.Header>
+                <Modal bsSize="large" show={show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>{data.question.content}</Modal.Header>
                     <Modal.Body>
-                        <form>
-                            <label>
-                                Réponse :
-                                <input type="text" name="answer" onChange={this.handleChangeInput}/>
-                            </label>
-                            <button type="submit">Répondre</button>
-                        </form>
+                        <FormGroup>
+                            {data.answers.map(answer => <Radio
+                                onChange={this.handleChangeInput}
+                                key={answer.id}
+                                name="answer"
+                                value={!!answer.valid}>
+                                {answer.content}
+                            </Radio>)}
+                            <Button type="submit" onClick={this.handleSubmit}>Choisir</Button>
+                        </FormGroup>
                     </Modal.Body>
                 </Modal>
             </>)
