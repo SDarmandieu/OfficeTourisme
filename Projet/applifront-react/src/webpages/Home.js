@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {userStore} from '../database/userController'
 import {cityIndex} from '../database/cityController'
 import {Link} from "react-router-dom";
-import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup, ListGroupItem} from "react-bootstrap"
+import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup} from "react-bootstrap"
 
 export default class Home extends Component {
     constructor(props) {
@@ -71,19 +71,19 @@ export default class Home extends Component {
                     </>
                     : <>
                         <h3>Bienvenue {user} sur l'application de jeux de piste</h3>
-                        <ListGroup>
-                            {/*{cities.map(city => <ListGroupItem key={city.id} href={`/city/${city.id}`}
-                                                               header={city.name}>{city.games.length} jeux
-                                disponibles</ListGroupItem>)}*/}
-                            {cities.map(city => <ListGroupItem key={city.id}
-                                                               header={city.name}>
-                                <Link style={styles} to={{
-                                    pathname: `/city/${city.id}`,
-                                    state: {city: city}
-                                }}>
-                                    {city.games.length} jeux disponibles
-                                </Link>
-                            </ListGroupItem>)}
+                        <ListGroup componentClass={'ul'}>
+                            {cities.map(city =>
+                                <Link
+                                    key={city.id}
+                                    to={{
+                                        pathname: `/city/${city.id}`,
+                                        state: {city: city}
+                                    }}>
+                                    <div style={link} className={'list-group-item center-block'}>
+                                        <h4 className="list-group-item-heading">{city.name}</h4>
+                                        <p className="list-group-item-text">{city.games.length} jeux disponibles</p>
+                                    </div>
+                                </Link>)}
                         </ListGroup>
                     </>}
             </>
@@ -91,7 +91,9 @@ export default class Home extends Component {
     }
 }
 
-const styles = {
-        display: 'block',
-        color: 'inherit'
+const link = {
+    color: 'black',
+    borderRadius: 5,
+    width: '95%',
+    marginTop: '10px',
 }

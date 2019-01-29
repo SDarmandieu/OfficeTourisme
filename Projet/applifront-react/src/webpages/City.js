@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {gameIndex} from '../database/gameController'
-import {ListGroup, ListGroupItem} from "react-bootstrap";
+import {ListGroup} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 export default class City extends Component {
@@ -25,26 +25,30 @@ export default class City extends Component {
         return (
             <>
                 <h3>Liste des jeux de {city.name}</h3>
-                <ListGroup>
-                    {games.map(game => <ListGroupItem key={game.id}
-                                                      header={game.name}>
-                        <Link style={styles} to={{
+                <ListGroup componentClass="ul">
+                    {games.map(game =>
+                        <Link key={game.id} to={{
                             pathname: `/game/${game.id}`,
                             state: {
                                 game: game,
                                 city: city
                             }
                         }}>
-                            {game.desc}
-                        </Link>
-                    </ListGroupItem>)}
+                            <div style={link} className={'list-group-item center-block'}>
+                                <h4 className="list-group-item-heading">{game.desc}</h4>
+                                <p className="list-group-item-text">{game.age}</p>
+                            </div>
+                        </Link>)
+                    }
                 </ListGroup>
             </>
         )
     }
 }
 
-const styles = {
-    display: 'block',
-    color: 'inherit'
+const link = {
+    color: 'black',
+    borderRadius: 5,
+    width: '95%',
+    marginTop: '10px'
 }
