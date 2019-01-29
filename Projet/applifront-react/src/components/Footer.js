@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navbar, Grid, Col, Image, Row} from "react-bootstrap";
+import {Grid, Col, Image, Row} from "react-bootstrap";
 
 export default class Footer extends Component {
     constructor(props) {
@@ -32,6 +32,7 @@ const col = {
 
 const grid = {
     height: '14vh',
+    width: '100%',
     position: 'fixed',
     top: '86vh',
     backgroundColor: '#222',
