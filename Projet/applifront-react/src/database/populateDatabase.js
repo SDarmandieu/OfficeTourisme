@@ -3,18 +3,17 @@ import db from "./db";
 /**
  * fill DB with the API created from SQL Laravel Backend
  */
-export const populate = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/database`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("data", data)
+export const populate = async () => {
+    let response = await fetch(`${process.env.REACT_APP_API_URL}/database`)
+    let data = await response.json()
+    console.log(data)
 
-            db.on("ready", function () {
-                Object.entries(data).forEach(([tableName, tableDatas]) => {
-                    tableDatas.map(current => db.table(tableName).put(current))
-                })
-            });
-            db.open();
+    db.on("ready", function () {
+        Object.entries(data).forEach(([tableName, tableDatas]) => {
+            tableDatas.map(current => db.table(tableName).put(current))
+        })
+    });
+    db.open();
 
             //
             // const getGame = async () => {
@@ -38,5 +37,5 @@ export const populate = () => {
                         console.log("marker Dexie", this.state.markersDexie)
                     }))
             })*/
-        })
+        // })
 }
