@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Modal, FormGroup, Radio, Button} from 'react-bootstrap';
 
-class QuestionModal extends Component {
+export default class QuestionModal extends Component {
 
     constructor(props) {
         super(props);
@@ -35,7 +35,12 @@ class QuestionModal extends Component {
      * change answer state when radio is selected
      * @param e
      */
-    handleChangeInput = e => this.setState({validAnswer: e.target.value})
+    handleChangeInput = e => this.setState({
+        validAnswer: {
+            valid: e.target.value,
+            expe: this.props.data.question.expe
+        }
+    })
 
 
     handleSubmit = async e => {
@@ -46,7 +51,7 @@ class QuestionModal extends Component {
     }
 
     render() {
-        let {point,answers,question} = this.props.data
+        let {point, answers, question} = this.props.data
         let {show} = this.state
         return (
             <>
@@ -69,5 +74,3 @@ class QuestionModal extends Component {
             </>)
     }
 }
-
-export default QuestionModal;
