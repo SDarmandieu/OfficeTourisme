@@ -56,7 +56,9 @@ export default class Game extends Component {
             strings: {
                 popup: "C'est moi !"
             }
-        }).addTo(map).start()
+        }).addTo(map)
+
+        map.setView(center)
 
         return map
     }
@@ -75,8 +77,8 @@ export default class Game extends Component {
         points.map(point => {
             let marker = L.marker([point.lat, point.lon])
                 .addTo(POIgroup)
-                .bindPopup(`<p>${point.desc}</p>`)
-            marker.id = [point.id, this.state.game.id]
+            marker.point = point
+            marker.game = this.state.game
             return marker
         })
     }
@@ -87,12 +89,13 @@ export default class Game extends Component {
      * @returns {Promise<void>}
      */
     showQuestionModal = async e => {
-        let question = await questionShow(e.layer.id)
+        let question = await questionShow(e.layer)
         let answers = await answerIndex(question.id)
         this.setState({
             questionModal: {
                 question: question,
-                answers: answers
+                answers: answers,
+                point: e.layer.point
             }
         })
     }
@@ -117,13 +120,13 @@ export default class Game extends Component {
         let {questionModal, validAnswer} = this.state
         return (
             <>
-                    <div id="map"></div>
-                    {questionModal && <QuestionModal data={questionModal}
-                                                     showResultModal={this.showResultModal}
-                                                     hideQuestionModal={this.hideQuestionModal}/>}
-                    {validAnswer && <ResultModal validAnswer={validAnswer}
-                                                 hideResultModal={this.hideResultModal}/>
-                    }
+                <div id="map"></div>
+                {questionModal && <QuestionModal data={questionModal}
+                                                 showResultModal={this.showResultModal}
+                                                 hideQuestionModal={this.hideQuestionModal}/>}
+                {validAnswer && <ResultModal validAnswer={validAnswer}
+                                             hideResultModal={this.hideResultModal}/>
+                }
             </>
         )
     }
