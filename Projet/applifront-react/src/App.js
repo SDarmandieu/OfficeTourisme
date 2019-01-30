@@ -20,8 +20,8 @@ class App extends Component {
         let inGame = window.location.pathname.split`/`[1] === 'game'
         return (
             <div className="App">
-                {!inGame && <Navigation/>}
-                <div style={{marginBottom:'15vh'}}><Routing/></div>
+                <Navigation/>
+                <div style={{marginBottom:'15vh',marginTop:'10vh'}}><Routing/></div>
                 {!inGame && <Footer/>}
             </div>
         );
