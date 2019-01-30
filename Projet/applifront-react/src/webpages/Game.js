@@ -6,7 +6,6 @@ import QuestionModal from '../components/QuestionModal'
 import ResultModal from '../components/ResultModal'
 import L from "leaflet";
 import 'leaflet.locatecontrol';
-import GameNavigation from "../components/GameNavigation";
 
 export default class Game extends Component {
     constructor(props) {
@@ -125,7 +124,6 @@ export default class Game extends Component {
                     {validAnswer && <ResultModal validAnswer={validAnswer}
                                                  hideResultModal={this.hideResultModal}/>
                     }
-                    <GameNavigation/>
             </>
         )
     }
