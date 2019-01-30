@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Game;
-use App\City;
 use App\Point;
 use App\Question;
 
@@ -54,6 +52,7 @@ class GamePointController extends Controller
     public function detach($game_id,$point_id)
     {
         $game = Game::findOrFail($game_id);
+        Question::where('game_id',$game_id)->where('point_id',$point_id)->delete();
 
         $game->points()->detach($point_id);
 
