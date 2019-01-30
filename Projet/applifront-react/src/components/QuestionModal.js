@@ -46,16 +46,16 @@ class QuestionModal extends Component {
     }
 
     render() {
-        let {data} = this.props
+        let {point,answers,question} = this.props.data
         let {show} = this.state
-        console.log(data)
         return (
             <>
                 <Modal bsSize="large" show={show} onHide={this.handleClose}>
-                    <Modal.Header closeButton>{data.question.content}</Modal.Header>
+                    <Modal.Header closeButton>{point.desc}</Modal.Header>
                     <Modal.Body>
+                        {question.content}
                         <FormGroup>
-                            {data.answers.map(answer => <Radio
+                            {answers.map(answer => <Radio
                                 onChange={this.handleChangeInput}
                                 key={answer.id}
                                 name="answer"
