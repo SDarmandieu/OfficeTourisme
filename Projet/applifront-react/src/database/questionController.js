@@ -9,3 +9,5 @@ export const questionShow = async marker => {
     let questions = await db.questions.where('point_id').equals(+marker.point.id).toArray()
     return questions.find(q => +q.game_id === +marker.game.id)
 }
+
+export const questionDone = async id => {await db.questions.update(id,{done:"true"}) ; console.log("done")}
