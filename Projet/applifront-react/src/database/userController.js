@@ -14,3 +14,13 @@ export const userStore = pseudo => {
         'games_done': []
     })
 }
+
+/**
+ * add expe to user when right answer is provided
+ * @param expe
+ * @returns {Promise<void>}
+ */
+export const userGainExpe = async (expe) => {
+    let user = await db.user.get(1)
+    await db.user.update(1, {expe: user.expe + expe})
+}
