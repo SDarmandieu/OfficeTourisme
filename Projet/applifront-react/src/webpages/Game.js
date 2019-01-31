@@ -70,17 +70,47 @@ export default class Game extends Component {
      * @param center
      */
     addMarkers = (map, points, center) => {
-        L.marker(center).addTo(map).bindPopup(`Office de Tourisme`)
+        let infoIcon = new L.Icon({
+            iconUrl: '/images/marker-icon-green.png',
+            shadowUrl: '/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
-        let POIgroup = L.featureGroup().addTo(map).on("click", this.showQuestionModal)
+        L.marker(center, {icon: infoIcon}).addTo(map).bindPopup(`Office de Tourisme`)
 
-        points.map(point => {
-            let marker = L.marker([point.lat, point.lon])
-                .addTo(POIgroup)
-            marker.point = point
-            marker.game = this.state.game
-            return marker
-        })
+        let notDoneGroup = L.featureGroup().addTo(map).on("click", this.showQuestionModal)
+        let doneGroup = L.featureGroup().addTo(map)
+
+        let doneIcon = new L.Icon({
+            iconUrl: '/images/marker-icon-black.png',
+            shadowUrl: '/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        points.map(async point => {
+                let marker
+                let check = {
+                    point: point,
+                    game: this.state.game
+                }
+                let question = await questionShow(check)
+                if (question.done === "true") {
+                    marker = L.marker([point.lat, point.lon], {icon: doneIcon}).bindPopup('Tu as déjà répondu à cette question').addTo(doneGroup)
+                } else {
+                    marker = L.marker([point.lat, point.lon]).addTo(notDoneGroup)
+                }
+                marker.point = point
+                marker.game = this.state.game
+
+                return marker
+            }
+        )
     }
 
     /**
