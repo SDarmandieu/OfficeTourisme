@@ -21,7 +21,7 @@ class Question extends JsonResource
             'point_id' => $this->point_id,
             'game_id' => $this->game_id,
             'file_id' => $this->file_id,
-            'done' => false
+            'done' => "false"
         ];
     }
 }
