@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import {Modal, FormGroup, Radio, Button} from 'react-bootstrap';
+import {userGainExpe} from "../database/userController";
+import {questionDone} from "../database/questionController"
 
 export default class QuestionModal extends Component {
 
@@ -48,6 +50,10 @@ export default class QuestionModal extends Component {
         this.handleClose()
         let {validAnswer} = this.state
         this.showResultModal(validAnswer)
+        if(validAnswer.valid==="true") {
+            userGainExpe(validAnswer.expe)
+            questionDone(this.props.data.question.id)
+        }
     }
 
     render() {
