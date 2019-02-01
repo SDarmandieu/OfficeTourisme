@@ -11,28 +11,26 @@ export default class Game extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            game: {},
-            points: [],
-            city: {},
             questionModal: null,
-            validAnswer: null,
-            center: [0, 0],
-            zoom: 16
+            validAnswer: null
         }
     }
 
     async componentDidMount() {
         let {city, game} = this.props.location.state
         let points = await pointIndex(game)
-        await this.setState({
-            points: points,
-            city: city,
-            center: [city.lat, city.lon],
-            game: game
-        })
-        let {center, zoom} = this.state
-        let map = this.generateMap(center, points, zoom)
-        this.addMarkers(map, points, center)
+        let map = this.generateMap([city.lat, city.lon], points, 16)
+        this.addMarkers(map, points, [city.lat, city.lon])
+        this.isGameOver()
+    }
+
+    isGameOver = () => {
+        let questionsIdList = this.props.location.state.game.questions
+        let {questions_done} = this.props.user
+        let compare = questions_done.filter(q => questionsIdList.includes(q))
+        if (compare.length === questionsIdList.length) {
+            this.setState({validAnswer: 'gameOver'})
+        }
     }
 
     /**
@@ -56,9 +54,25 @@ export default class Game extends Component {
             strings: {
                 popup: "C'est moi !"
             }
-        }).addTo(map)
+        }).addTo(map).start()
 
         map.setView(center)
+
+        let questionsIdList = this.props.location.state.game.questions
+        let {questions_done} = this.props.user
+        let compare = questions_done.filter(q => questionsIdList.includes(q))
+
+        let filterButton = L.Control.extend({
+            'onAdd': () => {
+                let container = L.DomUtil.create('div', 'search-container');
+                let badge = L.DomUtil.create('span', 'badge badge-inverse', container);
+                console.log(badge)
+                // badge.type = 'text';
+                badge.innerHTML = `Avancement : ${compare.length}/${questionsIdList.length}`
+                return container
+            }
+        })
+        map.addControl(new filterButton);
 
         return map
     }
@@ -97,16 +111,16 @@ export default class Game extends Component {
                 let marker
                 let check = {
                     point: point,
-                    game: this.state.game
+                    game: this.props.location.state.game
                 }
                 let question = await questionShow(check)
-                if (question.done === "true") {
+                if (this.props.user.questions_done.includes(question.id)) {
                     marker = L.marker([point.lat, point.lon], {icon: doneIcon}).bindPopup('Tu as déjà répondu à cette question').addTo(doneGroup)
                 } else {
                     marker = L.marker([point.lat, point.lon]).addTo(notDoneGroup)
                 }
                 marker.point = point
-                marker.game = this.state.game
+                marker.game = this.props.location.state.game
 
                 return marker
             }
@@ -144,13 +158,20 @@ export default class Game extends Component {
     /**
      * close result modal by setting state to null
      */
-    hideResultModal = () => this.setState({validAnswer: null})
+    hideResultModal = async () => {
+        let bool = this.state.validAnswer === 'gameOver'
+        await this.setState({
+            validAnswer: null,
+        })
+        if (!bool) window.location.reload();
+    }
 
     render() {
         let {questionModal, validAnswer} = this.state
+        let height = Math.max(window.screen.height, window.screen.width)
         return (
             <>
-                <div id="map"></div>
+                <div id="map" style={{height: height - 50}}></div>
                 {questionModal && <QuestionModal data={questionModal}
                                                  showResultModal={this.showResultModal}
                                                  hideQuestionModal={this.hideQuestionModal}/>}

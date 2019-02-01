@@ -70,7 +70,7 @@ export default class Home extends Component {
                         </form>
                     </>
                     : <>
-                        <h3>Bienvenue {user} sur l'application de jeux de piste</h3>
+                        <h3>Bienvenue {user.name} sur l'application de jeux de piste</h3>
                         <ListGroup componentClass={'ul'}>
                             {cities.map(city =>
                                 <Link
