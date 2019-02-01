@@ -28,7 +28,7 @@ class Game extends Model
     	return $this->belongsToMany('App\Point');
     }
 
-    public function question()
+    public function questions()
     {
         return $this->hasMany('App\Question');
     }
