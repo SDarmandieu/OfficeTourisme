@@ -33,7 +33,6 @@ const col = {
 const grid = {
     height: '14vh',
     width: '100%',
-    position: 'fixed',
     top: '86vh',
     backgroundColor: '#222',
     borderColor: '#080808'

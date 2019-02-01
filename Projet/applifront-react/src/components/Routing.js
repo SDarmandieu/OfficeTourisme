@@ -9,12 +9,18 @@ import {checkUser} from '../database/userController'
 export default class Routing extends Component {
     constructor(props) {
         super(props)
-        this.state = {user: undefined}
+        this.state = {
+            user: '',
+        }
     }
 
     async componentDidMount() {
+        this.updateUser()
+    }
+
+    updateUser = async () => {
         let user = await checkUser()
-        this.setState({user: user})
+        await this.setState({user: user[0]})
     }
 
     render() {
@@ -26,7 +32,7 @@ export default class Routing extends Component {
                 <Route path='/contacts' render={() => <div>Contacts</div>}/>
                 <Route path='/tutorial' render={() => <div>Tutoriel</div>}/>
                 <Route path='/city/:id' component = {City}/>
-                <Route path='/game/:id' component = {Game}/>
+                <Route path='/game/:id' render={(props) => <Game {...props} user={user}/>}/>
             </Switch>
         )
     }
