@@ -23,6 +23,6 @@ code {
   border: none;
 }
 
-#map {
-  height : 92vh;
+.badge-inverse {
+  background-color: #333333;
 }
