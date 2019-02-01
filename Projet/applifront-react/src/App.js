@@ -21,8 +21,8 @@ class App extends Component {
         return (
             <div className="App">
                 <Navigation/>
-                <div style={{marginBottom:'15vh',marginTop:'8vh'}}><Routing/></div>
-                {!inGame && <Footer/>}
+                <div style={{paddingTop:50}}><Routing/></div>
+                {/*{!inGame && <Footer/>}*/}
             </div>
         );
     }
