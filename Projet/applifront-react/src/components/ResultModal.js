@@ -25,7 +25,7 @@ export default class ResultModal extends Component {
     handleClose = this.props.hideResultModal
 
     render() {
-        let {valid, expe} = this.props.validAnswer
+        let {valid, question} = this.props.validAnswer
         let {show} = this.state
         let rand = Math.floor(Math.random() * 6)
         let message = {
@@ -40,16 +40,24 @@ export default class ResultModal extends Component {
                             <Modal.Body style={styles.body}>
                                 <FontAwesome name="check" size="4x"
                                              style={{color: 'green'}}/>
-                                <h3 style={styles.advice}>+{expe} points d'expérience</h3>
+                                <h3 style={styles.advice}>+{question.expe} points d'expérience</h3>
                             </Modal.Body>
                         </Modal>
-                        :
+                        : valid === "false" ?
                         <Modal bsSize="large" show={show} onHide={this.handleClose}>
                             <Modal.Header closeButton><h1>{message.wrong[rand]}</h1></Modal.Header>
                             <Modal.Body style={{display: 'flex', alignItems: 'center'}}>
                                 <FontAwesome name="times" size="4x"
                                              style={{color: 'red'}}/>
                                 <h3 style={styles.advice}>Essaie encore !</h3>
+                            </Modal.Body>
+                        </Modal>
+                        : <Modal bsSize="large" show={show} onHide={this.handleClose}>
+                            <Modal.Header closeButton><h1>Félicitations !</h1></Modal.Header>
+                            <Modal.Body style={{display: 'flex', alignItems: 'center'}}>
+                                <FontAwesome name="trophy" size="4x"
+                                             style={{color: 'gold'}}/>
+                                <h3 style={styles.advice}>Tu as terminé ce jeu !</h3>
                             </Modal.Body>
                         </Modal>
                 }</>

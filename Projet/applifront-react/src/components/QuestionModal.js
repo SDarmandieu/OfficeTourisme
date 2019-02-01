@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Modal, FormGroup, Radio, Button} from 'react-bootstrap';
-import {userGainExpe} from "../database/userController";
-import {questionDone} from "../database/questionController"
+import {userQuestionDone} from "../database/userController"
 
 export default class QuestionModal extends Component {
 
@@ -32,7 +31,6 @@ export default class QuestionModal extends Component {
 
     showResultModal = this.props.showResultModal
 
-
     /**
      * change answer state when radio is selected
      * @param e
@@ -40,7 +38,7 @@ export default class QuestionModal extends Component {
     handleChangeInput = e => this.setState({
         validAnswer: {
             valid: e.target.value,
-            expe: this.props.data.question.expe
+            question: this.props.data.question
         }
     })
 
@@ -50,9 +48,8 @@ export default class QuestionModal extends Component {
         this.handleClose()
         let {validAnswer} = this.state
         this.showResultModal(validAnswer)
-        if(validAnswer.valid==="true") {
-            userGainExpe(validAnswer.expe)
-            questionDone(this.props.data.question.id)
+        if (validAnswer.valid === "true") {
+            userQuestionDone(validAnswer.question)
         }
     }
 
@@ -71,7 +68,7 @@ export default class QuestionModal extends Component {
                                 key={answer.id}
                                 name="answer"
                                 value={!!answer.valid}>
-                                {answer.content}
+                                {answer.content} {answer.valid}
                             </Radio>)}
                             <Button type="submit" onClick={this.handleSubmit}>Choisir</Button>
                         </FormGroup>
