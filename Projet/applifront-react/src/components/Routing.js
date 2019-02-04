@@ -31,7 +31,7 @@ export default class Routing extends Component {
                 <Route path='/account' render={() => <div>Account</div>}/>
                 <Route path='/contacts' render={() => <div>Contacts</div>}/>
                 <Route path='/tutorial' render={() => <div>Tutoriel</div>}/>
-                <Route path='/city/:id' component = {City}/>
+                <Route path='/city/:id' render={(props) => <City {...props} user={user}/>}/>
                 <Route path='/game/:id' render={(props) => <Game {...props} user={user}/>}/>
             </Switch>
         )
