@@ -25,3 +25,12 @@ export const userQuestionDone = async question => {
         questions_done: [...user.questions_done, question.id]
     })
 }
+
+export const userGameProgress = props => {
+    let questionsIdList = props.location.state.game.questions
+    let {questions_done} = props.user
+    return {
+        "done": questions_done.filter(q => questionsIdList.includes(q)).length,
+        "total": questionsIdList.length
+    }
+}
