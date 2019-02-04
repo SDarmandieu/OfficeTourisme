@@ -27,10 +27,8 @@ export default class Game extends Component {
     }
 
     isGameOver = () => {
-        let questionsIdList = this.props.location.state.game.questions
-        let {questions_done} = this.props.user
-        let compare = questions_done.filter(q => questionsIdList.includes(q))
-        if (compare.length === questionsIdList.length) {
+        let {done,total} = userGameProgress(this.props)
+        if (done === total) {
             this.setState({validAnswer: 'gameOver'})
         }
     }
