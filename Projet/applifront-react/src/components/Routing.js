@@ -5,12 +5,12 @@ import City from "../webpages/City";
 import Game from "../webpages/Game";
 import {checkUser} from '../database/userController'
 
-
 export default class Routing extends Component {
     constructor(props) {
         super(props)
         this.state = {
             user: '',
+            mapKey: 1
         }
     }
 
@@ -20,7 +20,7 @@ export default class Routing extends Component {
 
     updateUser = async () => {
         let user = await checkUser()
-        await this.setState({user: user[0]})
+        await this.setState({user: user[0], mapKey: this.state.mapKey + 1})
     }
 
     render() {
@@ -32,7 +32,9 @@ export default class Routing extends Component {
                 <Route path='/contacts' render={() => <div>Contacts</div>}/>
                 <Route path='/tutorial' render={() => <div>Tutoriel</div>}/>
                 <Route path='/city/:id' render={(props) => <City {...props} user={user}/>}/>
-                <Route path='/game/:id' render={(props) => <Game {...props} user={user}/>}/>
+                <Route path='/game/:id' render={(props) => <Game key={this.state.mapKey} {...props}
+                                                                 user={user}
+                                                                 updateUser={this.updateUser}/>}/>
             </Switch>
         )
     }

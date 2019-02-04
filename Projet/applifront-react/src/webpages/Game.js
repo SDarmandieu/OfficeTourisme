@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
 import {answerIndex} from '../database/answerController'
-import {userGameProgress} from "../database/userController";
+import {userGameOver, userGameProgress, checkUser} from "../database/userController";
 import QuestionModal from '../components/QuestionModal'
 import ResultModal from '../components/ResultModal'
 import L from "leaflet";
 import 'leaflet.locatecontrol';
 import 'leaflet-easybutton'
+import _ from "lodash";
 
 export default class Game extends Component {
     constructor(props) {
@@ -23,13 +24,24 @@ export default class Game extends Component {
         let points = await pointIndex(game)
         let map = this.generateMap([city.lat, city.lon], points, 16)
         this.addMarkers(map, points, [city.lat, city.lon])
-        this.isGameOver()
     }
 
-    isGameOver = () => {
-        let {done,total} = userGameProgress(this.props)
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        let user = await checkUser()
+        if (!_.isEqual(prevProps.user, user[0])) {
+            await this.props.updateUser()
+        }
+        if(prevState.validAnswer !== 'gameOver'){
+            await this.isGameOver()
+        }
+        console.log("prev", prevProps.user, user)
+    }
+
+    isGameOver = async () => {
+        let {done, total} = userGameProgress(this.props)
         if (done === total) {
-            this.setState({validAnswer: 'gameOver'})
+            await this.setState({validAnswer: 'gameOver'})
+            await userGameOver(this.props.location.state.game.id)
         }
     }
 
@@ -58,7 +70,8 @@ export default class Game extends Component {
 
         map.setView(center)
 
-        let {done,total} = userGameProgress(this.props)
+        let {done, total} = userGameProgress(this.props)
+        console.log("done", done, total)
 
         let progressBadge = L.Control.extend({
             'onAdd': () => {
@@ -70,11 +83,11 @@ export default class Game extends Component {
         })
 
         L.easyButton('fa-home fa-3x',
-            () => this.props.history.push('/'),{position:'bottomleft'}
+            () => this.props.history.push('/'), {position: 'bottomleft'}
         ).addTo(map)
 
         L.easyButton('fa-user fa-3x',
-            () => this.props.history.push('/account'),{position:'bottomright'}
+            () => this.props.history.push('/account'), {position: 'bottomright'}
         ).addTo(map)
 
 
@@ -170,7 +183,7 @@ export default class Game extends Component {
         await this.setState({
             validAnswer: null,
         })
-        if (!bool) window.location.reload();
+        // if (!bool) window.location.reload();
     }
 
     render() {

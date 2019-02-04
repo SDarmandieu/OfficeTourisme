@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {gameIndex} from '../database/gameController'
+import {gameCityIndex} from '../database/gameController'
 import {ListGroup} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
@@ -7,21 +7,18 @@ export default class City extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            games: [],
-            city: {}
+            games: []
         }
     }
 
     async componentDidMount() {
-        let games = await gameIndex(this.props.match.params.id)
-        await this.setState({
-            games: games, city: this.props.location.state.city
-        })
-        console.log('city', this.state.city)
+        let games = await gameCityIndex(this.props.match.params.id)
+        await this.setState({games: games})
     }
 
     render() {
-        let {games, city} = this.state
+        let {games} = this.state
+        let {city} = this.props.location.state
         return (
             <>
                 <h3>Liste des jeux de {city.name}</h3>
@@ -36,7 +33,8 @@ export default class City extends Component {
                         }}>
                             <div style={link} className={'list-group-item center-block'}>
                                 <h4 className="list-group-item-heading">{game.desc}</h4>
-                                <p className="list-group-item-text">{game.age}</p>
+                                <p className="list-group-item-text">Âge conseillé : {game.age}</p>
+                                <p className="list-group-item-text">{this.props.user.games_done.includes(game.id)?"Terminé" : "Non terminé"}</p>
                             </div>
                         </Link>)
                     }

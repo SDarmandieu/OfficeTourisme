@@ -19,7 +19,6 @@ export default class Home extends Component {
         await this.setState({
             cities: cities
         })
-        console.log('cities', this.state.cities)
     }
 
     handleSubmit = () => {

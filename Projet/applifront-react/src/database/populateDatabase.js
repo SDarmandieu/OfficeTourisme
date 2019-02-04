@@ -6,7 +6,6 @@ import db from "./db";
 export const populate = async () => {
     let response = await fetch(`${process.env.REACT_APP_API_URL}/database`)
     let data = await response.json()
-    console.log(data)
 
     db.on("ready", function () {
         Object.entries(data).forEach(([tableName, tableDatas]) => {

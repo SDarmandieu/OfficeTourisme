@@ -5,4 +5,4 @@ import db from './db'
  * @param city_id
  * @returns {Dexie.Promise<Array<T>>}
  */
-export const gameIndex = async(city_id)=> await db.games.where('city_id').equals(+city_id).toArray()
+export const gameCityIndex = async(city_id)=> await db.games.where('city_id').equals(+city_id).toArray()

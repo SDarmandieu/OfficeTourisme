@@ -19,18 +19,31 @@ export const userStore = pseudo => {
  */
 export const userQuestionDone = async question => {
     let user = await db.user.get(1)
-    console.log(user.questions_done, typeof user.questions_done)
     return await db.user.update(1, {
         expe: user.expe + question.expe,
         questions_done: [...user.questions_done, question.id]
     })
 }
 
+export const userGameOver = async game_id => {
+    let user = await db.user.get(1)
+    await db.user.update(1, {
+        games_done : [...user.games_done,+game_id]
+    })
+}
+
 export const userGameProgress = props => {
     let questionsIdList = props.location.state.game.questions
     let {questions_done} = props.user
-    return {
-        "done": questions_done.filter(q => questionsIdList.includes(q)).length,
-        "total": questionsIdList.length
-    }
+    console.log(questions_done, questionsIdList)
+    return ({
+        done: questions_done.filter(q => questionsIdList.includes(q)).length,
+        total: questionsIdList.length
+    })
+}
+
+export const userGameProgressCity = props => {
+    let gamesIdList = props.location.state.city.games
+    let {games_done} = props.user
+    return gamesIdList.map(g => games_done.includes(g))
 }
