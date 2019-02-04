@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Navigation from './components/Navigation'
 import Routing from './components/Routing'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import './App.css';
 
 import {populate} from './database/populateDatabase'
@@ -20,8 +20,8 @@ class App extends Component {
         let inGame = window.location.pathname.split`/`[1] === 'game'
         return (
             <div className="App">
-                <Navigation/>
-                <div style={{paddingTop:50}}><Routing/></div>
+                {!inGame && <Navigation/>}
+                <div style={{paddingTop:!inGame*50}}><Routing/></div>
                 {/*{!inGame && <Footer/>}*/}
             </div>
         );
