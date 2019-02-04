@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
 import {answerIndex} from '../database/answerController'
+import {userGameProgress} from "../database/userController";
 import QuestionModal from '../components/QuestionModal'
 import ResultModal from '../components/ResultModal'
 import L from "leaflet";
 import 'leaflet.locatecontrol';
+import 'leaflet-easybutton'
 
 export default class Game extends Component {
     constructor(props) {
@@ -58,21 +60,28 @@ export default class Game extends Component {
 
         map.setView(center)
 
-        let questionsIdList = this.props.location.state.game.questions
-        let {questions_done} = this.props.user
-        let compare = questions_done.filter(q => questionsIdList.includes(q))
+        let {done,total} = userGameProgress(this.props)
 
-        let filterButton = L.Control.extend({
+        let progressBadge = L.Control.extend({
             'onAdd': () => {
                 let container = L.DomUtil.create('div', 'search-container');
                 let badge = L.DomUtil.create('span', 'badge badge-inverse', container);
-                console.log(badge)
-                // badge.type = 'text';
-                badge.innerHTML = `Avancement : ${compare.length}/${questionsIdList.length}`
+                badge.innerHTML = `Avancement : ${done}/${total}`
                 return container
             }
         })
-        map.addControl(new filterButton);
+
+        L.easyButton('fa-home fa-3x',
+            () => this.props.history.push('/'),{position:'bottomleft'}
+        ).addTo(map)
+
+        L.easyButton('fa-user fa-3x',
+            () => this.props.history.push('/account'),{position:'bottomright'}
+        ).addTo(map)
+
+
+        map.addControl(new progressBadge());
+
 
         return map
     }
@@ -168,10 +177,9 @@ export default class Game extends Component {
 
     render() {
         let {questionModal, validAnswer} = this.state
-        let height = Math.max(window.screen.height, window.screen.width)
         return (
             <>
-                <div id="map" style={{height: height - 50}}></div>
+                <div id="map"></div>
                 {questionModal && <QuestionModal data={questionModal}
                                                  showResultModal={this.showResultModal}
                                                  hideQuestionModal={this.hideQuestionModal}/>}
