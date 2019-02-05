@@ -2,6 +2,7 @@ import db from "./db";
 
 /**
  * fill DB with the API created from SQL Laravel Backend
+ * @returns {Promise<void>}
  */
 export const populate = async () => {
     let response = await fetch(`${process.env.REACT_APP_API_URL}/database`)
