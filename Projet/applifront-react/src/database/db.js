@@ -10,7 +10,7 @@ db.version(1).stores({
     "answers": "id,content,valid,question_id,file_id",
     "files": "id,path,type,extension,alt,imagetype_id",
     "imagetypes": "id,title",
-    "user": "++id,name,expe,games_done,questions_done"
+    "user": "++id,name,expe,games_done,questions_done,games_doing"
 });
 
 export default db;
