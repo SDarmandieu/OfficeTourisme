@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Modal} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome'
+import {userGameOver} from "../database/userController";
 
 export default class ResultModal extends Component {
 
@@ -13,6 +14,15 @@ export default class ResultModal extends Component {
 
     componentWillMount() {
         this.setState({show: true})
+    }
+
+    async componentDidMount() {
+        if (this.props.validAnswer === 'gameOver') {
+            let game_id = this.props.location.state.game.id
+            if (!this.props.user.games_done.includes(game_id)) {
+                await userGameOver(game_id)
+            }
+        }
     }
 
     /**
@@ -53,7 +63,7 @@ export default class ResultModal extends Component {
                             </Modal.Body>
                         </Modal>
                         : <Modal bsSize="large" show={show} onHide={this.handleClose}>
-                            <Modal.Header closeButton><h1>Félicitations !</h1></Modal.Header>
+                            <Modal.Header closeButton><h1>{message.right[rand]}</h1></Modal.Header>
                             <Modal.Body style={{display: 'flex', alignItems: 'center'}}>
                                 <FontAwesome name="trophy" size="4x"
                                              style={{color: 'gold'}}/>
