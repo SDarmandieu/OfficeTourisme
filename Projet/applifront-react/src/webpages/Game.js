@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
 import {answerIndex} from '../database/answerController'
-import {userGameOver, userGameProgress, checkUser} from "../database/userController";
+import {userGameProgress, checkUser} from "../database/userController";
 import QuestionModal from '../components/QuestionModal'
 import ResultModal from '../components/ResultModal'
 import L from "leaflet";
@@ -15,7 +15,8 @@ export default class Game extends Component {
         super(props)
         this.state = {
             questionModal: null,
-            validAnswer: null
+            validAnswer: null,
+            gameOver: false
         }
     }
 
@@ -24,24 +25,20 @@ export default class Game extends Component {
         let points = await pointIndex(game)
         let map = this.generateMap([city.lat, city.lon], points, 16)
         this.addMarkers(map, points, [city.lat, city.lon])
+        console.log("game mounted")
     }
 
+    /**
+     * if user has changed , call update from parent
+     * @param prevProps
+     * @param prevState
+     * @param snapshot
+     * @returns {Promise<void>}
+     */
     async componentDidUpdate(prevProps, prevState, snapshot) {
         let user = await checkUser()
         if (!_.isEqual(prevProps.user, user[0])) {
             await this.props.updateUser()
-        }
-        if(prevState.validAnswer !== 'gameOver'){
-            await this.isGameOver()
-        }
-        console.log("prev", prevProps.user, user)
-    }
-
-    isGameOver = async () => {
-        let {done, total} = userGameProgress(this.props)
-        if (done === total) {
-            await this.setState({validAnswer: 'gameOver'})
-            await userGameOver(this.props.location.state.game.id)
         }
     }
 
@@ -71,7 +68,7 @@ export default class Game extends Component {
         map.setView(center)
 
         let {done, total} = userGameProgress(this.props)
-        console.log("done", done, total)
+        if (done === total) this.setState({gameOver: true})
 
         let progressBadge = L.Control.extend({
             'onAdd': () => {
@@ -178,25 +175,24 @@ export default class Game extends Component {
     /**
      * close result modal by setting state to null
      */
-    hideResultModal = async () => {
-        let bool = this.state.validAnswer === 'gameOver'
-        await this.setState({
-            validAnswer: null,
-        })
-        // if (!bool) window.location.reload();
-    }
+    hideResultModal = () => this.setState({validAnswer: null, gameOver: false})
 
     render() {
-        let {questionModal, validAnswer} = this.state
+        let {questionModal, validAnswer, gameOver} = this.state
         return (
             <>
                 <div id="map"></div>
-                {questionModal && <QuestionModal data={questionModal}
+                {questionModal && <QuestionModal {...this.props}
+                                                 data={questionModal}
                                                  showResultModal={this.showResultModal}
                                                  hideQuestionModal={this.hideQuestionModal}/>}
-                {validAnswer && <ResultModal validAnswer={validAnswer}
-                                             hideResultModal={this.hideResultModal}/>
+                {validAnswer && !gameOver && <ResultModal validAnswer={validAnswer}
+                                                          hideResultModal={this.hideResultModal}/>
                 }
+
+                {gameOver && <ResultModal {...this.props}
+                                          validAnswer="gameOver"
+                                          hideResultModal={this.hideResultModal}/>}
             </>
         )
     }

@@ -20,18 +20,24 @@ export default class Home extends Component {
             cities: cities
         })
     }
-
+    /**
+     * call user store when form submit
+     **/
     handleSubmit = () => {
         userStore(this.state.value)
     }
 
+    /**
+     * change value state on input change
+     **/
     handleChange = (event) => {
         this.setState({value: event.target.value})
         console.log(this.state.value)
     }
 
-    // clickCity = city => this.setState({clickedCity:city})
-
+    /**
+     * check if input match regex
+     **/
     getValidationState() {
         let {value} = this.state
         return value.length === 0 ? null : /^[a-zA-Z]{3,10}$/.test(value) ? 'success' : 'error'
@@ -69,6 +75,7 @@ export default class Home extends Component {
                         </form>
                     </>
                     : <>
+                        {/*<button onClick={this.props.history.goBack}>Retour</button>*/}
                         <h3>Bienvenue {user.name} sur l'application de jeux de piste</h3>
                         <ListGroup componentClass={'ul'}>
                             {cities.map(city =>
