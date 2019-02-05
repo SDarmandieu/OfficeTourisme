@@ -29,6 +29,10 @@ export default class QuestionModal extends Component {
      */
     handleClose = this.props.hideQuestionModal
 
+    /**
+     * show result modal of parent
+     * @type {Game.showResultModal|*}
+     */
     showResultModal = this.props.showResultModal
 
     /**
@@ -42,14 +46,18 @@ export default class QuestionModal extends Component {
         }
     })
 
-
+    /**
+     * when submit an answer , defines what to do
+     * @param e
+     * @returns {Promise<void>}
+     */
     handleSubmit = async e => {
         e.preventDefault()
         this.handleClose()
         let {validAnswer} = this.state
         this.showResultModal(validAnswer)
         if (validAnswer.valid === "true") {
-            userQuestionDone(validAnswer.question)
+            await userQuestionDone(validAnswer.question)
         }
     }
 
