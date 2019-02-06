@@ -74,7 +74,7 @@ export default class Home extends Component {
                             <Button type="submit">Ok</Button>
                         </form>
                     </section>
-                    : <section className="container" style={{marginBottom:50}}>
+                    : <section className="container" style={{marginBottom: 50}}>
                         <h3>Bienvenue {user.name} sur l'application de jeux de piste</h3>
                         <ListGroup componentClass={'ul'}>
                             {cities.map(city =>
@@ -86,7 +86,7 @@ export default class Home extends Component {
                                     }}>
                                     <div style={styles.link} className={'list-group-item center-block'}>
                                         <h4 className="list-group-item-heading">{city.name}</h4>
-                                        <p className="list-group-item-text">{city.games.length} jeux disponibles</p>
+                                        <p className="list-group-item-text">{city.games.length} {city.games.length !== 1 ? "jeux disponibles" : "jeu disponible"} </p>
                                     </div>
                                 </Link>)}
                         </ListGroup>
@@ -101,18 +101,18 @@ export default class Home extends Component {
 }
 
 const styles = {
-    link : {
+    link: {
         color: 'black',
         borderRadius: 5,
         marginTop: '10px',
     },
-    button : {
+    button: {
         width: '90%',
         position: 'fixed',
         bottom: 15,
         right: '5%',
-        color:'white',
-        backgroundColor:'#428BCA',
-        borderColor:'#428BCA'
+        color: 'white',
+        backgroundColor: '#428BCA',
+        borderColor: '#428BCA'
     }
 }
