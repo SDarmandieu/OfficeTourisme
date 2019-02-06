@@ -82,9 +82,10 @@ export default class Account extends Component {
     }
 
     render() {
-        let {user} = this.props
+        let {user, location} = this.props
         let {games_done, cities, games_doing, showForm} = this.state
         let {level, percent} = this.getLevel(user.expe)
+        let {backButton} = location.state || false
         return (
             <main style={{marginTop: 15, marginBottom: 15}}>
 
@@ -128,7 +129,7 @@ export default class Account extends Component {
 
                 <hr/>
 
-                <section className="container">
+                <section className="container" style={{marginBottom: 50}}>
                     <h3>Mes jeux</h3>
                     <Tabs defaultActiveKey="doing" id="my-games">
 
@@ -142,7 +143,7 @@ export default class Account extends Component {
                                         city: city
                                     }
                                 }}>
-                                    <div style={link} className={'list-group-item center-block'}>
+                                    <div style={styles.link} className={'list-group-item center-block'}>
                                         <h4 className="list-group-item-heading">{game.desc} ({city.name})</h4>
                                         <p className="list-group-item-text">Âge conseillé : {game.age}</p>
                                     </div>
@@ -160,7 +161,7 @@ export default class Account extends Component {
                                         city: city
                                     }
                                 }}>
-                                    <div style={link} className={'list-group-item center-block'}>
+                                    <div style={styles.link} className={'list-group-item center-block'}>
                                         <h4 className="list-group-item-heading">{game.desc} ({city.name})</h4>
                                         <p className="list-group-item-text">Âge conseillé : {game.age}</p>
                                     </div>
@@ -170,14 +171,36 @@ export default class Account extends Component {
 
                     </Tabs>
                 </section>
+                {backButton !== undefined ?
+                    <Button onClick={this.props.history.goBack} variant="success" size="lg"
+                                                     style={styles.button}>
+                    Retour {backButton}
+                </Button> :
+                    <Button onClick={()=>this.props.history.push('/')} variant="success" size="lg"
+                            style={styles.button}>
+                        Retour à l'accueil
+                    </Button>
+
+                }
             </main>
         )
     }
 }
 
-const link = {
-    color: 'black',
-    borderRadius: 5,
-    width: '95%',
-    marginTop: '10px'
+const styles = {
+    link : {
+        color: 'black',
+        borderRadius: 5,
+        width: '95%',
+        marginTop: '10px',
+    },
+    button : {
+        width: '90%',
+        position: 'fixed',
+        bottom: 10,
+        right: '5%',
+        color:'white',
+        backgroundColor:'#428BCA',
+        borderColor:'#428BCA'
+    }
 }

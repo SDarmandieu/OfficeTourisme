@@ -79,11 +79,11 @@ export default class Game extends Component {
         })
 
         L.easyButton('fa-home fa-3x',
-            () => this.props.history.push('/'), {position: 'bottomleft'}
+            () => this.props.history.push('/',{backButton:'au jeu'}), {position: 'bottomleft'}
         ).addTo(map)
 
         L.easyButton('fa-user fa-3x',
-            () => this.props.history.push('/account'), {position: 'bottomright'}
+            () => this.props.history.push('/account',{backButton:'au jeu'}), {position: 'bottomright'}
         ).addTo(map)
 
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {userNameUpdate, userStore} from '../database/userController'
+import {userStore} from '../database/userController'
 import {cityIndex} from '../database/cityController'
 import {Link} from "react-router-dom";
 import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup} from "react-bootstrap"
@@ -46,14 +46,15 @@ export default class Home extends Component {
     }
 
     render() {
-        let {user} = this.props
+        let {user, location} = this.props
         let {cities} = this.state
+        let {backButton} = location.state || false
         return (
             <>
                 {user === undefined
                     ? <section className="container">
                         <h1>Bienvenue sur l'application de jeux de piste</h1>
-                        <form onSubmit={this.handleSubmit} style={{marginTop:30}}>
+                        <form onSubmit={this.handleSubmit} style={{marginTop: 30}}>
                             <FormGroup
                                 controlId="addUser"
                                 validationState={this.getValidationState()}
@@ -73,8 +74,7 @@ export default class Home extends Component {
                             <Button type="submit">Ok</Button>
                         </form>
                     </section>
-                    : <>
-                        {/*<button onClick={this.props.history.goBack}>Retour</button>*/}
+                    : <section className="container" style={{marginBottom:50}}>
                         <h3>Bienvenue {user.name} sur l'application de jeux de piste</h3>
                         <ListGroup componentClass={'ul'}>
                             {cities.map(city =>
@@ -84,21 +84,35 @@ export default class Home extends Component {
                                         pathname: `/city/${city.id}`,
                                         state: {city: city}
                                     }}>
-                                    <div style={link} className={'list-group-item center-block'}>
+                                    <div style={styles.link} className={'list-group-item center-block'}>
                                         <h4 className="list-group-item-heading">{city.name}</h4>
                                         <p className="list-group-item-text">{city.games.length} jeux disponibles</p>
                                     </div>
                                 </Link>)}
                         </ListGroup>
-                    </>}
+                    </section>}
+                {backButton !== undefined && <Button onClick={this.props.history.goBack} variant="success" size="lg"
+                                                     style={styles.button}>
+                    Retour {backButton}
+                </Button>}
             </>
         )
     }
 }
 
-const link = {
-    color: 'black',
-    borderRadius: 5,
-    width: '95%',
-    marginTop: '10px',
+const styles = {
+    link : {
+        color: 'black',
+        borderRadius: 5,
+        marginTop: '10px',
+    },
+    button : {
+        width: '90%',
+        position: 'fixed',
+        bottom: 15,
+        right: '5%',
+        color:'white',
+        backgroundColor:'#428BCA',
+        borderColor:'#428BCA'
+    }
 }
