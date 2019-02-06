@@ -25,7 +25,6 @@ export default class Game extends Component {
         let points = await pointIndex(game)
         let map = this.generateMap([city.lat, city.lon], points, 16)
         this.addMarkers(map, points, [city.lat, city.lon])
-        console.log("game mounted")
     }
 
     /**
