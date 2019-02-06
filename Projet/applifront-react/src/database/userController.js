@@ -13,7 +13,7 @@ export const userStore = pseudo => {
         'expe': 0,
         'questions_done': [-1],
         'games_done': [-1],
-        'games_doing' : [-1]
+        'games_doing': [-1]
     })
 }
 
@@ -24,11 +24,11 @@ export const userStore = pseudo => {
  */
 export const userQuestionDone = async question => {
     let user = await db.user.get(1)
-    let games_doing = !user.games_doing.includes(+question.game_id)?[...user.games_doing,question.game_id]:user.games_doing
+    let games_doing = !user.games_doing.includes(+question.game_id) ? [...user.games_doing, question.game_id] : user.games_doing
     await db.user.update(1, {
         expe: user.expe + question.expe,
         questions_done: [...user.questions_done, question.id],
-        games_doing:games_doing
+        games_doing: games_doing
     })
 }
 
@@ -41,8 +41,8 @@ export const userGameOver = async game_id => {
     let user = await db.user.get(1)
     let updated_games_doing = user.games_doing.filter(id => id !== +game_id)
     await db.user.update(1, {
-        games_done : [...user.games_done,+game_id],
-        games_doing : updated_games_doing
+        games_done: [...user.games_done, +game_id],
+        games_doing: updated_games_doing
     })
 }
 
@@ -59,3 +59,10 @@ export const userGameProgress = props => {
         total: questionsIdList.length
     })
 }
+
+/**
+ * update username
+ * @param name
+ * @returns {Promise<*>}
+ */
+export const userNameUpdate = async name => await db.user.update(1, {name: name})
