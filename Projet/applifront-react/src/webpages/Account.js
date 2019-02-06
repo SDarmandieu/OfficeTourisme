@@ -114,7 +114,7 @@ export default class Account extends Component {
                         </form>
                     }
                     <p>Niveau {level}</p>
-                    <p>{user.expe} points d'expérience</p>
+                    <p>{user.expe} {user.expe === 0 ? "point d'expérience" : "points d'expérience"} </p>
                 </section>
 
                 <hr/>
@@ -173,10 +173,10 @@ export default class Account extends Component {
                 </section>
                 {backButton !== undefined ?
                     <Button onClick={this.props.history.goBack} variant="success" size="lg"
-                                                     style={styles.button}>
-                    Retour {backButton}
-                </Button> :
-                    <Button onClick={()=>this.props.history.push('/')} variant="success" size="lg"
+                            style={styles.button}>
+                        Retour {backButton}
+                    </Button> :
+                    <Button onClick={() => this.props.history.push('/')} variant="success" size="lg"
                             style={styles.button}>
                         Retour à l'accueil
                     </Button>
@@ -188,19 +188,19 @@ export default class Account extends Component {
 }
 
 const styles = {
-    link : {
+    link: {
         color: 'black',
         borderRadius: 5,
         width: '95%',
         marginTop: '10px',
     },
-    button : {
+    button: {
         width: '90%',
         position: 'fixed',
         bottom: 10,
         right: '5%',
-        color:'white',
-        backgroundColor:'#428BCA',
-        borderColor:'#428BCA'
+        color: 'white',
+        backgroundColor: '#428BCA',
+        borderColor: '#428BCA'
     }
 }
