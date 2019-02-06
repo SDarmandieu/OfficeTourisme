@@ -39,8 +39,10 @@ export const userQuestionDone = async question => {
  */
 export const userGameOver = async game_id => {
     let user = await db.user.get(1)
+    let updated_games_doing = user.games_doing.filter(id => id !== +game_id)
     await db.user.update(1, {
-        games_done : [...user.games_done,+game_id]
+        games_done : [...user.games_done,+game_id],
+        games_doing : updated_games_doing
     })
 }
 
