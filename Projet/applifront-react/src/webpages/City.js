@@ -19,10 +19,11 @@ export default class City extends Component {
     render() {
         let {games} = this.state
         let {city} = this.props.location.state
+        let {user} = this.props
         return (
             <>
                 <h3>Liste des jeux de {city.name}</h3>
-                <ListGroup componentClass="ul" style={{marginBottom:50}}>
+                <ListGroup componentClass="ul" style={{marginBottom: 50}}>
                     {games.map(game =>
                         <Link key={game.id} to={{
                             pathname: `/game/${game.id}`,
@@ -34,7 +35,7 @@ export default class City extends Component {
                             <div style={styles.link} className={'list-group-item center-block'}>
                                 <h4 className="list-group-item-heading">{game.desc}</h4>
                                 <p className="list-group-item-text">Âge conseillé : {game.age}</p>
-                                <p className="list-group-item-text">{this.props.user.games_done.includes(game.id)?"Terminé" : "Non terminé"}</p>
+                                <p className="list-group-item-text">{user.games_done.includes(game.id) ? "Terminé" : user.games_doing.includes(game.id) ? "En cours" : "Pas commencé"}</p>
                             </div>
                         </Link>)
                     }
@@ -49,19 +50,19 @@ export default class City extends Component {
 }
 
 const styles = {
-    link : {
+    link: {
         color: 'black',
         borderRadius: 5,
         width: '95%',
         marginTop: '10px',
     },
-    button : {
+    button: {
         width: '90%',
         position: 'fixed',
         bottom: 15,
         right: '5%',
-        color:'white',
-        backgroundColor:'#428BCA',
-        borderColor:'#428BCA'
+        color: 'white',
+        backgroundColor: '#428BCA',
+        borderColor: '#428BCA'
     }
 }
