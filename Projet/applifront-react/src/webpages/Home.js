@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {userStore} from '../database/userController'
+import {userNameUpdate, userStore} from '../database/userController'
 import {cityIndex} from '../database/cityController'
 import {Link} from "react-router-dom";
 import {FormGroup, FormControl, ControlLabel, Button, HelpBlock, ListGroup} from "react-bootstrap"
@@ -20,11 +20,14 @@ export default class Home extends Component {
             cities: cities
         })
     }
+
     /**
      * call user store when form submit
      **/
     handleSubmit = () => {
-        userStore(this.state.value)
+        let {value} = this.state
+        if (/^[a-zA-Z]{3,10}$/.test(value))
+            userStore(this.state.value)
     }
 
     /**
@@ -32,7 +35,6 @@ export default class Home extends Component {
      **/
     handleChange = (event) => {
         this.setState({value: event.target.value})
-        console.log(this.state.value)
     }
 
     /**
@@ -41,11 +43,6 @@ export default class Home extends Component {
     getValidationState() {
         let {value} = this.state
         return value.length === 0 ? null : /^[a-zA-Z]{3,10}$/.test(value) ? 'success' : 'error'
-
-        // if (length > 10) return 'success';
-        // else if (length > 5) return 'warning';
-        // else if (length > 0) return 'error';
-        // return null;
     }
 
     render() {
@@ -54,9 +51,9 @@ export default class Home extends Component {
         return (
             <>
                 {user === undefined
-                    ? <>
+                    ? <section className="container">
                         <h1>Bienvenue sur l'application de jeux de piste</h1>
-                        <form onSubmit={this.handleSubmit}>
+                        <form onSubmit={this.handleSubmit} style={{marginTop:30}}>
                             <FormGroup
                                 controlId="addUser"
                                 validationState={this.getValidationState()}
@@ -67,13 +64,15 @@ export default class Home extends Component {
                                     value={this.state.value}
                                     placeholder="Saisis ton pseudo"
                                     onChange={this.handleChange}
+                                    required
+                                    pattern={"^[a-zA-Z]{3,10}$"}
                                 />
                                 <FormControl.Feedback/>
                                 <HelpBlock>Entre 3 et 10 lettres</HelpBlock>
                             </FormGroup>
                             <Button type="submit">Ok</Button>
                         </form>
-                    </>
+                    </section>
                     : <>
                         {/*<button onClick={this.props.history.goBack}>Retour</button>*/}
                         <h3>Bienvenue {user.name} sur l'application de jeux de piste</h3>
