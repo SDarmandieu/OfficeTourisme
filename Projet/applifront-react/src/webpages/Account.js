@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {ProgressBar, Tabs, Tab} from 'react-bootstrap'
+import {ProgressBar, Tabs, Tab, FormGroup, ControlLabel, FormControl, HelpBlock, Button} from 'react-bootstrap'
 import {gameSearch} from "../database/gameController";
 import {Link} from "react-router-dom";
 import {cityIndex} from "../database/cityController";
+import FontAwesome from 'react-fontawesome'
+import {checkUser, userNameUpdate} from "../database/userController";
+
 
 export default class Account extends Component {
     constructor(props) {
@@ -10,15 +13,17 @@ export default class Account extends Component {
         this.state = {
             games_done: [],
             games_doing: [],
-            cities: []
+            cities: [],
+            value: '',
+            showForm: false
         }
     }
 
     async componentDidMount() {
-        let {user} = this.props
+        let user = await checkUser()
         let cities = await cityIndex()
-        let games_done = await gameSearch(user.games_done)
-        let games_doing = await gameSearch(user.games_doing)
+        let games_done = await gameSearch(user[0].games_done)
+        let games_doing = await gameSearch(user[0].games_doing)
         await this.setState({
             games_done: games_done,
             games_doing: games_doing,
@@ -52,15 +57,61 @@ export default class Account extends Component {
         }
     }
 
+    /**
+     * call user store when form submit
+     **/
+    handleSubmit = () => {
+        let {value} = this.state
+        if (/^[a-zA-Z]{3,10}$/.test(value))
+            userNameUpdate(this.state.value)
+    }
+
+    /**
+     * change value state on input change
+     **/
+    handleChange = (event) => {
+        this.setState({value: event.target.value})
+    }
+
+    /**
+     * check if input match regex
+     **/
+    getValidationState() {
+        let {value} = this.state
+        return value.length === 0 ? null : /^[a-zA-Z]{3,10}$/.test(value) ? 'success' : 'error'
+    }
+
     render() {
         let {user} = this.props
-        let {games_done, cities, games_doing} = this.state
+        let {games_done, cities, games_doing, showForm} = this.state
         let {level, percent} = this.getLevel(user.expe)
         return (
             <main style={{marginTop: 15, marginBottom: 15}}>
 
-                <section className="text-center">
-                    <h3>{user.name}</h3>
+                <section className="text-center container">
+                    {!showForm ?
+                        <h3>{user.name} <FontAwesome onClick={() => this.setState({showForm: true})} name="edit"/></h3>
+                        : <form onSubmit={this.handleSubmit}>
+                            <FormGroup
+                                controlId="updateUser"
+                                validationState={this.getValidationState()}
+                            >
+                                <ControlLabel>Modifie ton nom de joueur</ControlLabel>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.value}
+                                    placeholder="Saisis ton nouveau pseudo"
+                                    onChange={this.handleChange}
+                                    required
+                                    pattern={"^[a-zA-Z]{3,10}$"}
+                                />
+                                <FormControl.Feedback/>
+                                <HelpBlock>Entre 3 et 10 lettres</HelpBlock>
+                            </FormGroup>
+                            <Button type="submit">Ok</Button>
+                            <hr/>
+                        </form>
+                    }
                     <p>Niveau {level}</p>
                     <p>{user.expe} points d'expérience</p>
                 </section>
