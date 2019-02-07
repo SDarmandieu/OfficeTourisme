@@ -14,6 +14,13 @@ class File extends JsonResource
      */
     public function toArray($request)
     {
+        $answers_to_game_id = [];
+        $answers = $this->answers;
+        foreach($answers as $answer)
+        {
+            array_push($answers_to_game_id,$answer->question->game_id);
+        }
+
         return [
             'id' => $this->id,
             'filename' => $this->filename,
@@ -21,7 +28,10 @@ class File extends JsonResource
             'type' => $this->type,
             'extension' => $this->extension,
             'alt' => $this->alt,
-            'imagetype_id' => $this->imagetype_id
+            'imagetype_id' => $this->imagetype_id,
+            'games_to_id' => $this->games->pluck('id'),
+            'questions_to_game_id' => $this->questions->pluck('game_id'),
+            'answers_to_game_id' => $answers_to_game_id
         ];
     }
 }
