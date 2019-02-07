@@ -5,7 +5,7 @@ import db from "./db";
  * @returns {Promise<void>}
  */
 export const populate = async () => {
-    let response = await fetch(`${process.env.REACT_APP_API_URL}/database`)
+    let response = await fetch(`http://192.168.43.44:8000/api/database`)
     let data = await response.json()
 
     db.on("ready", function () {
