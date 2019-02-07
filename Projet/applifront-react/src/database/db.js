@@ -8,7 +8,7 @@ db.version(1).stores({
     "points": 'id,lat,lon,desc',
     "questions": "id,content,expe,point_id,game_id,file_id",
     "answers": "id,content,valid,question_id,file_id",
-    "files": "id,path,type,extension,alt,imagetype_id",
+    "files": "id,path,type,extension,alt,imagetype_id,games_to_id,questions_to_game_id,answers_to_game_id",
     "imagetypes": "id,title",
     "user": "++id,name,expe,games_done,questions_done,games_doing"
 });
