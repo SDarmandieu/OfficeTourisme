@@ -47,10 +47,10 @@
                 <ul class="navbar-nav ml-auto">
                     @auth
                         {{--<li class="nav-item">--}}
-                            {{--<a class="nav-link" href="{{ route('userCreate') }}">Créer un compte admin</a>--}}
+                        {{--<a class="nav-link" href="{{ route('userCreate') }}">Créer un compte admin</a>--}}
                         {{--</li>--}}
                         {{--<li class="nav-item">--}}
-                            {{--<a class="nav-link" href="{{ route('userShow',Auth::user()->id) }}">Mon compte</a>--}}
+                        {{--<a class="nav-link" href="{{ route('userShow',Auth::user()->id) }}">Mon compte</a>--}}
                         {{--</li>--}}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
@@ -79,6 +79,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        @endif
+
+        @if($errors)
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
+                     role="alert">
+                    {{$error}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endforeach
         @endif
 
         @yield('content')

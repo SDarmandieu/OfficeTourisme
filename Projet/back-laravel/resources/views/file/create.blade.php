@@ -7,17 +7,6 @@
 @section('content')
 
     <div class="container">
-        @if($errors)
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissible fade show col-xs-12 col-md-6 mx-auto text-center"
-                     role="alert">
-                    {{$error}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endforeach
-        @endif
         <div class="card">
             <div class="card-header">Création de fichier pour {{$city->name}}</div>
 
@@ -29,7 +18,7 @@
                         <label for="file" class="col-md-4 col-form-label text-md-right">Fichier</label>
 
                         <div class="col-md-6">
-                            <input id="file" class="btn" type="file" class="form-control" name="file"
+                            <input id="file" type="file" class="form-control btn" name="file"
                                    required autofocus>
                             <p class="text-danger" hidden><i class="fas fa-exclamation-triangle mr-1"></i>Ce fichier est trop volumineux (15Mo maximum)</p>
                         </div>
