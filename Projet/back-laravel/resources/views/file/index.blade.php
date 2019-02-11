@@ -3,7 +3,6 @@
 @section('breadcrumb')
     {{ Breadcrumbs::render('fileIndex',$city) }}
 @endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -31,7 +30,7 @@
         </div>
         <hr>
         <div class="card-deck row">
-            @foreach($files as $file)
+            @foreach($files as $file)r
                 <div class="col-sm col-md-6 col-lg-3">
                     <div class="card mt-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
