@@ -44,7 +44,7 @@ class StoreQuestion extends FormRequest
             'expe.numeric' => 'L\expérience doit être un nombre',
             'file.numeric' => 'Le fichier choisi n\'a pas un ID valide',
             'file.min' => 'Le fichier choisi n\'a pas un ID valide',
-            'content.max' => 'Le contenu de la question doit comporter moins de 255 caractères',
+            'question.max' => 'Le contenu de la question doit comporter moins de 255 caractères',
             'expe.in' => 'Cette valeur d\' expérience n\'existe pas',
         ];
     }
