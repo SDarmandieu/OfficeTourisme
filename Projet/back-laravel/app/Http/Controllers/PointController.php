@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Point;
 use App\City;
-use Illuminate\Http\Request;
 use App\Http\Requests\StorePoint;
-use App\Http\Requests\UpdatePoint;
-
 
 class PointController extends Controller
 {
