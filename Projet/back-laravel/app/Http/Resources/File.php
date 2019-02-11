@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class File extends JsonResource
 {
@@ -32,6 +33,7 @@ class File extends JsonResource
             'games_to_id' => $this->games->pluck('id'),
             'questions_to_game_id' => $this->questions->pluck('game_id'),
             'answers_to_game_id' => $answers_to_game_id
+//            'binary_content' => Storage::disk('public')->get($this->path)
         ];
     }
 }

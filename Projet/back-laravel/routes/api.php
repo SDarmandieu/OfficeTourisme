@@ -16,6 +16,8 @@ use App\File;
 use App\Http\Resources\File as FileResource;
 use App\Imagetype;
 use App\Http\Resources\Imagetype as ImagetypeResource;
+use Illuminate\Support\Facades\Storage;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +44,9 @@ Route::get('/database', function () {
         'files' => FileResource::collection(File::all()),
         'imagetypes' => ImagetypeResource::collection(Imagetype::all()),
     ];
+});
+
+Route::post('/file', function (Request $request) {
+    $file = Storage::disk('public')->get($request->path);
+    return response($file, 200)->header('Content-Type', 'image/jpeg');
 });
