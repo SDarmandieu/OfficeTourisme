@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\Http\Requests\StoreAnswer;
 use App\Question;
 use App\File;
-use Illuminate\Http\Request;
 
 class AnswerController extends Controller
 {
@@ -24,7 +24,7 @@ class AnswerController extends Controller
                     $q->where('title', '=', 'game');
                 })->get();
 
-        return view('answer.create', compact( 'images','question'));
+        return view('answer.create', compact('images', 'question'));
     }
 
     /**
@@ -33,59 +33,61 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($question_id,Request $request)
+    public function store($question_id, StoreAnswer $request)
     {
+        $validated = $request->validated();
         $question = Question::find($question_id);
         Answer::create([
-            'content' => $request->input('answer'),
-            'valid' => $request->input('valid'),
+            'content' => $validated['answer'],
+            'valid' => $validated['valid'],
             'question_id' => $question_id,
-            'file_id' => $request->input('file')
+            'file_id' => $validated['file']
         ]);
 
-        return redirect()->route('gamePointIndex',[$question->game->id,$question->point->id])->with('success', 'La réponse a bien été créée.');
+        return redirect()->route('gamePointIndex', [$question->game->id, $question->point->id])->with('success', 'La réponse a bien été créée.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Answer  $answer
+     * @param  \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
     public function edit($answer_id)
     {
         $answer = Answer::findOrFail($answer_id);
         $images = File::where('city_id', '=', $answer->question->game->city->id)
-        ->whereHas('imagetype',
-            function ($q) {
-                $q->where('title', '=', 'game');
-            })->get();
-        return view('answer.edit', compact('images','answer'));
+            ->whereHas('imagetype',
+                function ($q) {
+                    $q->where('title', '=', 'game');
+                })->get();
+        return view('answer.edit', compact('images', 'answer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Answer  $answer
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function update($answer_id,Request $request)
+    public function update($answer_id, StoreAnswer $request)
     {
+        $validated = $request->validated();
         $answer = Answer::findOrFail($answer_id);
         $answer->update([
-            'content' => $request->input('answer'),
-            'valid' => (bool)($request->input('valid')),
-            'file_id' => $request->input('file')
+            'content' => $validated['answer'],
+            'valid' => $validated['valid'],
+            'file_id' => $validated['file']
         ]);
 
-        return redirect()->route('gamePointIndex',[$answer->question->game->id,$answer->question->point->id])->with('success', 'La réponse a bien été modifiée.');
+        return redirect()->route('gamePointIndex', [$answer->question->game->id, $answer->question->point->id])->with('success', 'La réponse a bien été modifiée.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Answer  $answer
+     * @param  \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
     public function destroy($answer_id)
