@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Point;
 use App\City;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePoint;
+use App\Http\Requests\UpdatePoint;
+
 
 class PointController extends Controller
 {
@@ -37,12 +40,13 @@ class PointController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($city_id, Request $request)
+    public function store($city_id, StorePoint $request)
     {
+        $validated = $request->validated();
         Point::create([
-            'desc' => $request->input('desc'),
-            'lat' => $request->input('latitude'),
-            'lon' => $request->input('longitude'),
+            'desc' => $validated['desc'],
+            'lat' => $validated['latitude'],
+            'lon' => $validated['longitude'],
             'city_id' => $city_id
         ]);
 
@@ -68,16 +72,16 @@ class PointController extends Controller
      * @param  \App\Point $point
      * @return \Illuminate\Http\Response
      */
-    public function update($point_id,Request $request)
+    public function update($point_id, StorePoint $request)
     {
+        $validated = $request->validated();
         $point = Point::findOrFail($point_id);
         $point->update([
-            'desc' => $request->input('desc'),
-            'lat' => $request->input('latitude'),
-            'lon' => $request->input('longitude')
+            'desc' => $validated['desc'],
+            'lat' => $validated['latitude'],
+            'lon' => $validated['longitude'],
         ]);
-
-        return redirect()->route('pointIndex',$point->city->id)->with('success', 'Le point d\'interêt a bien été modifié.');
+        return redirect()->route('pointIndex', $point->city->id)->with('success', 'Le point d\'interêt a bien été modifié.');
     }
 
     /**
@@ -91,7 +95,7 @@ class PointController extends Controller
         $point = Point::find($point_id);
         $city_id = $point->city->id;
         $point->delete();
-        return redirect()->route('pointIndex',$city_id)->with('success', 'Le point d\'interêt a bien été supprimé.');
+        return redirect()->route('pointIndex', $city_id)->with('success', 'Le point d\'interêt a bien été supprimé.');
 
     }
 }
