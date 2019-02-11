@@ -9,11 +9,10 @@ use App\File;
 
 class AnswerController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $question_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create($question_id)
     {
@@ -29,9 +28,9 @@ class AnswerController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param $question_id
+     * @param StoreAnswer $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($question_id, StoreAnswer $request)
     {
@@ -49,9 +48,8 @@ class AnswerController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Answer $answer
-     * @return \Illuminate\Http\Response
+     * @param $answer_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($answer_id)
     {
@@ -66,10 +64,9 @@ class AnswerController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Answer $answer
-     * @return \Illuminate\Http\Response
+     * @param $answer_id
+     * @param StoreAnswer $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($answer_id, StoreAnswer $request)
     {
@@ -86,9 +83,8 @@ class AnswerController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Answer $answer
-     * @return \Illuminate\Http\Response
+     * @param $answer_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($answer_id)
     {

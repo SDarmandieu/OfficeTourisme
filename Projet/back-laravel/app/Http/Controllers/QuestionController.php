@@ -7,15 +7,14 @@ use App\Question;
 use App\Point;
 use App\Game;
 use App\File;
-use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $game_id
+     * @param $point_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create($game_id, $point_id)
     {
@@ -27,14 +26,15 @@ class QuestionController extends Controller
                     $q->where('title', '=', 'game');
                 })->get();
 
-        return view('question.create', compact( 'game', 'point', 'files'));
+        return view('question.create', compact('game', 'point', 'files'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param $game_id
+     * @param $point_id
+     * @param StoreQuestion $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($game_id, $point_id, StoreQuestion $request)
     {
@@ -52,9 +52,8 @@ class QuestionController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Question $question
-     * @return \Illuminate\Http\Response
+     * @param $question_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($question_id)
     {
@@ -63,17 +62,16 @@ class QuestionController extends Controller
             function ($q) {
                 $q->where('title', '=', 'game');
             })
-            ->where('city_id','=',$question->game->city->id)
+            ->where('city_id', '=', $question->game->city->id)
             ->get();
-        return view('question.edit', compact('question','images'));
+        return view('question.edit', compact('question', 'images'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Question $question
-     * @return \Illuminate\Http\Response
+     * @param $question_id
+     * @param StoreQuestion $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($question_id, StoreQuestion $request)
     {
@@ -85,14 +83,13 @@ class QuestionController extends Controller
             'file_id' => $validated['file']
         ]);
 
-        return redirect()->route('gamePointIndex', [$question->game->id,$question->point->id])->with('success', 'La question a bien été modifiée');
+        return redirect()->route('gamePointIndex', [$question->game->id, $question->point->id])->with('success', 'La question a bien été modifiée');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Question $question
-     * @return \Illuminate\Http\Response
+     * @param $question_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($question_id)
     {
@@ -100,7 +97,6 @@ class QuestionController extends Controller
         $game_id = $question->game->id;
         $point_id = $question->point->id;
         $question->delete();
-        return redirect()->route('gamePointIndex', [$game_id,$point_id])->with('success', 'La question a bien été supprimée.');
-
+        return redirect()->route('gamePointIndex', [$game_id, $point_id])->with('success', 'La question a bien été supprimée.');
     }
 }

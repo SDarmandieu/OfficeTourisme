@@ -10,8 +10,6 @@ class GamePointController extends Controller
 {
     /**
      * Display a listing of the resource
-     *
-     * @param $city_id
      * @param $game_id
      * @param $point_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -25,13 +23,12 @@ class GamePointController extends Controller
 
         return view('gamePoint.index',compact('game','point','question'));
     }
+
     /**
      * Store a newly created resource in storage.
-     *
-     * @param $city_id
      * @param $game_id
      * @param $point_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function attach($game_id,$point_id)
     {
@@ -43,11 +40,9 @@ class GamePointController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param $city_id
      * @param $game_id
      * @param $point_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function detach($game_id,$point_id)
     {

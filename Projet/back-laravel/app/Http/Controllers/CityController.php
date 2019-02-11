@@ -11,8 +11,7 @@ class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -22,9 +21,8 @@ class CityController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCity $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCity $request)
     {
@@ -41,8 +39,8 @@ class CityController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -52,9 +50,9 @@ class CityController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCity $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(StoreCity $request, $id)
     {
@@ -70,9 +68,9 @@ class CityController extends Controller
     }
 
     /**
-     *
      * Remove the specified resource from storage.
-     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -84,8 +82,9 @@ class CityController extends Controller
 
     /**
      * Show the homepage of a specific city (point/game/image)
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-
     public function home($id)
     {
         $city = City::findOrFail($id);

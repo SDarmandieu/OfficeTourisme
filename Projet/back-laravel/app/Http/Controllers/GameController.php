@@ -6,14 +6,12 @@ use App\Game;
 use App\City;
 use App\File;
 use App\Http\Requests\StoreGame;
-use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
 
     /**
      * Display a listing of the resource.
-     *
      * @param $city_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -26,7 +24,6 @@ class GameController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @param $city_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -43,9 +40,8 @@ class GameController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param $city_id
-     * @param Request $request
+     * @param StoreGame $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store($city_id, StoreGame $request)
@@ -65,8 +61,6 @@ class GameController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param $city_id
      * @param $game_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -78,16 +72,13 @@ class GameController extends Controller
             })->get();
         $game = Game::findOrFail($game_id);
         $current_icon =$game->files->first(function($f){return $f['imagetype_id']===2;});
-//        dd($current_icon);
         return view('game.edit', compact('game', 'icons', 'current_icon'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param $city_id
      * @param $game_id
-     * @param Request $request
+     * @param StoreGame $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($game_id, StoreGame $request)
@@ -106,7 +97,6 @@ class GameController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param $city_id
      * @param $game_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -121,8 +111,6 @@ class GameController extends Controller
 
     /**
      * Display game home view
-     *
-     * @param $city_id
      * @param $game_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
