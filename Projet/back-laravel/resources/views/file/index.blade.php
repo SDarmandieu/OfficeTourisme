@@ -30,7 +30,7 @@
         </div>
         <hr>
         <div class="card-deck row">
-            @foreach($files as $file)r
+            @foreach($files as $file)
                 <div class="col-sm col-md-6 col-lg-3">
                     <div class="card mt-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
