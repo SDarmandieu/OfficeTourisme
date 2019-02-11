@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\File;
+use App\Http\Requests\StoreCity;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
@@ -26,12 +26,13 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCity $request)
     {
+        $validated = $request->validated();
         City::create([
-            'name' => $request->input('name'),
-            'lat' => $request->input('latitude'),
-            'lon' => $request->input('longitude')
+            'name' => $validated['name'],
+            'lat' => $validated['latitude'],
+            'lon' => $validated['longitude']
         ]);
 
         return redirect()->route('cityIndex')->with('success', 'La ville a bien été créée.');
@@ -55,13 +56,14 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCity $request, $id)
     {
+        $validated = $request->validated();
         $city = City::findOrFail($id);
         $city->update([
-            'name' => $request->input('name'),
-            'lat' => $request->input('latitude'),
-            'lon' => $request->input('longitude')
+            'name' => $validated['name'],
+            'lat' => $validated['latitude'],
+            'lon' => $validated['longitude']
         ]);
 
         return redirect()->route('cityIndex')->with('success', 'La ville a bien été modifiée.');
