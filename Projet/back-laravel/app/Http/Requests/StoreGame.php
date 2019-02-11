@@ -27,7 +27,7 @@ class StoreGame extends FormRequest
         return [
             'name' => 'required|max:50',
             'desc' => 'required|max:255',
-            'age' => 'required|in:'.$ages,
+            'age' => 'required|in:' . $ages,
             'icon' => 'nullable|numeric|min:1'
         ];
     }

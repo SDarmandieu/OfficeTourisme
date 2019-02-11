@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreQuestion;
 use App\Question;
 use App\Point;
 use App\Game;
-use App\City;
 use App\File;
 use Illuminate\Http\Request;
 
@@ -36,14 +36,15 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store($game_id, $point_id, Request $request)
+    public function store($game_id, $point_id, StoreQuestion $request)
     {
+        $validated = $request->validated();
         Question::create([
-            'content' => $request->input('question'),
-            'expe' => $request->input('expe'),
+            'content' => $validated['question'],
+            'expe' => $validated['expe'],
             'point_id' => $point_id,
             'game_id' => $game_id,
-            'file_id' => $request->input('file')
+            'file_id' => $validated['file']
         ]);
 
         return redirect()->route('gamePointIndex', [$game_id, $point_id])->with('success', 'La question a bien été créée.');
@@ -74,13 +75,14 @@ class QuestionController extends Controller
      * @param  \App\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function update($question_id, Request $request)
+    public function update($question_id, StoreQuestion $request)
     {
+        $validated = $request->validated();
         $question = Question::findOrFail($question_id);
         $question->update([
-            'content' => $request->input('question'),
-            'expe' => $request->input('expe'),
-            'file_id' => $request->input('file')
+            'content' => $validated['question'],
+            'expe' => $validated['expe'],
+            'file_id' => $validated['file']
         ]);
 
         return redirect()->route('gamePointIndex', [$question->game->id,$question->point->id])->with('success', 'La question a bien été modifiée');
