@@ -30,7 +30,8 @@
                                 <label for="latitude" class="col-md-4 col-form-label text-md-right">Latitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="latitude" type="text" class="form-control" name="latitude" required>
+                                    <input id="latitude" type="number" min="-90" max="90" step="0.0001"
+                                           class="form-control" name="latitude" required>
                                 </div>
                             </div>
 
@@ -38,7 +39,8 @@
                                 <label for="longitude" class="col-md-4 col-form-label text-md-right">Longitude</label>
 
                                 <div class="col-md-6">
-                                    <input id="longitude" type="text" class="form-control" name="longitude" required>
+                                    <input id="longitude" type="number" min="-180" max="180" step="0.0001"
+                                           class="form-control" name="longitude" required>
                                 </div>
                             </div>
 
@@ -107,8 +109,8 @@
             }
 
             map.on('click', function (e) {
-                let latitude = e.latlng.lat.toString().substring(0, 15);
-                let longitude = e.latlng.lng.toString().substring(0, 15);
+                let latitude = e.latlng.lat.toFixed(4).toString()
+                let longitude = e.latlng.lng.toFixed(4).toString()
                 $('#latitude').val(latitude);
                 $('#longitude').val(longitude);
                 updateMarker(latitude, longitude);
@@ -119,7 +121,7 @@
              *
              * @returns {boolean}
              */
-            const updateMarkerByInputs = () => updateMarker( $('#latitude').val() , $('#longitude').val())
+            const updateMarkerByInputs = () => updateMarker($('#latitude').val(), $('#longitude').val())
 
             $('#latitude').on('input', updateMarkerByInputs);
             $('#longitude').on('input', updateMarkerByInputs);
