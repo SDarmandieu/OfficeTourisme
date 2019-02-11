@@ -92,16 +92,19 @@ class FileController extends Controller
 
     /**
      * @param $file_id
-     * @param Request $request
+     * @param UpdateFile $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update($file_id, UpdateFile $request)
     {
         $validated = $request->validated();
+        if (!isset($validated['imagetype'])) {
+            $validated['imagetype'] = null;
+        }
         $file = File::findOrFail($file_id);
         $file->update([
-            'alt' => $request->input('alt'),
-            'imagetype_id' => $request->input('imagetype')
+            'alt' => $validated['alt'],
+            'imagetype_id' => $validated['imagetype']
         ]);
         return redirect()->route('fileIndex', [$file->city->id, $file->type])->with('success', 'Le fichier a bien été modifié.');
     }
