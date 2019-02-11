@@ -39,7 +39,7 @@
                                 type="radio"
                                 name="icon"
                                 value="{{null}}"
-                            @if ($game->image_id == null)
+                            @if ($current_icon === null)
                                 {{'checked'}}
                                 @endif>
                             <label
@@ -51,7 +51,7 @@
                                     id="icon{{$icon->id}}"
                                     type="radio" name="icon"
                                     value="{{$icon->id}}"
-                                @if ($icon->id == $game->image_id)
+                                @if ($current_icon!==null && $icon->id == $current_icon->id)
                                     {{'checked'}}
                                     @endif>
                                 <label

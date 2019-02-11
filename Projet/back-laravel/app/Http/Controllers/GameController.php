@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use App\City;
 use App\File;
+use App\Http\Requests\StoreGame;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -47,16 +48,17 @@ class GameController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($city_id, Request $request)
+    public function store($city_id, StoreGame $request)
     {
+        $validated = $request->validated();
         $game = Game::create([
-            'desc' => $request->input('desc'),
-            'name' => $request->input('name'),
-            'age' => $request->input('age'),
+            'desc' => $validated['desc'],
+            'name' => $validated['name'],
+            'age' => $validated['age'],
             'city_id' => $city_id
         ]);
 
-        $game->files()->attach($request->input('icon'));
+        $game->files()->attach($validated['icon']);
 
         return redirect()->route('gameIndex', $city_id)->with('success', 'Le jeu de piste a bien été créé.');
     }
@@ -75,7 +77,9 @@ class GameController extends Controller
                 $q->where('title', '=', 'icon');
             })->get();
         $game = Game::findOrFail($game_id);
-        return view('game.edit', compact('game', 'icons'));
+        $current_icon =$game->files->first(function($f){return $f['imagetype_id']===2;});
+//        dd($current_icon);
+        return view('game.edit', compact('game', 'icons', 'current_icon'));
     }
 
     /**
@@ -86,15 +90,16 @@ class GameController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($game_id, Request $request)
+    public function update($game_id, StoreGame $request)
     {
+        $validated = $request->validated();
         $game = Game::findOrFail($game_id);
         $game->update([
-            'desc' => $request->input('desc'),
-            'name' => $request->input('name'),
-            'age' => $request->input('age'),
-            'image_id' => $request->input('icon')
+            'desc' => $validated['desc'],
+            'name' => $validated['name'],
+            'age' => $validated['age']
         ]);
+        $game->files()->sync($validated['icon']);
 
         return redirect()->route('gameIndex', $game->city->id)->with('success', 'Le jeu de piste a bien été modifié.');
     }
