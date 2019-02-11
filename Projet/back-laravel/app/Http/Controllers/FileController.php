@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App;
 use App\File;
 use App\City;
 use App\Imagetype;
+use App\Http\Requests\StoreFile;
+use App\Http\Requests\UpdateFile;
 
 class FileController extends Controller
 {
@@ -51,19 +52,16 @@ class FileController extends Controller
 
     /**
      * @param $city_id
-     * @param Request $request
+     * @param StoreFile $request
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store($city_id, Request $request)
+    public function store($city_id, StoreFile $request)
     {
-        $all_ext = implode(',', $this->allExtensions());
-
-        $this->validate($request, [
-            'file' => 'required|file|mimes:' . $all_ext . '|max:15000'
-        ]);
-
-        $file = $request->file;
+        $validated = $request->validated();
+        if (!isset($validated['imagetype'])) {
+            $validated['imagetype'] = null;
+        }
+        $file = $validated['file'];
         $filename = $file->getClientOriginalName();
         $ext = $file->getClientOriginalExtension();
         $type = $this->getType($ext);
@@ -74,9 +72,9 @@ class FileController extends Controller
             'path' => $path,
             'type' => $type,
             'extension' => $ext,
-            'alt' => $request->input('alt'),
+            'alt' => $validated['alt'],
             'city_id' => $city_id,
-            'imagetype_id' => $request->input('imagetype')
+            'imagetype_id' => $validated['imagetype']
         ]);
         return redirect()->route('fileIndex', [$city_id, $type])->with('success', 'Le fichier a bien été créé.');
     }
@@ -97,8 +95,9 @@ class FileController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($file_id, Request $request)
+    public function update($file_id, UpdateFile $request)
     {
+        $validated = $request->validated();
         $file = File::findOrFail($file_id);
         $file->update([
             'alt' => $request->input('alt'),
@@ -141,14 +140,4 @@ class FileController extends Controller
             return 'video';
         }
     }
-
-    /**
-     * Get all extensions
-     * @return array Extensions of all file types
-     */
-    private function allExtensions()
-    {
-        return array_merge($this->image_ext, $this->audio_ext, $this->video_ext);
-    }
-
 }
