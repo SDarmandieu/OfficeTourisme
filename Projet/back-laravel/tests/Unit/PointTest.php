@@ -113,7 +113,7 @@ class PointTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->from('/city/' . $this->city->id . '/point')
+            ->from('/city/' . $this->city->id . '/point/create')
             ->post('/city/' . $this->city->id . '/point/store', [
                 'desc' => 'foo',
                 'latitude' => '42',
@@ -135,7 +135,7 @@ class PointTest extends TestCase
     public function testPointStoreRouteNoAuth()
     {
         $response = $this
-            ->from('/city/' . $this->city->id . '/point')
+            ->from('/city/' . $this->city->id . '/point/create')
             ->post('/city/' . $this->city->id . '/point/store', [
                 'desc' => 'foo',
                 'latitude' => '42',
@@ -264,7 +264,7 @@ class PointTest extends TestCase
      *
      * @return void
      */
-    public function testCityUpdateRouteAuth()
+    public function testPointUpdateRouteAuth()
     {
         $user = factory(User::class)->create();
 
@@ -303,7 +303,7 @@ class PointTest extends TestCase
      *
      * @return void
      */
-    public function testCityUpdateRouteNoAuth()
+    public function testPointUpdateRouteNoAuth()
     {
         $point = Point::create([
             'desc' => 'foo',
