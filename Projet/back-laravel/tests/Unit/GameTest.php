@@ -395,6 +395,7 @@ class GameTest extends TestCase
 
         $response = $this
             ->actingAs($user)
+            ->from('/game/edit/'.$game->id)
             ->call(
                 'PUT',
                 '/game/update/' . $game->id,
@@ -407,7 +408,7 @@ class GameTest extends TestCase
             );
 
         $response
-//            ->assertRedirect('/game/edit/' . $game->id)
+            ->assertRedirect('/game/edit/' . $game->id)
             ->assertStatus(302)
             ->assertSessionHasErrors(['name', 'desc', 'age', 'icon']);
 
