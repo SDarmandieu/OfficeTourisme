@@ -9,7 +9,7 @@ $factory->define(App\File::class, function (Faker $faker) {
             return [
                 'filename' => "audio fake",
                 'path' => 'fake/fake_audio.mp3',
-                'extension' => 'mp4',
+                'extension' => 'mp3',
                 'type' => 'audio',
                 'alt' => "applause",
                 'imagetype_id' => null
