@@ -110,7 +110,7 @@ Route::delete('/answer/destroy/{answer_id}','AnswerController@destroy')->name('a
 /**
  * File crud route
  */
-Route::get('/city/{city_id}/files/{type}/{id?}','FileController@index')->name('fileIndex')->middleware('auth');
+Route::get('/city/{city_id}/files/{type}','FileController@index')->name('fileIndex')->middleware('auth');
 
 Route::get('/city/{city_id}/file/create','FileController@create')->name('fileCreate')->middleware('auth');
 Route::post('/city/{city_id}/file/store','FileController@store')->name('fileStore')->middleware('auth');

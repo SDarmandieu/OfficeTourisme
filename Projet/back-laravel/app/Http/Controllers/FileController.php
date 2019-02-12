@@ -22,19 +22,15 @@ class FileController extends Controller
      * @param null $file_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($city_id, $type, $file_id = null)
+    public function index($city_id, $type)
     {
         $city = City::findOrFail($city_id);
 
-        if (!is_null($file_id)) {
-            $files = File::findOrFail($file_id);
-        } else {
-            $records_per_page = ($type == 'video') ? 6 : 15;
+        $records_per_page = ($type == 'video') ? 6 : 15;
 
-            $files = File::where('type', $type)
-                ->where('city_id', $city_id)
-                ->orderBy('id', 'desc')->paginate($records_per_page);
-        }
+        $files = File::where('type', $type)
+            ->where('city_id', $city_id)
+            ->orderBy('id', 'desc')->paginate($records_per_page);
 
         return view('file.index', compact('files', 'city'));
     }
