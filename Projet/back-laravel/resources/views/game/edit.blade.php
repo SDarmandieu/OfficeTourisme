@@ -87,7 +87,10 @@
                     </div>
 
                     <p><i class="fas fa-info-circle"></i>
-                        blablabla random help
+                        La description du jeu est affichée dans l'application , (ainsi que son nom) : elle doit être concise , décrire le jeu et donner envie.
+                    </p>
+                    <p><i class="fas fa-info-circle"></i>
+                        La tranche d'âge est à titre indicative , et est affichée dans l'appli
                     </p>
 
                     <div class="form-group row mb-0">
