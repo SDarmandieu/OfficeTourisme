@@ -20,7 +20,8 @@
                         <div class="col-md-6">
                             <input id="file" type="file" class="form-control btn" name="file"
                                    required autofocus>
-                            <p class="text-danger" hidden><i class="fas fa-exclamation-triangle mr-1"></i>Ce fichier est trop volumineux (15Mo maximum)</p>
+                            <p class="text-danger" hidden><i class="fas fa-exclamation-triangle mr-1"></i>Ce fichier est
+                                trop volumineux (15Mo maximum)</p>
                         </div>
                     </div>
 
@@ -35,8 +36,22 @@
                     <span id="ifImage"></span>
 
                     <p><i class="fas fa-info-circle"></i>
-                        blablabla random help
+                        La taille d'un fichier ne peut excéder 15Mo
                     </p>
+
+                    <p><i class="fas fa-info-circle"></i>
+                        L'alternative textuelle doit décrire de façon concise le contenu du fichier.
+                    </p>
+
+                    <p><i class="fas fa-info-circle"></i>
+                        Logo : les logos de partenaires , associations...
+                    </p>
+                    <p><i class="fas fa-info-circle"></i>
+                        Icon : les icônes représentant le joueur, dans un jeu de piste,
+                        sur la carte</p>
+                    <p><i class="fas fa-info-circle"></i>
+                        Game : les images dans les questions et les réponses</p>
+
 
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
@@ -56,8 +71,7 @@
         $(document).ready(() => {
             $('#file').bind('change',
                 () => {
-                    if($('#file')[0].files[0]['type'].split`/`[0]  === 'image')
-                    {
+                    if ($('#file')[0].files[0]['type'].split`/`[0] === 'image') {
                         let imageTypeInput = `<div class="form-group row">
                         <label for="imagetype" class="col-md-4 col-form-label text-md-right">Type d'image</label>
                         <select name="imagetype" class="form-control col-md-6" id="imagetype" required>
@@ -70,14 +84,11 @@
                             </select>
                         </div>`
                         $('#ifImage').html(imageTypeInput)
-                    }
-                    else $('#ifImage').empty()
+                    } else $('#ifImage').empty()
 
-                    if($('#file')[0].files[0]['size'] > 15000000)
-                    {
+                    if ($('#file')[0].files[0]['size'] > 15000000) {
                         $('.text-danger').removeAttr('hidden')
-                    }
-                    else $('.text-danger').attr('hidden','hidden')
+                    } else $('.text-danger').attr('hidden', 'hidden')
                 }
             )
         })

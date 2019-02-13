@@ -61,6 +61,24 @@
                         alternative textuelle.
                     </p>
 
+                    <p><i class="fas fa-info-circle"></i>
+                        La taille d'un fichier ne peut excéder 15Mo
+                    </p>
+
+                    <p><i class="fas fa-info-circle"></i>
+                        L'alternative textuelle doit décrire de façon concise le contenu du fichier.
+                    </p>
+                    @if($file->type == 'image')
+                        <p><i class="fas fa-info-circle"></i>
+                            Logo : les logos de partenaires , associations...
+                        </p>
+                        <p><i class="fas fa-info-circle"></i>
+                            Icon : les icônes représentant le joueur, dans un jeu de piste,
+                            sur la carte</p>
+                        <p><i class="fas fa-info-circle"></i>
+                            Game : les images dans les questions et les réponses</p>
+                    @endif
+
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
                             <button type="submit" class="btn btn-primary">
