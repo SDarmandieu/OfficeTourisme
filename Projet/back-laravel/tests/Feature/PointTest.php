@@ -13,6 +13,7 @@ class PointTest extends TestCase
     use DatabaseTransactions;
 
     protected $city;
+    protected $user;
 
     /**
      * Set the URL of the previous request.
@@ -32,6 +33,7 @@ class PointTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->user = factory(User::class)->create();
         $this->city = City::create([
             'name' => 'foo',
             'lat' => '68.124',
@@ -45,10 +47,8 @@ class PointTest extends TestCase
      */
     public function testPointIndexRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/' . $this->city->id . '/point');
 
         $response
@@ -79,10 +79,8 @@ class PointTest extends TestCase
      */
     public function testPointCreateRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/' . $this->city->id . '/point/create');
         $response
             ->assertStatus(200)
@@ -109,10 +107,8 @@ class PointTest extends TestCase
      */
     public function testPointStoreRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->from('/city/' . $this->city->id . '/point/create')
             ->post('/city/' . $this->city->id . '/point/store', [
                 'desc' => 'foo',
@@ -150,14 +146,36 @@ class PointTest extends TestCase
     }
 
     /**
+     * testing point store with invalid fields
+     *
+     * @return void
+     */
+    public function testPointStoreRouteInvalidFields()
+    {
+        $response = $this
+            ->actingAs($this->user)
+            ->from('/city/' . $this->city->id . '/point/create')
+            ->post('/city/' . $this->city->id . '/point/store', [
+                'desc' => null,
+                'latitude' => -1000,
+                'longitude' => 'Laravel is awesome'
+            ]);
+
+        $response
+            ->assertRedirect('/city/' . $this->city->id . '/point/create')
+            ->assertStatus(302)
+            ->assertSessionHasErrors(['desc', 'latitude', 'longitude']);
+
+        $this->assertDatabaseMissing('points', ['lon' => 'Laravel is awesome']);
+    }
+
+    /**
      * testing point destroy when authenticated
      *
      * @return void
      */
     public function testPointDestroyRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $point = Point::create([
             'desc' => 'foo',
             'lat' => '68.124',
@@ -168,7 +186,7 @@ class PointTest extends TestCase
         $this->assertDatabaseHas('points', ['desc' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'DELETE',
                 '/point/destroy/' . $point->id,
@@ -226,9 +244,8 @@ class PointTest extends TestCase
             'city_id' => $this->city->id
         ]);
 
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/point/edit/' . $point->id);
 
         $response
@@ -266,8 +283,6 @@ class PointTest extends TestCase
      */
     public function testPointUpdateRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $point = Point::create([
             'desc' => 'foo',
             'lat' => '68.124',
@@ -278,7 +293,7 @@ class PointTest extends TestCase
         $this->assertDatabaseHas('points', ['desc' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'PUT',
                 '/point/update/' . $point->id,
@@ -332,5 +347,42 @@ class PointTest extends TestCase
         $this
             ->assertDatabaseMissing('points', ['desc' => 'bar'])
             ->assertDatabaseHas('points', ['desc' => 'foo']);
+    }
+
+    /**
+     * testing point update with invalid fields
+     *
+     * @return void
+     */
+    public function testPointUpdateRouteInvalidFields()
+    {
+        $point = Point::create([
+            'desc' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176',
+            'city_id' => $this->city->id
+        ]);
+
+        $this->assertDatabaseHas('points', ['desc' => 'foo']);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->from('/point/edit/' . $point->id)
+            ->call(
+                'PUT',
+                '/point/update/' . $point->id,
+                [
+                    'desc' => null,
+                    'latitude' => -1000,
+                    'longitude' => 'Sing me a song of a lass that is gone',
+                    '_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/point/edit/' . $point->id)
+            ->assertStatus(302)
+            ->assertSessionHasErrors(['desc', 'latitude', 'longitude']);
+
+        $this->assertDatabaseMissing('points', ['lon' => 'Sing me a song of a lass that is gone']);
     }
 }
