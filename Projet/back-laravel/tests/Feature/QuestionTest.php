@@ -228,9 +228,9 @@ class QuestionTest extends TestCase
     }
 
     /**
-     * testing game update with all fields invalid
+     * testing question update with all fields invalid
      */
-    public function testGameUpdateRouteInvalidFields()
+    public function testQuestionUpdateRouteInvalidFields()
     {
         $question = Question::create([
             'content' => 'foo',
