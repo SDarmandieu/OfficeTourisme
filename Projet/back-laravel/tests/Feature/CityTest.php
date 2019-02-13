@@ -11,6 +11,8 @@ class RouteTest extends TestCase
 {
     use DatabaseTransactions;
 
+    protected $user;
+
     /**
      * Set the URL of the previous request.
      *
@@ -24,6 +26,12 @@ class RouteTest extends TestCase
             ->setPreviousUrl($url);
 
         return $this;
+    }
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->user = factory(User::class)->create();
     }
 
     /**
@@ -58,9 +66,8 @@ class RouteTest extends TestCase
      */
     public function testCityRouteAuth()
     {
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city');
         $response->assertStatus(200);
     }
@@ -85,9 +92,8 @@ class RouteTest extends TestCase
      */
     public function testCityCreateRouteAuth()
     {
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/create');
         $response->assertStatus(200);
     }
@@ -99,10 +105,8 @@ class RouteTest extends TestCase
      */
     public function testCityStoreRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->from('/city/create')
             ->post('/city/store', [
                 'name' => 'foo',
@@ -140,14 +144,36 @@ class RouteTest extends TestCase
     }
 
     /**
+     * testing city store with invalid fields
+     *
+     * @return void
+     */
+    public function testCityStoreRouteInvalidFields()
+    {
+        $response = $this
+            ->actingAs($this->user)
+            ->from('/city/create')
+            ->post('/city/store', [
+                'name' => null,
+                'latitude' => '-1000',
+                'longitude' => 'toto'
+            ]);
+
+        $response
+            ->assertRedirect('/city/create')
+            ->assertStatus(302)
+            ->assertSessionHasErrors(['name', 'latitude', 'longitude']);
+
+        $this->assertDatabaseMissing('cities', ['name' => null]);
+    }
+
+    /**
      * testing city destroy when authenticated
      *
      * @return void
      */
     public function testCityDestroyRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $city = City::create([
             'name' => 'foo',
             'lat' => '68.124',
@@ -157,7 +183,7 @@ class RouteTest extends TestCase
         $this->assertDatabaseHas('cities', ['name' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'DELETE',
                 '/city/destroy/' . $city->id,
@@ -213,9 +239,8 @@ class RouteTest extends TestCase
             'lon' => '24.176'
         ]);
 
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/edit/' . $city->id);
 
         $response
@@ -253,8 +278,6 @@ class RouteTest extends TestCase
      */
     public function testCityUpdateRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $city = City::create([
             'name' => 'foo',
             'lat' => '68.124',
@@ -264,7 +287,7 @@ class RouteTest extends TestCase
         $this->assertDatabaseHas('cities', ['name' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'PUT',
                 '/city/update/' . $city->id,
@@ -320,6 +343,41 @@ class RouteTest extends TestCase
     }
 
     /**
+     * testing city update with invalid fields
+     *
+     * @return void
+     */
+    public function testCityUpdateRouteInvalidFields()
+    {
+        $city = City::create([
+            'name' => 'foo',
+            'lat' => '68.124',
+            'lon' => '24.176'
+        ]);
+
+        $this->assertDatabaseHas('cities', ['name' => 'foo']);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->from('/city/edit/' . $city->id)
+            ->call(
+                'PUT',
+                '/city/update/' . $city->id,
+                [
+                    'name' => null,
+                    'latitude' => -1000,
+                    'longitude' => 'foobar',
+                    '_token' => csrf_token()]
+            );
+        $response
+            ->assertRedirect('/city/edit/' . $city->id)
+            ->assertStatus(302)
+            ->assertSessionHasErrors(['name', 'latitude', 'longitude']);
+
+        $this->assertDatabaseMissing('cities', ['name' => null]);
+    }
+
+    /**
      * testing a specific city home page when authenticated
      */
     public function testCityHomeRouteAuth()
@@ -330,10 +388,8 @@ class RouteTest extends TestCase
             'lon' => '24.176'
         ]);
 
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/' . $city->id);
 
         $response
