@@ -104,7 +104,7 @@ class QuestionTest extends TestCase
     /**
      * testing question store with all fields invalid
      */
-    public function testGameStoreRouteInvalidFields()
+    public function testQuestionStoreRouteInvalidFields()
     {
         $response = $this
             ->actingAs($this->user)
