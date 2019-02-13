@@ -123,9 +123,8 @@ class GamePointTest extends TestCase
             ->assertStatus(200)
             ->assertViewHas(['point', 'game']);
 
-        $dataPoint = $response->original->getData()['point'];
-        $dataGame = $response->original->getData()['game'];
-        $this->assertInstanceOf('App\Point', $dataPoint);
-        $this->assertInstanceOf('App\Game', $dataGame);
+        $data = $response->original->getData();
+        $this->assertInstanceOf('App\Point', $data['point']);
+        $this->assertInstanceOf('App\Game', $data['game']);
     }
 }
