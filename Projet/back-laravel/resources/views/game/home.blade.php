@@ -71,7 +71,8 @@
             </p>
 
             <p><i class="fas fa-info-circle"></i>
-                Pour agir sur un point, il faut soit cliquer sur ce point sur la carte , soit sur une de ses actions dans la liste de gauche.
+                Pour agir sur un point, il faut soit cliquer sur ce point sur la carte , soit sur une de ses actions
+                dans la liste de gauche.
             </p>
         </div>
     </div>
@@ -198,7 +199,7 @@
              *  to adapt the content of destroy modal
              */
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let {desc,id} = $(event.relatedTarget).data('point')
+                let {desc, id} = $(event.relatedTarget).data('point')
                 let modal = $(this)
                 modal.find('.modal-body span').text(desc)
                 modal.find('.modal-title').text(`Supprimer ${desc}`)

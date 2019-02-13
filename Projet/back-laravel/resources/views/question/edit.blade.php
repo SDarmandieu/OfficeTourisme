@@ -83,7 +83,7 @@
                     </div>
 
                     <p><i class="fas fa-info-circle"></i>
-                        blablabla random help
+                        L'image sera affichée directement dans l'application, quand la question est affichée.
                     </p>
 
                     <div class="form-group row mb-0">
