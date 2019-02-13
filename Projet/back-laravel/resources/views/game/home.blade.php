@@ -62,6 +62,17 @@
 
         <div class="col">
             <div id="mapid"></div>
+            <p><i class="fas fa-info-circle"></i>
+                Les marqueurs bleus sont les points de la ville non associés au jeu.
+            </p>
+
+            <p><i class="fas fa-info-circle"></i>
+                Les marqueurs rouges sont les points de la ville déjà associés au jeu.
+            </p>
+
+            <p><i class="fas fa-info-circle"></i>
+                Pour agir sur un point, il faut soit cliquer sur ce point sur la carte , soit sur une de ses actions dans la liste de gauche.
+            </p>
         </div>
     </div>
 
