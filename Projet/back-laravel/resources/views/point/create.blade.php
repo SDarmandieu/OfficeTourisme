@@ -47,6 +47,11 @@
                             <p><i class="fas fa-info-circle"></i> Cliquer sur la carte pour remplir automatiquement les
                                 champs.</p>
 
+                            <p><i class="fas fa-info-circle"></i>
+                                La description du point est affichée dans
+                                l'application. Elle doit être concise , et contenir le batîment/chose notable à
+                                proximité , en relation avec sa future question.</p>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
