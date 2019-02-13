@@ -46,7 +46,7 @@
                                     type="radio"
                                     name="file"
                                     value="{{$image->id}}"
-                                    @if ($image->id == $answer->file_id)
+                                @if ($image->id == $answer->file_id)
                                     {{'checked'}}
                                     @endif>
                                 <label
@@ -88,7 +88,11 @@
                     </div>
 
                     <p><i class="fas fa-info-circle"></i>
-                        blablabla random help
+                        L'image sera affichée directement dans l'application, quand la question est affichée.
+                    </p>
+
+                    <p><i class="fas fa-info-circle"></i>
+                        Il est préférable de n'avoir qu'une seule réponse valide pour une même question.
                     </p>
 
                     <div class="form-group row mb-0">
