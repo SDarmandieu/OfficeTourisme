@@ -299,7 +299,7 @@ class PointTest extends TestCase
     }
 
     /**
-     * testing city update when not authenticated
+     * testing point update when not authenticated
      *
      * @return void
      */
