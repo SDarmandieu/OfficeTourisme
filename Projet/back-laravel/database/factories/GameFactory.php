@@ -7,6 +7,7 @@ $factory->define(App\Game::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
         'age' => $ages[array_rand($ages)],
-        'desc' => $faker->word
+        'desc' => $faker->word,
+        'published' => false
     ];
 });
