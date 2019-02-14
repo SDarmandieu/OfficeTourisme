@@ -31,21 +31,31 @@
                                     @default
                                     <span class="badge badge-dark">11/13 ans</span>
                                 @endswitch
+
+                                @switch($game->published)
+                                    @case(true)
+                                    <span class="badge badge-success">Publié (en ligne)</span>
+                                    @break
+
+                                    @case(false)
+                                    <span class="badge badge-danger">Non publié (hors ligne)</span>
+                                    @break
+                                @endswitch
                             </div>
                             <div class="card-body">
                                 <p>Description : {{$game->desc}}</p>
-                                {{--Icône :--}}
-                                {{--@if($game->files()->pluck('imagetype_id'))--}}
-                                {{--<img class="img-fluid my-2 w-25" src="{{asset('storage/'.$game->image->path)}}"--}}
-                                {{--alt="{{asset('storage/'.$game->image->lat)}}">--}}
-                                {{--@else--}}
-                                {{--<span>par défault</span>--}}
-                                {{--@endif--}}
                             </div>
                             <div class="card-footer d-flex flex-column">
+                                <form method="POST" action="{{route('gamePublish',$game->id)}}">
+                                    @csrf
+                                    <button
+                                        class="d-flex align-items-center align-self-start btn btn-link pl-0 pb-0"><i
+                                            class="fas fa-globe fa-2x mr-1"></i><span
+                                            class="link_">Mettre le jeu en ligne</span></button>
+                                </form>
 
                                 <a href="{{route('gameHome',$game->id)}}"
-                                   class="d-flex align-items-center align-self-start"><i
+                                   class="d-flex align-items-center mt-2 align-self-start"><i
                                         class="fas fa-home fa-2x mr-1"></i><span
                                         class="link_">Accéder
                                     au contenu du jeu de piste</span></a>
@@ -103,7 +113,7 @@
     <script>
         $(document).ready(() => {
             $('#destroyModal').on('show.bs.modal', function (event) {
-                let {name,id} = $(event.relatedTarget).data('game')
+                let {name, id} = $(event.relatedTarget).data('game')
                 let modal = $(this)
                 modal.find('.modal-body span').text(name)
                 modal.find('.modal-title').text(`Supprimer ${name}`)
