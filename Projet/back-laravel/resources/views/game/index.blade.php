@@ -51,7 +51,8 @@
                                     <button
                                         class="d-flex align-items-center align-self-start btn btn-link pl-0 pb-0"><i
                                             class="fas fa-globe fa-2x mr-1"></i><span
-                                            class="link_">Mettre le jeu en ligne</span></button>
+                                            class="link_">{{$game->published==true ?'Dépublier ce jeu':'Publier ce jeu en ligne'}}</span>
+                                    </button>
                                 </form>
 
                                 <a href="{{route('gameHome',$game->id)}}"
