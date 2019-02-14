@@ -24,6 +24,7 @@ class Game extends JsonResource
             'questions' => $this->questions->pluck('id'),
             'length' => $this->questions->count(),
             'files' => $this->files->pluck('id'),
+            'published' => $this->published
         ];
     }
 }
