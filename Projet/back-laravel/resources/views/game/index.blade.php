@@ -47,6 +47,7 @@
                             </div>
                             <div class="card-footer d-flex flex-column">
                                 <form method="POST" action="{{route('gamePublish',$game->id)}}">
+                                    @method('PUT')
                                     @csrf
                                     <button
                                         class="d-flex align-items-center align-self-start btn btn-link pl-0 pb-0"><i
