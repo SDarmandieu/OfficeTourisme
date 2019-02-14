@@ -21,7 +21,7 @@ class Answer extends JsonResource
             'content' => $this->content,
             'valid' => $this->valid,
             'question_id' => $this->question_id,
-            'file_id' => $file
+            'file' => $file
         ];
     }
 }

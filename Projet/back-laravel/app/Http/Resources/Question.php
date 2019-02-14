@@ -22,7 +22,7 @@ class Question extends JsonResource
             'expe' => $this->expe,
             'point_id' => $this->point_id,
             'game_id' => $this->game_id,
-            'file_id' => $file
+            'file' => $file
         ];
     }
 }
