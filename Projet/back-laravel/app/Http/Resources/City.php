@@ -19,7 +19,7 @@ class City extends JsonResource
             'name' => $this->name,
             'lon' => $this->lon,
             'lat' => $this->lat,
-            'games' => $this->games->pluck('id')
+            'games' => $this->games->where('published',true)->pluck('id')
         ];
     }
 }
