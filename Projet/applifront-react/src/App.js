@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Navigation from './components/Navigation'
 import Routing from './components/Routing'
 // import Footer from './components/Footer'
 import './App.css';
@@ -16,12 +15,12 @@ class App extends Component {
         populate()
     }
 
+    inGame = () => window.location.pathname.split`/`[1] === 'game'
+
     render() {
-        let inGame = window.location.pathname.split`/`[1] === 'game'
         return (
             <div className="App">
-                {!inGame && <Navigation/>}
-                <div style={{paddingTop:!inGame*50}}><Routing/></div>
+                <div style={{paddingTop:!this.inGame()*50}}><Routing inGame={this.inGame}/></div>
                 {/*{!inGame && <Footer/>}*/}
             </div>
         );

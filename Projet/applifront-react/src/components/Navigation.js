@@ -9,6 +9,7 @@ export default class Navigation extends Component {
     }
 
     render() {
+        let {user} = this.props
         return (
             <Navbar inverse collapseOnSelect fixedTop>
                 <Navbar.Header>
@@ -24,11 +25,15 @@ export default class Navigation extends Component {
                                 Accueil
                             </NavItem>
                         </LinkContainer>
+
+                        {user !== undefined &&
                         <LinkContainer to="/account">
                             <NavItem eventKey={2}>
                                 Mon compte
                             </NavItem>
                         </LinkContainer>
+                        }
+
                         <LinkContainer to="/contacts">
                             <NavItem eventKey={3}>
                                 Contacts
