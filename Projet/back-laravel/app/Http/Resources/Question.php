@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\File;
 
 class Question extends JsonResource
 {
@@ -14,13 +15,14 @@ class Question extends JsonResource
      */
     public function toArray($request)
     {
+        $file = File::find($this->file_id);
         return [
             'id' => $this->id,
             'content' => $this->content,
             'expe' => $this->expe,
             'point_id' => $this->point_id,
             'game_id' => $this->game_id,
-            'file_id' => $this->file_id
+            'file_id' => $file
         ];
     }
 }
