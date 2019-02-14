@@ -51,7 +51,7 @@
                                     <button
                                         class="d-flex align-items-center align-self-start btn btn-link pl-0 pb-0"><i
                                             class="fas fa-globe fa-2x mr-1"></i><span
-                                            class="link_">{{$game->published==true ?'Dépublier ce jeu':'Publier ce jeu sur l\'application}}</span>
+                                            class="link_">{{$game->published==true ?'Dépublier ce jeu':'Publier ce jeu sur l\'application'}}</span>
                                     </button>
                                 </form>
 
