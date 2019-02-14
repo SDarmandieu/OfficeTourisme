@@ -13,6 +13,7 @@ class GameTest extends TestCase
     use DatabaseTransactions;
 
     protected $city;
+    protected $user;
 
     /**
      * Set the URL of the previous request.
@@ -32,6 +33,7 @@ class GameTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->user = factory(User::class)->create();
         $this->city = City::create([
             'name' => 'foo',
             'lat' => '68.124',
@@ -45,10 +47,8 @@ class GameTest extends TestCase
      */
     public function testGameIndexRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/' . $this->city->id . '/game');
 
         $response
@@ -79,10 +79,8 @@ class GameTest extends TestCase
      */
     public function testGameCreateRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/city/' . $this->city->id . '/game/create');
         $response
             ->assertStatus(200)
@@ -109,10 +107,8 @@ class GameTest extends TestCase
      */
     public function testGameStoreRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->from('/city/' . $this->city->id . '/game/create')
             ->post('/city/' . $this->city->id . '/game/store', [
                 'name' => 'foo',
@@ -135,10 +131,8 @@ class GameTest extends TestCase
      */
     public function testGameStoreRouteInvalidFields()
     {
-        $user = factory(User::class)->create();
-
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->from('/city/' . $this->city->id . '/game/create')
             ->post('/city/' . $this->city->id . '/game/store', [
                 'name' => null,
@@ -186,8 +180,6 @@ class GameTest extends TestCase
      */
     public function testGameDestroyRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $game = Game::create([
             'name' => 'foo',
             'desc' => 'bar',
@@ -199,7 +191,7 @@ class GameTest extends TestCase
         $this->assertDatabaseHas('games', ['name' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'DELETE',
                 '/game/destroy/' . $game->id,
@@ -261,9 +253,8 @@ class GameTest extends TestCase
             'city_id' => $this->city->id
         ]);
 
-        $user = factory(User::class)->create();
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->get('/game/edit/' . $game->id);
 
         $response
@@ -302,8 +293,6 @@ class GameTest extends TestCase
      */
     public function testGameUpdateRouteAuth()
     {
-        $user = factory(User::class)->create();
-
         $game = Game::create([
             'name' => 'foo',
             'desc' => 'bar',
@@ -315,7 +304,7 @@ class GameTest extends TestCase
         $this->assertDatabaseHas('games', ['name' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->call(
                 'PUT',
                 '/game/update/' . $game->id,
@@ -381,8 +370,6 @@ class GameTest extends TestCase
      */
     public function testGameUpdateRouteInvalidFields()
     {
-        $user = factory(User::class)->create();
-
         $game = Game::create([
             'name' => 'foo',
             'desc' => 'bar',
@@ -394,7 +381,7 @@ class GameTest extends TestCase
         $this->assertDatabaseHas('games', ['name' => 'foo']);
 
         $response = $this
-            ->actingAs($user)
+            ->actingAs($this->user)
             ->from('/game/edit/'.$game->id)
             ->call(
                 'PUT',
@@ -414,5 +401,15 @@ class GameTest extends TestCase
 
 
         $this->assertDatabaseMissing('games', ['name' => null]);
+    }
+
+    public function testGamePublishRouteToOnline()
+    {
+
+    }
+
+    public function testGamePublishRouteToOffline()
+    {
+
     }
 }
