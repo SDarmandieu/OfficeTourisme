@@ -382,7 +382,7 @@ class GameTest extends TestCase
 
         $response = $this
             ->actingAs($this->user)
-            ->from('/game/edit/'.$game->id)
+            ->from('/game/edit/' . $game->id)
             ->call(
                 'PUT',
                 '/game/update/' . $game->id,
@@ -405,11 +405,63 @@ class GameTest extends TestCase
 
     public function testGamePublishRouteToOnline()
     {
+        $game = Game::create([
+            'name' => 'foo',
+            'desc' => 'bar',
+            'age' => '11/13 ans',
+            'icon' => null,
+            'city_id' => $this->city->id
+        ]);
+
+        $this->assertDatabaseHas('games', ['name' => 'foo', 'published' => 0]);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->call(
+                'PUT',
+                '/game/publish/' . $game->id, ['_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/city/' . $this->city->id . '/game')
+            ->assertStatus(302)
+            ->assertSessionHas('success')
+            ->assertSessionHasNoErrors();
+
+        $this
+            ->assertDatabaseHas('games', ['name' => 'foo', 'published' => 1])
+            ->assertDatabaseMissing('games', ['name' => 'foo', 'published' => 0]);
 
     }
 
     public function testGamePublishRouteToOffline()
     {
+        $game = Game::create([
+            'name' => 'foo',
+            'desc' => 'bar',
+            'age' => '11/13 ans',
+            'icon' => null,
+            'city_id' => $this->city->id,
+            'published' => 1
+        ]);
 
+        $this->assertDatabaseHas('games', ['name' => 'foo', 'published' => 1]);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->call(
+                'PUT',
+                '/game/publish/' . $game->id, ['_token' => csrf_token()]
+            );
+
+        $response
+            ->assertRedirect('/city/' . $this->city->id . '/game')
+            ->assertStatus(302)
+            ->assertSessionHas('success')
+            ->assertSessionHasNoErrors();
+
+        $this
+            ->assertDatabaseHas('games', ['name' => 'foo', 'published' => 0])
+            ->assertDatabaseMissing('games', ['name' => 'foo', 'published' => 1]);
     }
 }
