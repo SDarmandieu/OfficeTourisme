@@ -76,6 +76,8 @@ Route::delete('/game/destroy/{game_id}','GameController@destroy')->name('gameDes
 
 Route::get('/game/{game_id}','GameController@home')->name('gameHome')->middleware('auth');
 
+Route::post('/game/{game_id}/publish','GameController@handlePublish')->name('gamePublish')->middleware('auth');
+
 /**
  * Game/Point association
  */
