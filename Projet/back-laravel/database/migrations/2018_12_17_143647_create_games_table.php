@@ -18,7 +18,7 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('age');
             $table->text('desc');
-            $table->boolean('published');
+            $table->boolean('published')->default(false);
             $table->integer('city_id')->unsigned();
             $table->timestamps();
 
