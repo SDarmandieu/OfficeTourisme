@@ -36,8 +36,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/database', function () {
     return [
-        'cities' => CityResource::collection(City::all()),
-        'games' => GameResource::collection(Game::all()),
+        'cities' => CityResource::collection(City::whereHas('games', function ($q) {
+            $q->where('published', true);
+        })->get()),
+        'games' => GameResource::collection(Game::where('published', true)->get()),
         'points' => PointResource::collection(Point::all()),
         'questions' => QuestionResource::collection(Question::all()),
         'answers' => AnswerResource::collection(Answer::all()),
@@ -46,7 +48,7 @@ Route::get('/database', function () {
     ];
 });
 
-Route::post('/file', function (Request $request) {
-    $file = Storage::disk('public')->get($request->path);
-    return response($file, 200)->header('Content-Type', 'image/jpeg');
-});
+//Route::post('/file', function (Request $request) {
+//    $file = Storage::disk('public')->get($request->path);
+//    return response($file, 200)->header('Content-Type', 'image/jpeg');
+//});
