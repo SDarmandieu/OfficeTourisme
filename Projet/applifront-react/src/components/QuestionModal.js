@@ -63,6 +63,7 @@ export default class QuestionModal extends Component {
 
     render() {
         let {point, answers, question} = this.props.data
+        console.log(question)
         let {show} = this.state
         return (
             <>
@@ -70,13 +71,20 @@ export default class QuestionModal extends Component {
                     <Modal.Header closeButton>{point.desc}</Modal.Header>
                     <Modal.Body>
                         {question.content}
+                        {question.file_id !== null && <img className="img-responsive"
+                                                           src={`http://192.168.43.44:8000/storage/${question.file_id.path}`}
+                                                           alt={question.file_id.alt}/>}
                         <FormGroup>
                             {answers.map(answer => <Radio
                                 onChange={this.handleChangeInput}
                                 key={answer.id}
                                 name="answer"
                                 value={!!answer.valid}>
-                                {answer.content} {answer.valid}
+                                {answer.content}
+                                {answer.file_id !== null && <img className="img-responsive"
+                                                                   src={`http://192.168.43.44:8000/storage/${answer.file_id.path}`}
+                                                                   alt={answer.file_id.alt}/>}
+                                {answer.valid}
                             </Radio>)}
                             <Button type="submit" onClick={this.handleSubmit}>Choisir</Button>
                         </FormGroup>
