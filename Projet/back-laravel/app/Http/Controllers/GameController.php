@@ -51,6 +51,7 @@ class GameController extends Controller
             'desc' => $validated['desc'],
             'name' => $validated['name'],
             'age' => $validated['age'],
+            'published' => false,
             'city_id' => $city_id
         ]);
 
@@ -119,5 +120,14 @@ class GameController extends Controller
         $game = Game::find($game_id);
         $points = $game->points()->paginate(5);
         return view('game.home', compact('game', 'points'));
+    }
+
+    public function handlePublish($game_id)
+    {
+        $game = Game::find($game_id);
+        $game->update([
+            'published' => !$game->published,
+        ]);
+        return redirect()->route('gameIndex', $game->city->id)->with('success', 'Le status du jeu a bien été changé.');
     }
 }
