@@ -18,7 +18,7 @@ Breadcrumbs::for('cityIndex', function ($trail) {
 
 Breadcrumbs::for('cityCreate', function ($trail) {
     $trail->parent('cityIndex');
-    $trail->push('Création', route('cityIndex'));
+    $trail->push('Création', route('cityCreate'));
 });
 
 Breadcrumbs::for('cityEdit', function ($trail, $city) {
@@ -122,4 +122,22 @@ Breadcrumbs::for('answerCreate', function ($trail, $question) {
 Breadcrumbs::for('answerEdit', function ($trail, $answer) {
     $trail->parent('gamePointIndex',$answer->question->game , $answer->question->point);
     $trail->push('Modification de réponse', route('answerEdit', $answer->id));
+});
+
+/**
+ * user breadcrumbs
+ */
+Breadcrumbs::for('userIndex', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Administrateurs', route('userIndex'));
+});
+
+Breadcrumbs::for('userCreate', function ($trail) {
+    $trail->parent('userIndex');
+    $trail->push('Création', route('userCreate'));
+});
+
+Breadcrumbs::for('userEdit', function ($trail, $user) {
+    $trail->parent('userIndex');
+    $trail->push('Modification '.$user->name, route('userEdit', $user->id));
 });
