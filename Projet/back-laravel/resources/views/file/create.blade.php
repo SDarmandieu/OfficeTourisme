@@ -4,7 +4,7 @@
     {{ Breadcrumbs::render('fileCreate',$city) }}
 @endsection
 
-@section('content')
+@section('content')cd
     <div class="container">
         <div class="card">
             <div class="card-header">Création de fichier pour {{$city->name}}</div>

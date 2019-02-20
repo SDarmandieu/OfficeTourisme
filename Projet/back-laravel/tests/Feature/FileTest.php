@@ -45,6 +45,37 @@ class FileTest extends TestCase
     }
 
     /**
+     * testing image store with invalid fields
+     *
+     * @return void
+     */
+    public function testImageStoreRouteInvalidFields()
+    {
+        Storage::fake('public');
+
+        $file = UploadedFile::fake()->create('test.jpg', 20000);
+
+        $response = $this
+            ->actingAs($this->user)
+            ->from('/city/' . $this->city->id . '/file/create')
+            ->post('/city/' . $this->city->id . '/file/store',
+                [
+                    'file' => $file,
+                    'alt' => null,
+                    'imagetype' => -1
+                ]);
+
+        Storage::disk('public')->assertMissing('/files/image/' . $file->hashName());
+
+        $response
+            ->assertLocation('/city/' . $this->city->id . '/file/create')
+            ->assertStatus(302)
+            ->assertSessionHasErrors(['file', 'alt', 'imagetype']);
+
+        $this->assertDatabaseMissing('files', ['filename' => 'test.jpg']);
+    }
+
+    /**
      * testing image index route when authenticated
      * @return void
      */
@@ -146,36 +177,7 @@ class FileTest extends TestCase
         $this->assertDatabaseHas('files', ['filename' => 'test.jpg']);
     }
 
-    /**
-     * testing image store with invalid fields
-     *
-     * @return void
-     */
-    public function testImageStoreRouteInvalidFields()
-    {
-        Storage::fake('public');
 
-        $file = UploadedFile::fake()->create('test.jpg', 20000);
-
-        $response = $this
-            ->actingAs($this->user)
-            ->from('/city/' . $this->city->id . '/file/create')
-            ->post('/city/' . $this->city->id . '/file/store',
-                [
-                    'file' => $file,
-                    'alt' => null,
-                    'imagetype' => -1
-                ]);
-
-        Storage::disk('public')->assertMissing('/files/image/' . $file->hashName());
-
-        $response
-            ->assertLocation('/city/' . $this->city->id . '/file/create')
-            ->assertStatus(302)
-            ->assertSessionHasErrors(['file', 'alt', 'imagetype']);
-
-        $this->assertDatabaseMissing('files', ['filename' => 'test.jpg']);
-    }
 
     /**
      * testing video store when authenticated
