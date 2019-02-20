@@ -66,9 +66,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Attention , vous êtes sur le point de supprimer l'administrateur <span></span> et tout le contenu
-                    qui en
-                    dépend. Veuillez confirmer votre choix.
+                    Attention , vous êtes sur le point de supprimer l'administrateur <span></span>. Veuillez confirmer votre choix.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
