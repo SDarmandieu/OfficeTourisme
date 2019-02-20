@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('breadcrumb')
+    {{ Breadcrumbs::render('userCreate') }}
 @endsection
 
 @section('content')
@@ -12,7 +13,7 @@
                     <div class="card-header">Créer un compte admin</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('userCreate') }}">
+                        <form method="POST" action="{{ route('userStore') }}">
                             @csrf
 
                             <div class="form-group row">
