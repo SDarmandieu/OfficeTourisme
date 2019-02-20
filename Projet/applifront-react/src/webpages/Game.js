@@ -9,7 +9,7 @@ import ResultModal from '../components/ResultModal'
 import L from "leaflet";
 import 'leaflet.locatecontrol';
 import 'leaflet-easybutton'
-import _ from "lodash";
+import isEqual from "lodash/isEqual";
 
 export default class Game extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ export default class Game extends Component {
      */
     async componentDidUpdate(prevProps, prevState, snapshot) {
         let user = await checkUser()
-        if (!_.isEqual(prevProps.user, user[0])) {
+        if (!isEqual(prevProps.user, user[0])) {
             await this.props.updateUser()
         }
     }
