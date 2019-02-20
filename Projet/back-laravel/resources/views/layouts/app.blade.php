@@ -46,12 +46,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     @auth
-                        {{--<li class="nav-item">--}}
-                        {{--<a class="nav-link" href="{{ route('userCreate') }}">Créer un compte admin</a>--}}
-                        {{--</li>--}}
-                        {{--<li class="nav-item">--}}
-                        {{--<a class="nav-link" href="{{ route('userShow',Auth::user()->id) }}">Mon compte</a>--}}
-                        {{--</li>--}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('userIndex') }}">Gestion des administrateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('userEdit',Auth::user()->id) }}">Mon compte</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
