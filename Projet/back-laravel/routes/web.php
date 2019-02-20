@@ -19,7 +19,7 @@ Auth::routes();
 /**
  * User routes
  */
-Route::get('/user/show/{id}','UserController@show')->name('userShow')->middleware('auth');
+Route::get('/users','UserController@index')->name('userIndex')->middleware('auth');
 
 Route::view('/user/create','user.create')->name('userCreate')->middleware('auth');
 Route::post('/user/store','UserController@store')->name('userStore')->middleware('auth');
