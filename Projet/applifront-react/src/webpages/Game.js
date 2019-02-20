@@ -3,6 +3,7 @@ import {pointIndex} from '../database/pointController'
 import {questionShow} from '../database/questionController'
 import {answerIndex} from '../database/answerController'
 import {userGameProgress, checkUser} from "../database/userController";
+import {fileIndex} from "../database/fileController";
 import QuestionModal from '../components/QuestionModal'
 import ResultModal from '../components/ResultModal'
 import L from "leaflet";
@@ -16,12 +17,16 @@ export default class Game extends Component {
         this.state = {
             questionModal: null,
             validAnswer: null,
-            gameOver: false
+            gameOver: false,
+            userLocation: null
         }
     }
 
     async componentDidMount() {
         let {city, game} = this.props.location.state
+        let files = await fileIndex(game.id)
+        console.log('files', files)
+
         let points = await pointIndex(game)
         let map = this.generateMap([city.lat, city.lon], points, 16)
         this.addMarkers(map, points, [city.lat, city.lon])
@@ -79,15 +84,17 @@ export default class Game extends Component {
         })
 
         L.easyButton('fa-home fa-3x',
-            () => this.props.history.push('/',{backButton:'au jeu'}), {position: 'bottomleft'}
+            () => this.props.history.push('/', {backButton: 'au jeu'}), {position: 'bottomleft'}
         ).addTo(map)
 
         L.easyButton('fa-user fa-3x',
-            () => this.props.history.push('/account',{backButton:'au jeu'}), {position: 'bottomright'}
+            () => this.props.history.push('/account', {backButton: 'au jeu'}), {position: 'bottomright'}
         ).addTo(map)
 
 
         map.addControl(new progressBadge());
+
+        map.on('locationfound', async e => await this.setState({userLocation: e.latlng}))
 
 
         return map
@@ -188,7 +195,6 @@ export default class Game extends Component {
                 {validAnswer && !gameOver && <ResultModal validAnswer={validAnswer}
                                                           hideResultModal={this.hideResultModal}/>
                 }
-
                 {gameOver && <ResultModal {...this.props}
                                           validAnswer="gameOver"
                                           hideResultModal={this.hideResultModal}/>}

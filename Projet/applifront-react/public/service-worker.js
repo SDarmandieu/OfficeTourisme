@@ -1,5 +1,4 @@
 let doCache = true; // Set this to true for production
-console.log("test script")
 let CACHE_NAME = "my-pwa-cache-v1";
 
 self.addEventListener("activate", event => {
@@ -27,7 +26,7 @@ self.addEventListener("install", function(event) {
                         response.json();
                     })
                     .then(assets => {
-                        const urlsToCache = ["/",assets['main.js']];
+                        const urlsToCache = ["/",assets['main.js'],new Request("http://192.168.43.44:8000/storage/files/image/ee1c5ceabae938c6cbeaf3d9c58b2243.jpg",{mode:"no-cors"})];
                         cache.addAll(urlsToCache);
                         console.log("cached");
                     });
@@ -36,12 +35,28 @@ self.addEventListener("install", function(event) {
     }
 });
 
-self.addEventListener("fetch", function(event) {
-    if (doCache) {
+// self.addEventListener("fetch", function(event) {
+//     if (doCache) {
+//         event.respondWith(
+//             caches.match(event.request).then(function(response) {
+//                 return response || fetch(event.request);
+//             })
+//         );
+//     }
+// });
+
+self.addEventListener('fetch', function fetcher (event) {
+    let request = event.request;
+    // check if request
+    if (request.url.indexOf('assets.contentful.com') > -1) {
+        // contentful asset detected
+        console.log("dedaaaaaaaans")
         event.respondWith(
             caches.match(event.request).then(function(response) {
-                return response || fetch(event.request);
+                // return from cache, otherwise fetch from network
+                return response || fetch(request);
             })
         );
     }
+    // otherwise: ignore event
 });

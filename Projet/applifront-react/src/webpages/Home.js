@@ -19,6 +19,7 @@ export default class Home extends Component {
         await this.setState({
             cities: cities
         })
+        // new Request("http://192.168.43.44:8000/storage/files/image/ee1c5ceabae938c6cbeaf3d9c58b2243.jpg",{mode:"no-cors"})
     }
 
     /**
