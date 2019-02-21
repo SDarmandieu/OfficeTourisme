@@ -58,7 +58,7 @@ export default class Game extends Component {
             center: center,
             zoom: zoom,
             layers: [
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png'),
+                L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png'),
             ]
         })
         L.control.locate({
@@ -108,8 +108,8 @@ export default class Game extends Component {
      */
     addMarkers = (map, points, center) => {
         let infoIcon = new L.Icon({
-            iconUrl: '/images/marker-icon-green.png',
-            shadowUrl: '/images/marker-shadow.png',
+            iconUrl: process.env.PUBLIC_URL + '/images/marker-icon-green.png',
+            shadowUrl: process.env.PUBLIC_URL + '/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -122,8 +122,8 @@ export default class Game extends Component {
         let doneGroup = L.featureGroup().addTo(map)
 
         let doneIcon = new L.Icon({
-            iconUrl: '/images/marker-icon-black.png',
-            shadowUrl: '/images/marker-shadow.png',
+            iconUrl: process.env.PUBLIC_URL + '/images/marker-icon-black.png',
+            shadowUrl: process.env.PUBLIC_URL + '/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -136,16 +136,21 @@ export default class Game extends Component {
                     point: point,
                     game: this.props.location.state.game
                 }
+                // let {userLocation} = this.state
+
                 let question = await questionShow(check)
                 if (this.props.user.questions_done.includes(question.id)) {
                     marker = L.marker([point.lat, point.lon], {icon: doneIcon}).bindPopup('Tu as déjà répondu à cette question').addTo(doneGroup)
-                } else {
-                    marker = L.marker([point.lat, point.lon]).addTo(notDoneGroup)
                 }
+                // else if (userLocation && (userLocation.distanceTo([point.lat, point.long]) < 50000000)) {
+                   else marker = L.marker([point.lat, point.lon]).addTo(notDoneGroup)
+                // } else marker = L.marker([point.lat, point.lon]).bindPopup('Tu es trop éloigné de ce point').addTo(map)
+
                 marker.point = point
                 marker.game = this.props.location.state.game
 
                 return marker
+
             }
         )
     }
@@ -185,6 +190,7 @@ export default class Game extends Component {
 
     render() {
         let {questionModal, validAnswer, gameOver} = this.state
+
         return (
             <>
                 <div id="map"></div>

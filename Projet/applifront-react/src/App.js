@@ -15,7 +15,7 @@ class App extends Component {
         populate()
     }
 
-    inGame = () => window.location.pathname.split`/`[1] === 'game'
+    inGame = () => window.location.pathname.includes('game')
 
     render() {
         return (

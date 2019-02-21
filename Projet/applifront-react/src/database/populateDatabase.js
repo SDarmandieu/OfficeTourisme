@@ -5,7 +5,7 @@ import db from "./db";
  * @returns {Promise<void>}
  */
 export const populate = async () => {
-    let response = await fetch("http://192.168.43.44:8000/api/database")
+    let response = await fetch("https://1a3ae8f6.ngrok.io/api/database")
     let data = await response.json()
 
     db.on("ready", function () {
